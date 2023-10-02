@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import com.pulse.air.commons.enums.Status;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 import com.pulse.air.employee.api.contract.JobTypeService;
-import com.pulse.air.employee.api.model.jobtype.JobTypeRequest;
-import com.pulse.air.employee.api.model.jobtype.JobTypeResponse;
 import com.pulse.air.employee.core.mapper.JobTypeMapper;
 import com.pulse.air.employee.dao.JobTypeRepository;
 import com.pulse.air.employee.dao.model.JobTypeEntity;
+import com.pulse.air.employee.model.jobtype.JobTypeRequest;
+import com.pulse.air.employee.model.jobtype.JobTypeResponse;
 
 @Service
 public class JobTypeServiceImpl

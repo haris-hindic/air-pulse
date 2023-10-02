@@ -18,7 +18,9 @@
     <modules>
         <module>commons</module>
         <module>employee-service</module>
+        <module>employee-model</module>
         <module>flight-catalogue-service</module>
+        <module>flight-catalogue-model</module>
     </modules>
 
     <properties>

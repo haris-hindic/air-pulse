@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.pulse.air.commons.model.ApiListResponse;
+import com.pulse.air.employee.model.employee.EmployeeResponse;
 
 import lombok.AllArgsConstructor;
 
@@ -17,9 +18,9 @@ public class TestController {
 	private WebClient webClient;
 
 	@GetMapping
-	public ApiListResponse<Object> findAll() {
+	public ApiListResponse<EmployeeResponse> findAll() {
 
-		ParameterizedTypeReference<ApiListResponse<Object>> x = new ParameterizedTypeReference<ApiListResponse<Object>>() {
+		ParameterizedTypeReference<ApiListResponse<EmployeeResponse>> x = new ParameterizedTypeReference<ApiListResponse<EmployeeResponse>>() {
 		};
 
 		return webClient.get().uri("http://localhost:8080/employee").retrieve().bodyToMono(x).block();

@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pulse.air.commons.contract.BaseCRUDService;
 import com.pulse.air.commons.rest.BaseCRUDController;
-import com.pulse.air.employee.api.model.jobtype.JobTypeRequest;
-import com.pulse.air.employee.api.model.jobtype.JobTypeResponse;
+import com.pulse.air.employee.model.jobtype.JobTypeRequest;
+import com.pulse.air.employee.model.jobtype.JobTypeResponse;
 
 @RestController
 @RequestMapping("job-type")

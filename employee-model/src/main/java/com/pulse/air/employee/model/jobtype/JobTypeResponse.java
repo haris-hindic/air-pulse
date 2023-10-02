@@ -1,4 +1,4 @@
-package com.pulse.air.employee.api.model.jobtype;
+package com.pulse.air.employee.model.jobtype;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
