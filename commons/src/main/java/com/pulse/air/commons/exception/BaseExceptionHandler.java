@@ -1,7 +1,5 @@
 package com.pulse.air.commons.exception;
 
-import java.util.UUID;
-
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,7 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.pulse.air.commons.model.ErrorResponse;
+import com.pulse.air.commons.model.ErrorApiResponse;
 
 public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -22,8 +20,10 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 		var errors = ex.getBindingResult().getFieldErrors().stream()
 				.map(DefaultMessageSourceResolvable::getDefaultMessage).toList();
 
-		return new ResponseEntity<>(ErrorResponse.builder().code(String.valueOf(status.value())).errors(errors)
-				.uuid(UUID.randomUUID()).build(), HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(
+				ErrorApiResponse.builder().code(Long.valueOf(HttpStatus.BAD_REQUEST.value())).errors(errors)
+						.status(HttpStatus.BAD_REQUEST.getReasonPhrase()).message(ex.getLocalizedMessage()).build(),
+				HttpStatus.BAD_REQUEST);
 	}
 
 }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.pulse.air.commons.contract.BaseCRUDService;
+import com.pulse.air.commons.model.ApiResponse;
 
 import jakarta.validation.Valid;
 
@@ -18,18 +19,18 @@ public class BaseCRUDController<TResponse, TRequest> extends BaseController<TRes
 	}
 
 	@PostMapping
-	public TResponse create(@Valid @RequestBody final TRequest request) {
+	public ApiResponse<TResponse> create(@Valid @RequestBody final TRequest request) {
 
 		return ((BaseCRUDService<TResponse, TRequest>) service).create(request);
 	}
 
 	@PutMapping(value = "{id}")
-	public TResponse create(@PathVariable final Long id, @Valid @RequestBody final TRequest request) {
+	public ApiResponse<TResponse> create(@PathVariable final Long id, @Valid @RequestBody final TRequest request) {
 		return ((BaseCRUDService<TResponse, TRequest>) service).update(id, request);
 	}
 
 	@DeleteMapping(value = "{id}")
-	public String delete(@PathVariable final Long id) {
+	public ApiResponse<String> delete(@PathVariable final Long id) {
 		return ((BaseCRUDService<TResponse, TRequest>) service).delete(id);
 	}
 }

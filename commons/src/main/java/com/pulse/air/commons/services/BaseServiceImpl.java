@@ -1,11 +1,12 @@
 package com.pulse.air.commons.services;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.HttpStatus;
 
 import com.pulse.air.commons.contract.BaseMapper;
 import com.pulse.air.commons.contract.BaseService;
+import com.pulse.air.commons.model.ApiListResponse;
+import com.pulse.air.commons.model.ApiResponse;
 
 import lombok.AllArgsConstructor;
 
@@ -17,16 +18,19 @@ public class BaseServiceImpl<TEntity, TResponse, TRequest, TMapper extends BaseM
 	private TRepository repository;
 
 	@Override
-	public List<TResponse> findAll() {
+	public ApiListResponse<TResponse> findAll() {
+
 		var entities = repository.findAll();
-		return mapper.entitesToDtos(entities);
+		return new ApiListResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
+				mapper.entitesToDtos(entities));
 	}
 
 	@Override
-	public TResponse findById(final Long id) {
+	public ApiResponse<TResponse> findById(final Long id) {
 		var entity = repository.findById(id);
 		if (entity.isPresent()) {
-			return mapper.entityToDto(entity.get());
+			return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
+					mapper.entityToDto(entity.get()));
 		} else {
 			return null;
 		}

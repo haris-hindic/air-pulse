@@ -1,7 +1,6 @@
 package com.pulse.air.commons.model;
 
 import java.util.List;
-import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,10 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ErrorResponse {
+public class ErrorApiResponse {
 
-	private UUID uuid;
-	private String code;
+	private Long code;
+	private String status;
+	private String message;
 	private List<String> errors;
 
 }

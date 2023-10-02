@@ -1,4 +1,4 @@
-package com.pulse.air.employee.api.model;
+package com.pulse.air.employee.api.model.employee;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

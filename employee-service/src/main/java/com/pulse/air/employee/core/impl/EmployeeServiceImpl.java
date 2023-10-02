@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.pulse.air.commons.enums.Status;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
-import com.pulse.air.employee.api.EmployeeService;
-import com.pulse.air.employee.api.model.EmployeeRequest;
-import com.pulse.air.employee.api.model.EmployeeResponse;
+import com.pulse.air.employee.api.contract.EmployeeService;
+import com.pulse.air.employee.api.model.employee.EmployeeRequest;
+import com.pulse.air.employee.api.model.employee.EmployeeResponse;
 import com.pulse.air.employee.core.mapper.EmployeeMapper;
 import com.pulse.air.employee.dao.EmployeeRepository;
 import com.pulse.air.employee.dao.model.EmployeeEntity;

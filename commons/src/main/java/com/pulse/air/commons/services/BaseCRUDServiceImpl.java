@@ -1,9 +1,11 @@
 package com.pulse.air.commons.services;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.HttpStatus;
 
 import com.pulse.air.commons.contract.BaseCRUDService;
 import com.pulse.air.commons.contract.BaseMapper;
+import com.pulse.air.commons.model.ApiResponse;
 
 public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends BaseMapper<TEntity, TResponse, TRequest>, TRepository extends JpaRepository<TEntity, Long>>
 		extends BaseServiceImpl<TEntity, TResponse, TRequest, TMapper, TRepository>
@@ -19,13 +21,14 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends B
 	}
 
 	@Override
-	public TResponse create(final TRequest request) {
+	public ApiResponse<TResponse> create(final TRequest request) {
 		var entity = mapper.dtoToEntity(request);
 		beforeInsert(entity);
 
 		repository.save(entity);
 
-		return mapper.entityToDto(entity);
+		return new ApiResponse<>(HttpStatus.CREATED.value(), HttpStatus.CREATED.getReasonPhrase(),
+				mapper.entityToDto(entity));
 	}
 
 	public void beforeInsert(final TEntity entity) {
@@ -33,7 +36,7 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends B
 	}
 
 	@Override
-	public TResponse update(final Long id, final TRequest request) {
+	public ApiResponse<TResponse> update(final Long id, final TRequest request) {
 		var entityOptional = repository.findById(id);
 
 		if (entityOptional.isPresent()) {
@@ -42,7 +45,8 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends B
 			beforeUpdate(entity);
 
 			repository.save(entity);
-			return mapper.entityToDto(entity);
+			return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
+					mapper.entityToDto(entity));
 		} else {
 			// HANDLE NON EXISTENT ENTITY
 			return null;
@@ -54,14 +58,16 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends B
 	}
 
 	@Override
-	public String delete(final Long id) {
+	public ApiResponse<String> delete(final Long id) {
 		var entity = repository.findById(id);
 
 		if (entity.isPresent()) {
 			repository.delete(entity.get());
-			return String.format("Successfully deleted entity with id -> %s", id);
+			return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
+					String.format("Successfully deleted entity with id -> %s", id));
 		} else {
-			return String.format("There is no entity with id -> %s", id);
+			return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
+					String.format("There is no entity with id -> %s", id));
 		}
 	}
 

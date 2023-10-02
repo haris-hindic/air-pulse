@@ -11,6 +11,13 @@ public class SwaggerConfiguration extends BaseSwaggerConfiguration {
 
 	@Bean
 	public GroupedOpenApi employeeApi() {
-		return GroupedOpenApi.builder().group("employee-api").packagesToScan("com.pulse.air.employee.rest").build();
+		return GroupedOpenApi.builder().group("employee-api").packagesToScan("com.pulse.air.employee.rest.employee")
+				.build();
+	}
+
+	@Bean
+	public GroupedOpenApi jobTypeApi() {
+		return GroupedOpenApi.builder().group("jobtype-api").packagesToScan("com.pulse.air.employee.rest.jobtype")
+				.build();
 	}
 }

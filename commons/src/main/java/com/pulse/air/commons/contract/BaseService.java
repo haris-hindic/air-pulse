@@ -1,10 +1,11 @@
 package com.pulse.air.commons.contract;
 
-import java.util.List;
+import com.pulse.air.commons.model.ApiListResponse;
+import com.pulse.air.commons.model.ApiResponse;
 
 public interface BaseService<TResponse> {
 
-	public List<TResponse> findAll();
+	public ApiListResponse<TResponse> findAll();
 
-	public TResponse findById(final Long id);
+	public ApiResponse<TResponse> findById(final Long id);
 }

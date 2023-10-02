@@ -1,11 +1,11 @@
 package com.pulse.air.commons.rest;
 
-import java.util.List;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.pulse.air.commons.contract.BaseService;
+import com.pulse.air.commons.model.ApiListResponse;
+import com.pulse.air.commons.model.ApiResponse;
 
 import lombok.AllArgsConstructor;
 
@@ -15,12 +15,12 @@ public class BaseController<TResponse> {
 	BaseService<TResponse> service;
 
 	@GetMapping
-	public List<TResponse> findAll() {
+	public ApiListResponse<TResponse> findAll() {
 		return service.findAll();
 	}
 
 	@GetMapping(value = "{id}")
-	public TResponse findById(@PathVariable final Long id) {
+	public ApiResponse<TResponse> findById(@PathVariable final Long id) {
 
 		return service.findById(id);
 	}
