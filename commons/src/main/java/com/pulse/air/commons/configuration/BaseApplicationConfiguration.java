@@ -1,5 +1,6 @@
 package com.pulse.air.commons.configuration;
 
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -9,7 +10,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class BaseApplicationConfiguration {
 
 	@Bean
-	public WebClient webClient() {
-		return WebClient.builder().build();
+	@LoadBalanced
+	public WebClient.Builder webClient() {
+		return WebClient.builder();
 	}
 }

@@ -19,12 +19,14 @@
         <module>commons</module>
         <module>employee-management</module>
         <module>flight-catalogue</module>
+        <module>discovery-service</module>
     </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-cloud.version>2022.0.4</spring-cloud.version>
     </properties>
     
     
@@ -59,18 +61,6 @@
 	      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 	      <version>2.2.0</version>
 	   </dependency>
-	   
-	   <!-- DATABASE-->
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-
-		<dependency>
-		    <groupId>org.postgresql</groupId>
-		    <artifactId>postgresql</artifactId>
-		    <scope>runtime</scope>
-		</dependency>
 		
 		<!-- MAPPER -->
 		<dependency>
@@ -86,6 +76,17 @@
 		</dependency>
 	</dependencies>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

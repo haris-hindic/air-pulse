@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping("testing")
 @AllArgsConstructor
 public class TestController {
-	private WebClient webClient;
+	private WebClient.Builder webClient;
 
 	@GetMapping
 	public ApiListResponse<EmployeeResponse> findAll() {
@@ -23,7 +23,7 @@ public class TestController {
 		ParameterizedTypeReference<ApiListResponse<EmployeeResponse>> x = new ParameterizedTypeReference<ApiListResponse<EmployeeResponse>>() {
 		};
 
-		return webClient.get().uri("http://localhost:8080/employee").retrieve().bodyToMono(x).block();
+		return webClient.build().get().uri("http://employee-service/employee").retrieve().bodyToMono(x).block();
 	}
 
 }
