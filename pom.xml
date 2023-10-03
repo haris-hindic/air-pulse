@@ -17,10 +17,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>commons</module>
-        <module>employee-service</module>
-        <module>employee-model</module>
-        <module>flight-catalogue-service</module>
-        <module>flight-catalogue-model</module>
+        <module>employee-management</module>
+        <module>flight-catalogue</module>
     </modules>
 
     <properties>

@@ -9,12 +9,19 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>commons</artifactId>
+    <artifactId>flight-catalogue</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>flight-catalogue-model</module>
+        <module>flight-catalogue-service</module>
+        <module>flight-catalogue-rest</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
 
 </project>

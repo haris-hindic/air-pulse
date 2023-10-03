@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.pulse.air</groupId>
-        <artifactId>air-pulse</artifactId>
+        <artifactId>flight-catalogue</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>commons</artifactId>
+    <artifactId>flight-catalogue-service</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -17,4 +17,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    
+    <dependencies>
+    	<dependency>
+    		<groupId>com.pulse.air</groupId>
+    		<artifactId>commons</artifactId>
+    		<version>1.0-SNAPSHOT</version>
+    	</dependency>
+    	<dependency>
+    		<groupId>com.pulse.air</groupId>
+    		<artifactId>employee-model</artifactId>
+    		<version>1.0-SNAPSHOT</version>
+    	</dependency>
+    </dependencies>
 </project>
