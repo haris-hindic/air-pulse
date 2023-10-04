@@ -20,6 +20,7 @@
         <module>employee-management</module>
         <module>flight-catalogue</module>
         <module>discovery-service</module>
+        <module>api-gateway</module>
     </modules>
 
     <properties>

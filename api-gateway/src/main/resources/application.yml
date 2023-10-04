@@ -1,0 +1,39 @@
+server:
+    port: 8083
+    
+eureka:
+    client:
+        registerWithEureka: true
+        serviceUrl:
+            defaultZone: http://localhost:8082/eureka
+            
+logging:
+    level:
+        org:
+            springframework:
+                cloud:
+                    gateway: TRACE
+                    gateway.route.RouteDefinitionRouteLocator: INFO
+
+spring:
+    application:
+        name: api-gateway
+    main:
+        web-application-type: reactive
+    cloud:
+        gateway:
+            routes:
+              - id: flight-catalogue-service
+                uri: lb://flight-catalogue-service
+                filters:
+                - RewritePath=/api/flightcatalogue/(?<segment>.*),/${segment}
+                predicates:
+                - Path=/api/flightcatalogue/** 
+              - id: employee-service
+                uri: lb://employee-service
+                filters:
+                - RewritePath=/api/employee/(?<segment>.*),/${segment}
+                predicates:
+                - Path=/api/employee/**
+        
+  
