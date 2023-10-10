@@ -5,7 +5,9 @@ import org.springframework.http.HttpStatus;
 
 import com.pulse.air.commons.contract.BaseCRUDService;
 import com.pulse.air.commons.contract.BaseMapper;
+import com.pulse.air.commons.model.ApiRequest;
 import com.pulse.air.commons.model.ApiResponse;
+import com.pulse.air.commons.model.ApiUpdateRequest;
 
 public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends BaseMapper<TEntity, TResponse, TRequest>, TRepository extends JpaRepository<TEntity, Long>>
 		extends BaseServiceImpl<TEntity, TResponse, TRequest, TMapper, TRepository>
@@ -21,9 +23,9 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends B
 	}
 
 	@Override
-	public ApiResponse<TResponse> create(final TRequest request) {
-		var entity = mapper.dtoToEntity(request);
-		beforeInsert(entity);
+	public ApiResponse<TResponse> create(final ApiRequest<TRequest> request) {
+		var entity = mapper.dtoToEntity(request.getObject());
+		beforeInsert(entity, request);
 
 		repository.save(entity);
 
@@ -31,18 +33,18 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends B
 				mapper.entityToDto(entity));
 	}
 
-	public void beforeInsert(final TEntity entity) {
+	public void beforeInsert(final TEntity entity, final ApiRequest<TRequest> request) {
 		// To be overridden
 	}
 
 	@Override
-	public ApiResponse<TResponse> update(final Long id, final TRequest request) {
-		var entityOptional = repository.findById(id);
+	public ApiResponse<TResponse> update(final ApiUpdateRequest<TRequest> request) {
+		var entityOptional = repository.findById(request.getId());
 
 		if (entityOptional.isPresent()) {
 			var entity = entityOptional.get();
-			mapper.updateEntity(entity, request);
-			beforeUpdate(entity);
+			mapper.updateEntity(entity, request.getObject());
+			beforeUpdate(entity, request);
 
 			repository.save(entity);
 			return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
@@ -53,21 +55,21 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends B
 		}
 	}
 
-	public void beforeUpdate(final TEntity entity) {
+	public void beforeUpdate(final TEntity entity, final ApiUpdateRequest<TRequest> request) {
 		// TO BE OVERRIDEN
 	}
 
 	@Override
-	public ApiResponse<String> delete(final Long id) {
-		var entity = repository.findById(id);
+	public ApiResponse<String> delete(final ApiRequest<Long> request) {
+		var entity = repository.findById(request.getObject());
 
 		if (entity.isPresent()) {
 			repository.delete(entity.get());
 			return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
-					String.format("Successfully deleted entity with id -> %s", id));
+					String.format("Successfully deleted entity with id -> %s", request.getObject()));
 		} else {
 			return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
-					String.format("There is no entity with id -> %s", id));
+					String.format("There is no entity with id -> %s", request.getObject()));
 		}
 	}
 

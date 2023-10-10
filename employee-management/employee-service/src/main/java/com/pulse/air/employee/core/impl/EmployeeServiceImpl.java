@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
 import com.pulse.air.commons.enums.Status;
+import com.pulse.air.commons.model.ApiRequest;
+import com.pulse.air.commons.model.ApiUpdateRequest;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 import com.pulse.air.employee.contract.EmployeeService;
 import com.pulse.air.employee.core.mapper.EmployeeMapper;
@@ -23,17 +25,17 @@ public class EmployeeServiceImpl extends
 	}
 
 	@Override
-	public void beforeInsert(final EmployeeEntity entity) {
+	public void beforeInsert(final EmployeeEntity entity, final ApiRequest<EmployeeRequest> request) {
 		entity.setStatus(Status.ACTIVE.getValue());
 		entity.setCreated(LocalDateTime.now());
-		entity.setCreatedBy("System");
-		super.beforeInsert(entity);
+		entity.setCreatedBy(request.getUsername());
+		super.beforeInsert(entity, request);
 	}
 
 	@Override
-	public void beforeUpdate(final EmployeeEntity entity) {
+	public void beforeUpdate(final EmployeeEntity entity, final ApiUpdateRequest<EmployeeRequest> request) {
 		entity.setModified(LocalDateTime.now());
-		entity.setModifiedBy("System");
-		super.beforeUpdate(entity);
+		entity.setModifiedBy(request.getUsername());
+		super.beforeUpdate(entity, request);
 	}
 }

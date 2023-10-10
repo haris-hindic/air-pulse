@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import com.pulse.air.commons.contract.BaseMapper;
 import com.pulse.air.commons.contract.BaseService;
 import com.pulse.air.commons.model.ApiListResponse;
+import com.pulse.air.commons.model.ApiRequest;
 import com.pulse.air.commons.model.ApiResponse;
 
 import lombok.AllArgsConstructor;
@@ -26,8 +27,8 @@ public class BaseServiceImpl<TEntity, TResponse, TRequest, TMapper extends BaseM
 	}
 
 	@Override
-	public ApiResponse<TResponse> findById(final Long id) {
-		var entity = repository.findById(id);
+	public ApiResponse<TResponse> findById(final ApiRequest<Long> request) {
+		var entity = repository.findById(request.getObject());
 		if (entity.isPresent()) {
 			return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
 					mapper.entityToDto(entity.get()));

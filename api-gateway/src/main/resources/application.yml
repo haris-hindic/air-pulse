@@ -35,5 +35,11 @@ spring:
                 - RewritePath=/api/employee/(?<segment>.*),/${segment}
                 predicates:
                 - Path=/api/employee/**
+              - id: auth-service
+                uri: lb://auth-service
+                filters:
+                - RewritePath=/api/auth/(?<segment>.*),/${segment}
+                predicates:
+                - Path=/api/auth/**
         
   

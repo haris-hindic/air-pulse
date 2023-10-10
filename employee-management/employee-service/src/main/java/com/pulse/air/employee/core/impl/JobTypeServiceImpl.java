@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
 import com.pulse.air.commons.enums.Status;
+import com.pulse.air.commons.model.ApiRequest;
+import com.pulse.air.commons.model.ApiUpdateRequest;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 import com.pulse.air.employee.contract.JobTypeService;
 import com.pulse.air.employee.core.mapper.JobTypeMapper;
@@ -23,17 +25,17 @@ public class JobTypeServiceImpl
 	}
 
 	@Override
-	public void beforeInsert(final JobTypeEntity entity) {
+	public void beforeInsert(final JobTypeEntity entity, final ApiRequest<JobTypeRequest> request) {
 		entity.setStatus(Status.ACTIVE.getValue());
 		entity.setCreated(LocalDateTime.now());
-		entity.setCreatedBy("System");
-		super.beforeInsert(entity);
+		entity.setCreatedBy(request.getUsername());
+		super.beforeInsert(entity, request);
 	}
 
 	@Override
-	public void beforeUpdate(final JobTypeEntity entity) {
+	public void beforeUpdate(final JobTypeEntity entity, final ApiUpdateRequest<JobTypeRequest> request) {
 		entity.setModified(LocalDateTime.now());
-		entity.setModifiedBy("System");
-		super.beforeUpdate(entity);
+		entity.setModifiedBy(request.getUsername());
+		super.beforeUpdate(entity, request);
 	}
 }

@@ -20,10 +20,8 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 		var errors = ex.getBindingResult().getFieldErrors().stream()
 				.map(DefaultMessageSourceResolvable::getDefaultMessage).toList();
 
-		return new ResponseEntity<>(
-				ErrorApiResponse.builder().code(Long.valueOf(HttpStatus.BAD_REQUEST.value())).errors(errors)
-						.status(HttpStatus.BAD_REQUEST.getReasonPhrase()).message(ex.getLocalizedMessage()).build(),
-				HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(new ErrorApiResponse(HttpStatus.BAD_REQUEST.value(),
+				HttpStatus.BAD_REQUEST.getReasonPhrase(), ex.getLocalizedMessage(), errors), HttpStatus.BAD_REQUEST);
 	}
 
 }

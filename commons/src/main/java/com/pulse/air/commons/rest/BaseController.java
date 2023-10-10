@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.pulse.air.commons.contract.BaseService;
 import com.pulse.air.commons.model.ApiListResponse;
+import com.pulse.air.commons.model.ApiRequest;
 import com.pulse.air.commons.model.ApiResponse;
 
 import lombok.AllArgsConstructor;
@@ -22,6 +23,6 @@ public class BaseController<TResponse> {
 	@GetMapping(value = "{id}")
 	public ApiResponse<TResponse> findById(@PathVariable final Long id) {
 
-		return service.findById(id);
+		return service.findById(new ApiRequest<>("system", id));
 	}
 }

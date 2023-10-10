@@ -7,12 +7,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.pulse.air.commons.contract.BaseCRUDService;
+import com.pulse.air.commons.model.ApiRequest;
 import com.pulse.air.commons.model.ApiResponse;
+import com.pulse.air.commons.model.ApiUpdateRequest;
 
 import jakarta.validation.Valid;
 
 @SuppressWarnings("unchecked")
 public class BaseCRUDController<TResponse, TRequest> extends BaseController<TResponse> {
+
+	private static final String SYSTEM = "system";
 
 	public BaseCRUDController(final BaseCRUDService<TResponse, TRequest> service) {
 		super(service);
@@ -21,16 +25,16 @@ public class BaseCRUDController<TResponse, TRequest> extends BaseController<TRes
 	@PostMapping
 	public ApiResponse<TResponse> create(@Valid @RequestBody final TRequest request) {
 
-		return ((BaseCRUDService<TResponse, TRequest>) service).create(request);
+		return ((BaseCRUDService<TResponse, TRequest>) service).create(new ApiRequest<>(SYSTEM, request));
 	}
 
 	@PutMapping(value = "{id}")
 	public ApiResponse<TResponse> create(@PathVariable final Long id, @Valid @RequestBody final TRequest request) {
-		return ((BaseCRUDService<TResponse, TRequest>) service).update(id, request);
+		return ((BaseCRUDService<TResponse, TRequest>) service).update(new ApiUpdateRequest<>(SYSTEM, request, id));
 	}
 
 	@DeleteMapping(value = "{id}")
 	public ApiResponse<String> delete(@PathVariable final Long id) {
-		return ((BaseCRUDService<TResponse, TRequest>) service).delete(id);
+		return ((BaseCRUDService<TResponse, TRequest>) service).delete(new ApiRequest<>(SYSTEM, id));
 	}
 }

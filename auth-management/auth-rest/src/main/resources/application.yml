@@ -1,0 +1,24 @@
+spring:
+  application:
+     name: auth-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        default_schema: testing
+    hibernate:
+      ddl-auto: validate
+
+server:
+   port: '8084'
+
+eureka:
+  client:
+    registerWithEureka: true
+    serviceUrl:
+       defaultZone: http://localhost:8082/eureka

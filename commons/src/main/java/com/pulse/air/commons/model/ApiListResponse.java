@@ -2,25 +2,20 @@ package com.pulse.air.commons.model;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+public class ApiListResponse<T> extends BaseResponse {
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class ApiListResponse<T> {
-
-	private Long code;
-	private String status;
 	private List<T> data;
 
 	public ApiListResponse(final int code, final String status, final List<T> data) {
-		super();
-		this.code = (long) code;
-		this.status = status;
+		super(code, status);
+		this.data = data;
+	}
+
+	public List<T> getData() {
+		return data;
+	}
+
+	public void setData(final List<T> data) {
 		this.data = data;
 	}
 
