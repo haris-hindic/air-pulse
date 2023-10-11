@@ -27,12 +27,14 @@ spring:
                 uri: lb://flight-catalogue-service
                 filters:
                 - RewritePath=/api/flightcatalogue/(?<segment>.*),/${segment}
+                - AuthFilter
                 predicates:
                 - Path=/api/flightcatalogue/** 
               - id: employee-service
                 uri: lb://employee-service
                 filters:
                 - RewritePath=/api/employee/(?<segment>.*),/${segment}
+                - AuthFilter
                 predicates:
                 - Path=/api/employee/**
               - id: auth-service

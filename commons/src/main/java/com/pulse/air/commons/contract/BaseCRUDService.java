@@ -1,8 +1,8 @@
 package com.pulse.air.commons.contract;
 
-import com.pulse.air.commons.model.ApiRequest;
-import com.pulse.air.commons.model.ApiResponse;
-import com.pulse.air.commons.model.ApiUpdateRequest;
+import com.pulse.air.common.model.ApiRequest;
+import com.pulse.air.common.model.ApiResponse;
+import com.pulse.air.common.model.ApiUpdateRequest;
 
 public interface BaseCRUDService<TResponse, TRequest> extends BaseService<TResponse> {
 

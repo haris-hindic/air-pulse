@@ -9,7 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.pulse.air.commons.model.ErrorApiResponse;
+import com.pulse.air.common.model.ErrorApiResponse;
 
 public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 

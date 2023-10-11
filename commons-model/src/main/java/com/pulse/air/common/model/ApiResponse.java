@@ -1,8 +1,12 @@
-package com.pulse.air.commons.model;
+package com.pulse.air.common.model;
 
 public class ApiResponse<T> extends BaseResponse {
 
 	private T data;
+
+	public ApiResponse() {
+		super();
+	}
 
 	public ApiResponse(final int code, final String status, final T data) {
 		super(code, status);

@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.pulse.air.common.model.ApiRequest;
+import com.pulse.air.common.model.ApiResponse;
+import com.pulse.air.common.model.ApiUpdateRequest;
 import com.pulse.air.commons.contract.BaseCRUDService;
-import com.pulse.air.commons.model.ApiRequest;
-import com.pulse.air.commons.model.ApiResponse;
-import com.pulse.air.commons.model.ApiUpdateRequest;
 
 import jakarta.validation.Valid;
 

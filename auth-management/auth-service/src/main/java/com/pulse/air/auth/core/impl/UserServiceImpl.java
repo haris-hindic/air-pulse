@@ -11,8 +11,8 @@ import com.pulse.air.auth.dao.UserRepository;
 import com.pulse.air.auth.dao.model.UserEntity;
 import com.pulse.air.auth.model.user.UserRequest;
 import com.pulse.air.auth.model.user.UserResponse;
+import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.commons.enums.Status;
-import com.pulse.air.commons.model.ApiRequest;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 
 @Service

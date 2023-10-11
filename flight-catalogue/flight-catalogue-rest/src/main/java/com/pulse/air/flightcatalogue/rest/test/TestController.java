@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.pulse.air.commons.model.ApiListResponse;
+import com.pulse.air.common.model.ApiListResponse;
 import com.pulse.air.employee.model.employee.EmployeeResponse;
 
 import lombok.AllArgsConstructor;

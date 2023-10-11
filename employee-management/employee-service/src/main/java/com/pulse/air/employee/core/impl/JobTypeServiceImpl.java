@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
 
+import com.pulse.air.common.model.ApiRequest;
+import com.pulse.air.common.model.ApiUpdateRequest;
 import com.pulse.air.commons.enums.Status;
-import com.pulse.air.commons.model.ApiRequest;
-import com.pulse.air.commons.model.ApiUpdateRequest;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 import com.pulse.air.employee.contract.JobTypeService;
 import com.pulse.air.employee.core.mapper.JobTypeMapper;

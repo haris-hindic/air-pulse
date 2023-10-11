@@ -2,8 +2,8 @@ package com.pulse.air.auth.contract;
 
 import com.pulse.air.auth.model.auth.LoginRequest;
 import com.pulse.air.auth.model.user.UserRequest;
-import com.pulse.air.commons.model.ApiRequest;
-import com.pulse.air.commons.model.ApiResponse;
+import com.pulse.air.common.model.ApiRequest;
+import com.pulse.air.common.model.ApiResponse;
 
 public interface AuthService {
 

@@ -1,4 +1,4 @@
-package com.pulse.air.commons.model;
+package com.pulse.air.common.model;
 
 import java.util.List;
 

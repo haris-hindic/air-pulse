@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pulse.air.auth.contract.AuthService;
 import com.pulse.air.auth.model.auth.LoginRequest;
 import com.pulse.air.auth.model.user.UserRequest;
-import com.pulse.air.commons.model.ApiRequest;
-import com.pulse.air.commons.model.ApiResponse;
+import com.pulse.air.common.model.ApiRequest;
+import com.pulse.air.common.model.ApiResponse;
 
 import lombok.AllArgsConstructor;
 
@@ -23,7 +23,7 @@ public class AuthManagementRest {
 	private AuthService authService;
 
 	@GetMapping("validate-token")
-	public ApiResponse<Boolean> generateToken(@RequestParam final String token) {
+	public ApiResponse<Boolean> validateToken(@RequestParam final String token) {
 		return authService.validateToken(new ApiRequest<>(null, token));
 	}
 
@@ -33,7 +33,7 @@ public class AuthManagementRest {
 	}
 
 	@PostMapping("register")
-	public ApiResponse<String> login(@RequestBody final UserRequest request) {
+	public ApiResponse<String> register(@RequestBody final UserRequest request) {
 		return authService.register(new ApiRequest<>(request.getUsername(), request));
 	}
 }

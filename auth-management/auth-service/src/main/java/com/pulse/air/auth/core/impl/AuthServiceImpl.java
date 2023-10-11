@@ -10,8 +10,8 @@ import com.pulse.air.auth.contract.UserService;
 import com.pulse.air.auth.core.utils.JwtUtil;
 import com.pulse.air.auth.model.auth.LoginRequest;
 import com.pulse.air.auth.model.user.UserRequest;
-import com.pulse.air.commons.model.ApiRequest;
-import com.pulse.air.commons.model.ApiResponse;
+import com.pulse.air.common.model.ApiRequest;
+import com.pulse.air.common.model.ApiResponse;
 
 import lombok.AllArgsConstructor;
 

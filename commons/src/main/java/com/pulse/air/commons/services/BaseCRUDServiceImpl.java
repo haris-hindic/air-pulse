@@ -3,11 +3,11 @@ package com.pulse.air.commons.services;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 
+import com.pulse.air.common.model.ApiRequest;
+import com.pulse.air.common.model.ApiResponse;
+import com.pulse.air.common.model.ApiUpdateRequest;
 import com.pulse.air.commons.contract.BaseCRUDService;
 import com.pulse.air.commons.contract.BaseMapper;
-import com.pulse.air.commons.model.ApiRequest;
-import com.pulse.air.commons.model.ApiResponse;
-import com.pulse.air.commons.model.ApiUpdateRequest;
 
 public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends BaseMapper<TEntity, TResponse, TRequest>, TRepository extends JpaRepository<TEntity, Long>>
 		extends BaseServiceImpl<TEntity, TResponse, TRequest, TMapper, TRepository>
