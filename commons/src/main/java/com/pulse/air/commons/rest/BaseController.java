@@ -3,6 +3,7 @@ package com.pulse.air.commons.rest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiListResponse;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiResponse;
@@ -16,12 +17,12 @@ public class BaseController<TResponse> {
 	BaseService<TResponse> service;
 
 	@GetMapping
-	public ApiListResponse<TResponse> findAll() {
+	public ApiListResponse<TResponse> findAll() throws ApiException {
 		return service.findAll();
 	}
 
 	@GetMapping(value = "{id}")
-	public ApiResponse<TResponse> findById(@PathVariable final Long id) {
+	public ApiResponse<TResponse> findById(@PathVariable final Long id) throws ApiException {
 
 		return service.findById(new ApiRequest<>("system", id));
 	}

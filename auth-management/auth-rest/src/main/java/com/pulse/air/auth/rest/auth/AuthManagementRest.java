@@ -33,7 +33,7 @@ public class AuthManagementRest {
 	}
 
 	@PostMapping("register")
-	public ApiResponse<String> register(@RequestBody final UserRequest request) {
+	public ApiResponse<String> register(@RequestBody final UserRequest request) throws Exception {
 		return authService.register(new ApiRequest<>(request.getUsername(), request));
 	}
 }

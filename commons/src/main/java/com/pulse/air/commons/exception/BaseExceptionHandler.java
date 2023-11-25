@@ -6,9 +6,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ErrorApiResponse;
 
 public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
@@ -24,4 +26,13 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 				HttpStatus.BAD_REQUEST.getReasonPhrase(), ex.getLocalizedMessage(), errors), HttpStatus.BAD_REQUEST);
 	}
 
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<ErrorApiResponse> handleCustomException(final ApiException ex) {
+
+		var errorResponse = new ErrorApiResponse(ex.getStatus().value(), ex.getStatus().getReasonPhrase(),
+				ex.getLocalizedMessage(), null);
+		ex.printStackTrace();
+		return new ResponseEntity<>(errorResponse, ex.getStatus());
+
+	}
 }

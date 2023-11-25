@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
 
+import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiUpdateRequest;
 import com.pulse.air.commons.enums.Status;
@@ -25,7 +26,8 @@ public class EmployeeServiceImpl extends
 	}
 
 	@Override
-	public void beforeInsert(final EmployeeEntity entity, final ApiRequest<EmployeeRequest> request) {
+	public void beforeInsert(final EmployeeEntity entity, final ApiRequest<EmployeeRequest> request)
+			throws ApiException {
 		entity.setStatus(Status.ACTIVE.getValue());
 		entity.setCreated(LocalDateTime.now());
 		entity.setCreatedBy(request.getUsername());

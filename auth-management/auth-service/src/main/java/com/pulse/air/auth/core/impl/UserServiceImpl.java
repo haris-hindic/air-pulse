@@ -11,6 +11,7 @@ import com.pulse.air.auth.dao.UserRepository;
 import com.pulse.air.auth.dao.model.UserEntity;
 import com.pulse.air.auth.model.user.UserRequest;
 import com.pulse.air.auth.model.user.UserResponse;
+import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.commons.enums.Status;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
@@ -28,7 +29,7 @@ public class UserServiceImpl extends
 	}
 
 	@Override
-	public void beforeInsert(final UserEntity entity, final ApiRequest<UserRequest> request) {
+	public void beforeInsert(final UserEntity entity, final ApiRequest<UserRequest> request) throws ApiException {
 		entity.setPassword(passwordEncoder.encode(request.getObject().getPassword()));
 		entity.setStatus(Status.ACTIVE.getValue());
 		entity.setCreated(LocalDateTime.now());

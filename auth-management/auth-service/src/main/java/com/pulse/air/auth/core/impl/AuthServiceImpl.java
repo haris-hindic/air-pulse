@@ -37,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public ApiResponse<String> register(final ApiRequest<UserRequest> request) {
+	public ApiResponse<String> register(final ApiRequest<UserRequest> request) throws Exception {
 		var user = userService.create(request).getData();
 
 		return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),

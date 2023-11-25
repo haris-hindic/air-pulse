@@ -3,6 +3,7 @@ package com.pulse.air.commons.services;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 
+import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiResponse;
 import com.pulse.air.common.model.ApiUpdateRequest;
@@ -23,7 +24,7 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends B
 	}
 
 	@Override
-	public ApiResponse<TResponse> create(final ApiRequest<TRequest> request) {
+	public ApiResponse<TResponse> create(final ApiRequest<TRequest> request) throws ApiException {
 		var entity = mapper.dtoToEntity(request.getObject());
 		beforeInsert(entity, request);
 
@@ -33,12 +34,12 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends B
 				mapper.entityToDto(entity));
 	}
 
-	public void beforeInsert(final TEntity entity, final ApiRequest<TRequest> request) {
+	public void beforeInsert(final TEntity entity, final ApiRequest<TRequest> request) throws ApiException {
 		// To be overridden
 	}
 
 	@Override
-	public ApiResponse<TResponse> update(final ApiUpdateRequest<TRequest> request) {
+	public ApiResponse<TResponse> update(final ApiUpdateRequest<TRequest> request) throws ApiException {
 		var entityOptional = repository.findById(request.getId());
 
 		if (entityOptional.isPresent()) {
@@ -60,7 +61,7 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends B
 	}
 
 	@Override
-	public ApiResponse<String> delete(final ApiRequest<Long> request) {
+	public ApiResponse<String> delete(final ApiRequest<Long> request) throws ApiException {
 		var entity = repository.findById(request.getObject());
 
 		if (entity.isPresent()) {

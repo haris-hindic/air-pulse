@@ -9,7 +9,7 @@ public interface AuthService {
 
 	public ApiResponse<String> login(final ApiRequest<LoginRequest> request);
 
-	public ApiResponse<String> register(final ApiRequest<UserRequest> request);
+	public ApiResponse<String> register(final ApiRequest<UserRequest> request) throws Exception;
 
 	public ApiResponse<Boolean> validateToken(final ApiRequest<String> request);
 }
