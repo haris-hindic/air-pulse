@@ -14,4 +14,34 @@ public class SwaggerConfiguration extends BaseSwaggerConfiguration {
 		return GroupedOpenApi.builder().group("test-api").packagesToScan("com.pulse.air.flightcatalogue.rest.test")
 				.build();
 	}
+
+	@Bean
+	public GroupedOpenApi flightApi() {
+		return GroupedOpenApi.builder().group("flight-api").packagesToScan("com.pulse.air.flightcatalogue.rest.flight")
+				.build();
+	}
+
+	@Bean
+	public GroupedOpenApi aircraftApi() {
+		return GroupedOpenApi.builder().group("aircraft-api")
+				.packagesToScan("com.pulse.air.flightcatalogue.rest.aircraft").build();
+	}
+
+	@Bean
+	public GroupedOpenApi aircraftSeatApi() {
+		return GroupedOpenApi.builder().group("aircraft-seat-api")
+				.packagesToScan("com.pulse.air.flightcatalogue.rest.aircraftseat").build();
+	}
+
+	@Bean
+	public GroupedOpenApi airportApi() {
+		return GroupedOpenApi.builder().group("airport-api")
+				.packagesToScan("com.pulse.air.flightcatalogue.rest.airport").build();
+	}
+
+	@Bean
+	public GroupedOpenApi staffApi() {
+		return GroupedOpenApi.builder().group("staff-api").packagesToScan("com.pulse.air.flightcatalogue.rest.staff")
+				.build();
+	}
 }

@@ -1,4 +1,4 @@
-package com.pulse.air.employee.model.absence;
+package com.pulse.air.flightcatalogue.model.staff;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -6,22 +6,20 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class AbsenceResponse implements Serializable {
+public class StaffResponse implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	private String comments;
+	private Long aircraftId;
 	private LocalDateTime created;
 	private String createdBy;
 	private Long employeeId;
-	private String employeeFullName;
-	private LocalDateTime endDate;
 	private LocalDateTime modified;
 	private String modifiedBy;
-	private String reason;
-	private LocalDateTime startDate;
 	private String status;
-	private String type;
+	private LocalDateTime validFrom;
+	private LocalDateTime validTo;
 
-	// private EmployeeEntity employee;
+	// private AircraftEntity aircraft;
+
 }

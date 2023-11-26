@@ -15,8 +15,8 @@ import com.pulse.air.employee.core.mapper.QualificationMapper;
 import com.pulse.air.employee.dao.EmployeeRepository;
 import com.pulse.air.employee.dao.QualificationRepository;
 import com.pulse.air.employee.dao.model.QualificationEntity;
-import com.pulse.air.employee.qualification.QualificationRequest;
-import com.pulse.air.employee.qualification.QualificationResponse;
+import com.pulse.air.employee.model.qualification.QualificationRequest;
+import com.pulse.air.employee.model.qualification.QualificationResponse;
 
 @Service
 public class QualificationServiceImpl extends

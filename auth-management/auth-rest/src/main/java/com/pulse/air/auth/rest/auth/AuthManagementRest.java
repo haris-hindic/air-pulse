@@ -1,5 +1,7 @@
 package com.pulse.air.auth.rest.auth;
 
+import java.io.IOException;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pulse.air.auth.contract.AuthService;
 import com.pulse.air.auth.model.auth.LoginRequest;
 import com.pulse.air.auth.model.user.UserRequest;
+import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiResponse;
 
@@ -23,17 +26,17 @@ public class AuthManagementRest {
 	private AuthService authService;
 
 	@GetMapping("validate-token")
-	public ApiResponse<Boolean> validateToken(@RequestParam final String token) {
+	public ApiResponse<Boolean> validateToken(@RequestParam final String token) throws IOException {
 		return authService.validateToken(new ApiRequest<>(null, token));
 	}
 
 	@PostMapping("login")
-	public ApiResponse<String> login(@RequestBody final LoginRequest request) {
+	public ApiResponse<String> login(@RequestBody final LoginRequest request) throws ApiException {
 		return authService.login(new ApiRequest<>(null, request));
 	}
 
 	@PostMapping("register")
-	public ApiResponse<String> register(@RequestBody final UserRequest request) throws Exception {
+	public ApiResponse<String> register(@RequestBody final UserRequest request) throws ApiException {
 		return authService.register(new ApiRequest<>(request.getUsername(), request));
 	}
 }

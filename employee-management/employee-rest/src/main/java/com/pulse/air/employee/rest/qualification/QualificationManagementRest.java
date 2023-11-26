@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pulse.air.commons.rest.BaseCRUDController;
 import com.pulse.air.employee.contract.QualificationService;
-import com.pulse.air.employee.qualification.QualificationRequest;
-import com.pulse.air.employee.qualification.QualificationResponse;
+import com.pulse.air.employee.model.qualification.QualificationRequest;
+import com.pulse.air.employee.model.qualification.QualificationResponse;
 
 @RestController
 @RequestMapping("qualification")

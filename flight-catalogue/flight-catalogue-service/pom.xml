@@ -24,5 +24,10 @@
     		<artifactId>employee-model</artifactId>
     		<version>1.0-SNAPSHOT</version>
     	</dependency>
+    	<dependency>
+    		<groupId>com.pulse.air</groupId>
+    		<artifactId>flight-catalogue-model</artifactId>
+    		<version>1.0-SNAPSHOT</version>
+    	</dependency>
     </dependencies>
 </project>

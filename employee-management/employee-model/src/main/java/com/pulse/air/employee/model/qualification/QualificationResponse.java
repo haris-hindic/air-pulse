@@ -1,4 +1,4 @@
-package com.pulse.air.employee.model.absence;
+package com.pulse.air.employee.model.qualification;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -6,22 +6,21 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class AbsenceResponse implements Serializable {
+public class QualificationResponse implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	private String comments;
 	private LocalDateTime created;
 	private String createdBy;
+	private String educationLevel;
 	private Long employeeId;
-	private String employeeFullName;
-	private LocalDateTime endDate;
+	private String languages;
+	private String licences;
 	private LocalDateTime modified;
 	private String modifiedBy;
-	private String reason;
-	private LocalDateTime startDate;
+	private String skills;
 	private String status;
-	private String type;
 
 	// private EmployeeEntity employee;
+
 }

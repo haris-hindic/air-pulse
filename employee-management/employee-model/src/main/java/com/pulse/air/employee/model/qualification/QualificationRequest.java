@@ -1,4 +1,4 @@
-package com.pulse.air.employee.qualification;
+package com.pulse.air.employee.model.qualification;
 
 import java.io.Serializable;
 

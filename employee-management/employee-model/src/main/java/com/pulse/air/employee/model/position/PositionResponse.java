@@ -14,8 +14,7 @@ public class PositionResponse implements Serializable {
 	private LocalDateTime created;
 	private String createdBy;
 	private Long employeeId;
-	private String employeeFirstName;
-	private String employeeLastName;
+	private String employeeFullName;
 	private LocalDateTime endDate;
 	private Long jobTypeId;
 	private String title;
