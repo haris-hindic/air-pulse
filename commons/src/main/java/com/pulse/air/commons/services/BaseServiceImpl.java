@@ -1,8 +1,10 @@
 package com.pulse.air.commons.services;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 
+import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiListResponse;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiResponse;
@@ -20,20 +22,21 @@ public class BaseServiceImpl<TEntity, TResponse, TRequest, TMapper extends BaseM
 
 	@Override
 	public ApiListResponse<TResponse> findAll() {
-
-		var entities = repository.findAll();
+		var x = Pageable.ofSize(2).withPage(1);
+		var entities = repository.findAll(x);
 		return new ApiListResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
-				mapper.entitesToDtos(entities));
+				mapper.entitesToDtos(entities.getContent()));
 	}
 
 	@Override
-	public ApiResponse<TResponse> findById(final ApiRequest<Long> request) {
+	public ApiResponse<TResponse> findById(final ApiRequest<Long> request) throws ApiException {
 		var entity = repository.findById(request.getObject());
 		if (entity.isPresent()) {
 			return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
 					mapper.entityToDto(entity.get()));
 		} else {
-			return null;
+			throw new ApiException(HttpStatus.NOT_FOUND,
+					String.format("There is no entity with id -> %s", request.getObject()));
 		}
 	}
 

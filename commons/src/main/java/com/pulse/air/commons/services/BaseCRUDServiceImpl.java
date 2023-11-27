@@ -51,8 +51,8 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends B
 			return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
 					mapper.entityToDto(entity));
 		} else {
-			// HANDLE NON EXISTENT ENTITY
-			return null;
+			throw new ApiException(HttpStatus.NOT_FOUND,
+					String.format("There is no entity with id -> %s", request.getObject()));
 		}
 	}
 
@@ -69,7 +69,7 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends B
 			return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
 					String.format("Successfully deleted entity with id -> %s", request.getObject()));
 		} else {
-			return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
+			throw new ApiException(HttpStatus.NOT_FOUND,
 					String.format("There is no entity with id -> %s", request.getObject()));
 		}
 	}

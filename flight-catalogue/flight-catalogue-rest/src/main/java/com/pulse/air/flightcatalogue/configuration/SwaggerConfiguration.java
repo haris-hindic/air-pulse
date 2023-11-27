@@ -44,4 +44,10 @@ public class SwaggerConfiguration extends BaseSwaggerConfiguration {
 		return GroupedOpenApi.builder().group("staff-api").packagesToScan("com.pulse.air.flightcatalogue.rest.staff")
 				.build();
 	}
+
+	@Bean
+	public GroupedOpenApi routeApi() {
+		return GroupedOpenApi.builder().group("route-api").packagesToScan("com.pulse.air.flightcatalogue.rest.route")
+				.build();
+	}
 }

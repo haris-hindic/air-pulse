@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiRequest;
@@ -17,26 +18,27 @@ import jakarta.validation.Valid;
 @SuppressWarnings("unchecked")
 public class BaseCRUDController<TResponse, TRequest> extends BaseController<TResponse> {
 
-	private static final String SYSTEM = "system";
-
 	public BaseCRUDController(final BaseCRUDService<TResponse, TRequest> service) {
 		super(service);
 	}
 
 	@PostMapping
-	public ApiResponse<TResponse> create(@Valid @RequestBody final TRequest request) throws ApiException {
+	public ApiResponse<TResponse> create(@Valid @RequestBody final TRequest request,
+			@RequestHeader("AP_USER") final String user) throws ApiException {
 
-		return ((BaseCRUDService<TResponse, TRequest>) service).create(new ApiRequest<>(SYSTEM, request));
+		return ((BaseCRUDService<TResponse, TRequest>) service).create(new ApiRequest<>(user, request));
 	}
 
 	@PutMapping(value = "{id}")
-	public ApiResponse<TResponse> create(@PathVariable final Long id, @Valid @RequestBody final TRequest request)
+	public ApiResponse<TResponse> create(@PathVariable final Long id, @Valid @RequestBody final TRequest request,
+			@RequestHeader("AP_USER") final String user)
 			throws ApiException {
-		return ((BaseCRUDService<TResponse, TRequest>) service).update(new ApiUpdateRequest<>(SYSTEM, request, id));
+		return ((BaseCRUDService<TResponse, TRequest>) service).update(new ApiUpdateRequest<>(user, request, id));
 	}
 
 	@DeleteMapping(value = "{id}")
-	public ApiResponse<String> delete(@PathVariable final Long id) throws ApiException {
-		return ((BaseCRUDService<TResponse, TRequest>) service).delete(new ApiRequest<>(SYSTEM, id));
+	public ApiResponse<String> delete(@PathVariable final Long id, @RequestHeader("AP_USER") final String user)
+			throws ApiException {
+		return ((BaseCRUDService<TResponse, TRequest>) service).delete(new ApiRequest<>(user, id));
 	}
 }
