@@ -1,0 +1,10 @@
+$transitionDuration: .2s;
+
+.layout-footer {
+    transition: margin-left $transitionDuration;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    border-top: 2px solid #dfe7ef;
+}
