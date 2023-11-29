@@ -1,0 +1,14 @@
+<!-- <p-menu [model]="model"></p-menu> -->
+
+
+<p-menu [model]="model">
+    <ng-template pTemplate="item" let-item>
+        <a [routerLink]="item.routerLink" [routerLinkActive]="item.routerLinkActive"
+            [routerLinkActiveOptions]="item.routerLinkActiveOptions" [class]="item.styleClass">
+            <div>
+                <span [class]="item.icon"></span>
+                <span> {{ item.label }}</span>
+            </div>
+        </a>
+    </ng-template>
+</p-menu>

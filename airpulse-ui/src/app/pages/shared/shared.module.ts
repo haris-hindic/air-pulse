@@ -1,13 +1,13 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
 import { ButtonModule } from "primeng/button";
 import { CheckboxModule } from "primeng/checkbox";
 import { InputTextModule } from "primeng/inputtext";
 import { DividerModule } from 'primeng/divider';
-
+import { CardModule } from 'primeng/card';
+import { BadgeModule } from 'primeng/badge';
 
 @NgModule({
     imports: [],
@@ -17,8 +17,10 @@ import { DividerModule } from 'primeng/divider';
         CheckboxModule,
         InputTextModule,
         FormsModule,
-        BrowserAnimationsModule,
         RouterModule,
-        DividerModule]
+        DividerModule,
+        CardModule,
+        BadgeModule
+    ]
 })
 export class SharedModule { }

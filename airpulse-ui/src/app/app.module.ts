@@ -9,8 +9,8 @@ import { PrimeNGConfig } from 'primeng/api';
 import { HomeComponent } from './pages/home/home.component';
 import { SharedModule } from './pages/shared/shared.module';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
-import { TopbarComponent } from './pages/layout/topbar/topbar.component';
 import { LayoutModule } from './pages/layout/layout.module';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -20,6 +20,7 @@ import { LayoutModule } from './pages/layout/layout.module';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     AuthModule,
     SharedModule,

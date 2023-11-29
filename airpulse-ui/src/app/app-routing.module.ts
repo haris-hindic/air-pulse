@@ -7,10 +7,9 @@ import { NotfoundComponent } from "./pages/notfound/notfound.component";
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
   { path: 'notfound', component: NotfoundComponent },
-  //{ path: 'home', component: HomeComponent, canActivate: [canActivateChild] },
+  { path: 'auth', loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule) },
+  { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule) },
 ];
 
 @NgModule({
