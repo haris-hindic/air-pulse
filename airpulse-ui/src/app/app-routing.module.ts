@@ -10,6 +10,7 @@ const appRoutes: Routes = [
   { path: 'notfound', component: NotfoundComponent },
   { path: 'auth', loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule) },
   { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule) },
+  { path: 'user', loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule) },
 ];
 
 @NgModule({

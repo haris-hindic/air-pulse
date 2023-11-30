@@ -11,6 +11,7 @@ import { SharedModule } from './pages/shared/shared.module';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { LayoutModule } from './pages/layout/layout.module';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { UserModule } from './pages/user/user.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     AuthModule,
     SharedModule,
     LayoutModule,
+    UserModule,
     StyleClassModule,
   ],
   providers: [],

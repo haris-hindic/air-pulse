@@ -8,6 +8,11 @@ import { InputTextModule } from "primeng/inputtext";
 import { DividerModule } from 'primeng/divider';
 import { CardModule } from 'primeng/card';
 import { BadgeModule } from 'primeng/badge';
+import { SkeletonModule } from 'primeng/skeleton';
+import { AvatarModule } from 'primeng/avatar';
+import { TabViewModule } from 'primeng/tabview';
+import { ChipModule } from 'primeng/chip';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
     imports: [],
@@ -20,7 +25,12 @@ import { BadgeModule } from 'primeng/badge';
         RouterModule,
         DividerModule,
         CardModule,
-        BadgeModule
+        BadgeModule,
+        SkeletonModule,
+        AvatarModule,
+        TabViewModule,
+        ChipModule,
+        ImageModule
     ]
 })
 export class SharedModule { }
