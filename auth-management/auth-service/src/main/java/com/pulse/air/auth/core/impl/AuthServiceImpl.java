@@ -31,14 +31,19 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public ApiResponse<String> login(final ApiRequest<LoginRequest> request) throws ApiException {
-		var authenticate = authentificationManager.authenticate(new UsernamePasswordAuthenticationToken(
-				request.getObject().getUsername(), request.getObject().getPassword()));
+		try {
 
-		if (authenticate.isAuthenticated()) {
-			return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
-					jwt.generateToken(request.getObject().getUsername()));
-		} else {
-			throw new ApiException(HttpStatus.UNAUTHORIZED, "invalid access");
+			var authenticate = authentificationManager.authenticate(new UsernamePasswordAuthenticationToken(
+					request.getObject().getUsername(), request.getObject().getPassword()));
+
+			if (authenticate.isAuthenticated()) {
+				return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
+						jwt.generateToken(request.getObject().getUsername()));
+			} else {
+				throw new ApiException(HttpStatus.UNAUTHORIZED, "invalid access");
+			}
+		} catch (Exception e) {
+			throw new ApiException(HttpStatus.UNAUTHORIZED, e.getMessage());
 		}
 	}
 
@@ -51,19 +56,17 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public ApiResponse<Boolean> validateToken(final ApiRequest<String> request)
-			throws IOException {
-		
+	public ApiResponse<Boolean> validateToken(final ApiRequest<String> request) throws IOException {
+
 		// TODO MOVE THIS TO GATEWAY TO ADD ONTO EVERY EXCHANGE
 
-		String[] chunks = request.getObject().split("\\.");
-		Base64.Decoder decoder = Base64.getUrlDecoder();
-		ObjectMapper mapper = new ObjectMapper();
+		var chunks = request.getObject().split("\\.");
+		var decoder = Base64.getUrlDecoder();
+		var mapper = new ObjectMapper();
 
-		String header = new String(decoder.decode(chunks[0]));
+		var header = new String(decoder.decode(chunks[0]));
 		var payload = mapper.readValue(decoder.decode(chunks[1]), Map.class);
-		String user = (String) payload.get("username");
-		
+		var user = (String) payload.get("username");
 
 		return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
 				jwt.validateToken(request.getObject()));
