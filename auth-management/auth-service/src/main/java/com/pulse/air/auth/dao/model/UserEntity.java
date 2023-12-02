@@ -58,4 +58,6 @@ public class UserEntity implements Serializable {
 	private String phoneNumber;
 
 	private String status;
+
+	private String role;
 }

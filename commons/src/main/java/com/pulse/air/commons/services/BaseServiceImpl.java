@@ -1,6 +1,5 @@
 package com.pulse.air.commons.services;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 
@@ -22,10 +21,10 @@ public class BaseServiceImpl<TEntity, TResponse, TRequest, TMapper extends BaseM
 
 	@Override
 	public ApiListResponse<TResponse> findAll() {
-		var x = Pageable.ofSize(2).withPage(1);
-		var entities = repository.findAll(x);
+		// var x = Pageable.ofSize(2).withPage(1);
+		var entities = repository.findAll();
 		return new ApiListResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
-				mapper.entitesToDtos(entities.getContent()));
+				mapper.entitesToDtos(entities));
 	}
 
 	@Override

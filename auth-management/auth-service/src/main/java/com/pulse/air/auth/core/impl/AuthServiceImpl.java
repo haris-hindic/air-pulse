@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pulse.air.auth.contract.AuthService;
 import com.pulse.air.auth.contract.UserService;
 import com.pulse.air.auth.core.utils.JwtUtil;
+import com.pulse.air.auth.dao.UserRepository;
 import com.pulse.air.auth.model.auth.LoginRequest;
 import com.pulse.air.auth.model.user.UserRequest;
 import com.pulse.air.common.model.ApiException;
@@ -27,6 +28,7 @@ public class AuthServiceImpl implements AuthService {
 
 	private JwtUtil jwt;
 	private UserService userService;
+	private UserRepository userRepository;
 	private AuthenticationManager authentificationManager;
 
 	@Override
@@ -37,8 +39,9 @@ public class AuthServiceImpl implements AuthService {
 					request.getObject().getUsername(), request.getObject().getPassword()));
 
 			if (authenticate.isAuthenticated()) {
+				var user = userRepository.findByUsername(request.getObject().getUsername()).get();
 				return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
-						jwt.generateToken(request.getObject().getUsername()));
+						jwt.generateToken(request.getObject().getUsername(), user.getRole()));
 			} else {
 				throw new ApiException(HttpStatus.UNAUTHORIZED, "invalid access");
 			}
@@ -49,10 +52,15 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public ApiResponse<String> register(final ApiRequest<UserRequest> request) throws ApiException {
+		var existingUserByUsername = userRepository.findByUsername(request.getUsername());
+		if (existingUserByUsername.isPresent()) {
+			throw new ApiException(HttpStatus.BAD_REQUEST, "Username already exists.");
+		}
+
 		var user = userService.create(request).getData();
 
 		return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
-				jwt.generateToken(user.getUsername()));
+				jwt.generateToken(user.getUsername(), user.getRole()));
 	}
 
 	@Override
