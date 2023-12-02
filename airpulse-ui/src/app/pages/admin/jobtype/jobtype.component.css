@@ -1,0 +1,17 @@
+:host ::ng-deep {
+  #myTable {
+    .p-datatable-header {
+      text-align: center;
+      padding-top: 0.1rem;
+      padding-bottom: 0.1rem;
+    }
+  }
+}
+
+th,
+td {
+  text-align: center;
+  padding: 0.3rem 0.3rem 0.3rem 0.3rem;
+  height: auto;
+  width: auto;
+}

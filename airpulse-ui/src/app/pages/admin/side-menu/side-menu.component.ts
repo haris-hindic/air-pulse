@@ -23,7 +23,7 @@ export class SideMenuComponent implements OnInit {
           { label: 'Dashboard', icon: 'pi pi-fw pi-bookmark', routerLink: ['/admin'], ...this.itemOptions },
           { label: 'Employee', icon: 'pi pi-fw pi-id-card', routerLink: ['employee'], ...this.itemOptions },
           { label: 'Aircraft', icon: 'pi pi-fw pi-check-square', routerLink: ['aircraft'], ...this.itemOptions },
-          { label: 'Invalid State', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['/uikit/invalidstate'], ...this.itemOptions },
+          { label: 'Job Type', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['jobtype'], ...this.itemOptions },
           { label: 'Button', icon: 'pi pi-fw pi-box', routerLink: ['/uikit/button'], ...this.itemOptions },
           { label: 'Table', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table'], ...this.itemOptions },
           { label: 'List', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/list'], ...this.itemOptions }]
