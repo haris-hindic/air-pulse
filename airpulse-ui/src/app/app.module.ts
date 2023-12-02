@@ -12,12 +12,17 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { LayoutModule } from './pages/layout/layout.module';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { UserModule } from './pages/user/user.module';
+import { NotificationsModule } from './pages/notifications/notification.module';
+import { MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './pages/shared/auth-interceptor.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    NotfoundComponent
+    NotfoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,9 +32,19 @@ import { UserModule } from './pages/user/user.module';
     SharedModule,
     LayoutModule,
     UserModule,
+    NotificationsModule,
     StyleClassModule,
+
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+    MessageService,
+    ConfirmationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
