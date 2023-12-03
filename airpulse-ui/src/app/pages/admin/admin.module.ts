@@ -8,6 +8,7 @@ import { EmployeeOverviewComponent } from './employee/employee-overview/employee
 import { AircraftOverviewComponent } from './aircraft/aircraft-overview/aircraft-overview.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { JobtypeComponent } from './jobtype/jobtype.component';
+import { JobtypeFormComponent } from './jobtype/jobtype-form/jobtype-form.component';
 
 @NgModule({
     imports: [
@@ -27,7 +28,7 @@ import { JobtypeComponent } from './jobtype/jobtype.component';
         SidebarModule
     ],
     declarations: [
-        AdminComponent, SideMenuComponent, EmployeeOverviewComponent, AircraftOverviewComponent, DashboardComponent, JobtypeComponent
+        AdminComponent, SideMenuComponent, EmployeeOverviewComponent, AircraftOverviewComponent, DashboardComponent, JobtypeComponent, JobtypeFormComponent
     ],
     exports: []
 })

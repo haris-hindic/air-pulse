@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { JobTypeResponse } from '../model/jobtype.model';
+import { JobTypeRequest, JobTypeResponse } from '../model/jobtype.model';
 import { JobTypeService } from '../services/jobtype.service';
-import { MessageToast } from '../../shared/message-toast.service';
+import { MessageToast } from '../../shared/services/message-toast.service';
+import { LoaderService } from '../../shared/services/loader.service';
 
 @Component({
   selector: 'app-jobtype',
@@ -21,58 +22,47 @@ export class JobtypeComponent {
 
   submitted: boolean = false;
 
-  statuses!: any[];
-
   constructor(private messageToast: MessageToast, private confirmationService: ConfirmationService,
-    private jobtypeService: JobTypeService) { }
+    private jobtypeService: JobTypeService, private loader: LoaderService) { }
 
   ngOnInit() {
-    //find job types
     this.findAll();
-
-    this.statuses = [
-      { label: 'ACTIVE', value: 'Active' },
-      { label: 'INACTIVE', value: 'Inactive' }
-    ];
   }
 
   findAll() {
+    this.jobtypes = [];
     this.jobtypeService.getAll().subscribe(
       {
         next: (result) => {
           this.jobtypes = result;
         }, error: (error) => {
-          console.log('error :>> ', error);
-          // this.messageToast.showError(
-          //   error['error']['status'],
-          //   error['error']['message']
-          // );
+          this.messageToast.showError("Error", error);
+          this.loader.hide();
         }
       }
     );
   }
 
   openNew() {
-    //this.product = {};
-    this.submitted = false;
+    this.jobtype = new JobTypeResponse();
     this.jobtypeDialog = true;
   }
 
-  deleteSelectedProducts() {
+  deactivateSelectedProducts() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected products?',
+      message: 'Are you sure you want to deactivate the selected job types?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //BULK DELETE
         this.selectedJobTypes = null;
-        //this.messageToast.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
         this.messageToast.showSuccess('Successful', 'Job type deleted.');
+        this.findAll();
       }
     });
   }
 
-  editProduct(jobtype: any) {
+  editJobtype(jobtype: any) {
     this.jobtype = { ...jobtype };
     this.jobtypeDialog = true;
   }
@@ -92,22 +82,47 @@ export class JobtypeComponent {
 
   hideDialog() {
     this.jobtypeDialog = false;
-    this.submitted = false;
   }
 
-  saveProduct() {
-    this.submitted = true;
+  saveJobtype(jobTypeRequest: JobTypeRequest) {
 
     if (this.jobtype.id) {
-
-      //this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Job type Updated', life: 3000 });
-      this.messageToast.showSuccess('Successful', 'Job type updated.');
+      this.jobtypeService.update(this.jobtype.id, jobTypeRequest).subscribe({
+        next: () => {
+          this.findAll();
+          this.messageToast.showSuccess('Successful', 'Job type updated.');
+          this.hideDialog();
+        },
+        error: (error) => {
+          this.handleError(error);
+        }
+      })
     } else {
-
-      //this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Job type Created', life: 3000 });
-      this.messageToast.showSuccess('Successful', 'Job type created.');
+      this.jobtypeService.create(jobTypeRequest).subscribe({
+        next: () => {
+          this.findAll();
+          this.messageToast.showSuccess('Successful', 'Job type created.');
+          this.hideDialog();
+        },
+        error: (error) => {
+          this.handleError(error);
+        }
+      });
     }
+  }
 
+  handleError(error: any) {
+    try {
+      this.messageToast.showError(
+        error['error']['status'],
+        error['error']['errors'] || error['error']['error']
+      );
+    } catch (err) {
+      this.messageToast.showError(
+        'Error',
+        error
+      );
+    }
   }
 
   getSeverity(status: string) {

@@ -1,0 +1,56 @@
+<p-dialog [(visible)]="visible" [style]="{ width: '450px' }" header="Job type details" [modal]="true"
+    (onHide)="hideDialog()" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <form id="form" [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
+
+            <div class="field">
+                <label for="name">Title</label>
+                <input type="text" pInputText id="name" formControlName="title" required autofocus />
+                <small class="p-error" *ngIf="form.get('title')!.hasError('required')">Title is required.</small>
+            </div>
+
+            <div class="field">
+                <label for="description">Responsibilities</label>
+                <textarea id="description" pInputTextarea formControlName="responsibilities" required rows="3"
+                    cols="20"></textarea>
+                <small class="p-error" *ngIf="form.get('responsibilities')!.hasError('required')">Responsibilities are
+                    required.</small>
+            </div>
+
+            <div class="field">
+                <label for="status">Status</label>
+                <p-dropdown formControlName="status" inputId="status" [options]="statuses">
+                    <ng-template pTemplate="jobtype">
+                        <p-tag [value]="jobtype.status.toUpperCase()"
+                            [severity]="getSeverity(jobtype.status.toUpperCase())"></p-tag>
+                    </ng-template>
+                    <ng-template let-option pTemplate="item">
+                        <p-tag [value]="option.label" [severity]="getSeverity(option.label)"></p-tag>
+                    </ng-template>
+                </p-dropdown>
+                <small class="p-error" *ngIf="form.get('status')!.hasError('required')">Status is required.</small>
+            </div>
+
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="salaryMin">Min. salary</label>
+                    <p-inputNumber id="salaryMin" formControlName="salaryMin" mode="currency" currency="USD"
+                        locale="en-US"></p-inputNumber>
+                </div>
+                <div class="field col">
+                    <label for="salaryMax">Max. salary</label>
+                    <p-inputNumber id="salaryMax" formControlName="salaryMax" mode="currency" currency="USD"
+                        locale="en-US"></p-inputNumber>
+                </div>
+                <small class="p-error"
+                    *ngIf="form.get('salaryMax')!.hasError('required') || form.get('salaryMin')!.hasError('required')">Salary
+                    range is required.</small>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" form="form" icon="pi pi-check" class="p-button-text"></button>
+    </ng-template>
+</p-dialog>

@@ -23,6 +23,8 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { RatingModule } from 'primeng/rating';
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
     imports: [],
@@ -52,7 +54,8 @@ import { HttpClientModule } from '@angular/common/http';
         DropdownModule,
         HttpClientModule,
         ReactiveFormsModule,
-
+        InputTextareaModule,
+        InputNumberModule
     ]
 })
 export class SharedModule { }

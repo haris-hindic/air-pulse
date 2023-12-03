@@ -16,7 +16,8 @@ import { NotificationsModule } from './pages/notifications/notification.module';
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './pages/shared/auth-interceptor.service';
+import { AuthInterceptor } from './pages/shared/services/auth-interceptor.service';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { AuthInterceptor } from './pages/shared/auth-interceptor.service';
     UserModule,
     NotificationsModule,
     StyleClassModule,
-
+    ProgressSpinnerModule
   ],
   providers: [
     {

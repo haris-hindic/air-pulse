@@ -1,21 +1,23 @@
 import { HttpClient } from "@angular/common/http";
 import { Observable, map } from "rxjs";
 import { devEnvironment } from "src/environments/devenv";
-import { getQueryString } from "./query-sting";
-import { ApiListResponse, ApiResponse } from "./api-response";
+import { ApiListResponse, ApiResponse } from "../model/api-response";
+import { getQueryString } from "../utils/query-sting";
+import { LoaderService } from "./loader.service";
 
 
 export abstract class BaseService<TResponse, TRequest> {
-  private endPoint;
   protected constructor(
     protected http: HttpClient,
-    protected endpoint: string
+    protected endpoint: string,
+    protected loader: LoaderService
   ) {
-    this.endPoint = endpoint;
   }
   url = `${devEnvironment.baseUrl}`;
 
   getAll(search = {}): Observable<TResponse[]> {
+    this.loader.show();
+
     const queryString = getQueryString(search);
     let url = `${this.url}/${this.endpoint}`;
     if (queryString) {
@@ -24,38 +26,47 @@ export abstract class BaseService<TResponse, TRequest> {
 
     return this.http.get<ApiListResponse<TResponse>>(`${url}`).pipe(
       map((response) => {
+        this.loader.hide();
         return response['data'];
       })
     );
   }
 
   getById(id: number): Observable<TResponse> {
+    this.loader.show();
     return this.http.get<ApiResponse<TResponse>>(`${this.url}/${this.endpoint}/${id}`).pipe(
       map((response) => {
+        this.loader.hide();
         return response['data'];
       })
     );
   }
 
   create(entity: TRequest): Observable<TResponse> {
+    this.loader.show();
     return this.http.post<ApiResponse<TResponse>>(`${this.url}/${this.endpoint}`, entity).pipe(
       map((response) => {
+        this.loader.hide();
         return response['data'];
       })
     );
   }
 
   update(id: number, entity: TRequest): Observable<TResponse> {
+    this.loader.show();
     return this.http.put<ApiResponse<TResponse>>(`${this.url}/${this.endpoint}/${id}`, entity).pipe(
       map((response) => {
+        this.loader.hide();
         return response['data'];
       })
     );
   }
 
   delete(id: number): Observable<string> {
+    this.loader.show();
     return this.http.delete<ApiResponse<string>>(`${this.url}/${this.endpoint}/${id}`).pipe(
       map((response) => {
+        this.loader.hide();
         return response['data'];
       })
     );

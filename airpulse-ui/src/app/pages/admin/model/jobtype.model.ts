@@ -16,4 +16,5 @@ export class JobTypeRequest {
   salaryMin!: number;
   salaryMax!: number;
   title!: string;
+  status!: string;
 }
