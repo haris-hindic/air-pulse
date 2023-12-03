@@ -26,17 +26,17 @@ spring:
               - id: flight-catalogue-service
                 uri: lb://flight-catalogue-service
                 filters:
-                - RewritePath=/api/flightcatalogue/(?<segment>.*),/${segment}
+                - RewritePath=/api/fc/(?<segment>.*),/${segment}
                 - AuthFilter
                 predicates:
-                - Path=/api/flightcatalogue/** 
+                - Path=/api/fc/** 
               - id: employee-service
                 uri: lb://employee-service
                 filters:
-                - RewritePath=/api/employee/(?<segment>.*),/${segment}
+                - RewritePath=/api/emp/(?<segment>.*),/${segment}
                 - AuthFilter
                 predicates:
-                - Path=/api/employee/**
+                - Path=/api/emp/**
               - id: auth-service
                 uri: lb://auth-service
                 filters:
