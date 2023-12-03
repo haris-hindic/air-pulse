@@ -9,6 +9,6 @@ import { LoaderService } from "../../shared/services/loader.service";
 })
 export class JobTypeService extends BaseService<JobTypeResponse, JobTypeRequest> {
   constructor(protected override http: HttpClient, protected override loader: LoaderService) {
-    super(http, 'employee/job-type', loader);
+    super(http, 'emp/job-type', loader);
   }
 }

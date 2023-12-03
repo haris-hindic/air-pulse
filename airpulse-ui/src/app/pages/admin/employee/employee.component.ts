@@ -1,38 +1,38 @@
 import { Component } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { JobTypeRequest, JobTypeResponse } from '../model/jobtype.model';
-import { JobTypeService } from '../services/jobtype.service';
+import { EmployeeRequest, EmployeeResponse } from '../model/employee.model';
+import { EmployeeService } from '../services/employee.service';
 import { MessageToast } from '../../shared/services/message-toast.service';
+import { ConfirmationService } from 'primeng/api';
 import { LoaderService } from '../../shared/services/loader.service';
 
 @Component({
-  selector: 'app-jobtype',
-  templateUrl: './jobtype.component.html',
-  styleUrls: ['./jobtype.component.css']
+  selector: 'app-employee',
+  templateUrl: './employee.component.html',
+  styleUrls: ['./employee.component.css']
 })
-export class JobtypeComponent {
+export class EmployeeComponent {
+  employeeDialog: boolean = false;
 
-  jobtypeDialog: boolean = false;
+  employees!: EmployeeResponse[];
 
-  jobtypes!: JobTypeResponse[];
+  employee!: EmployeeResponse;
 
-  jobtype!: JobTypeResponse;
+  selectedEmployees!: any | null;
 
-  selectedJobTypes!: any | null;
 
   constructor(private messageToast: MessageToast, private confirmationService: ConfirmationService,
-    private jobtypeService: JobTypeService, private loader: LoaderService) { }
+    private employeeService: EmployeeService, private loader: LoaderService) { }
 
   ngOnInit() {
     this.findAll();
   }
 
   findAll() {
-    this.jobtypes = [];
-    this.jobtypeService.getAll().subscribe(
+    this.employees = [];
+    this.employeeService.getAll().subscribe(
       {
         next: (result) => {
-          this.jobtypes = result;
+          this.employees = result;
         }, error: (error) => {
           this.messageToast.showError("Error", error);
           this.loader.hide();
@@ -42,53 +42,52 @@ export class JobtypeComponent {
   }
 
   openNew() {
-    this.jobtype = new JobTypeResponse();
-    this.jobtypeDialog = true;
+    this.employee = new EmployeeResponse();
+    this.employeeDialog = true;
   }
 
-  deactivateSelectedProducts() {
+  deleteSelectedEmployees() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to deactivate the selected job types?',
+      message: 'Are you sure you want to delete the selected employees?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //BULK DELETE
-        this.selectedJobTypes = null;
-        this.messageToast.showSuccess('Successful', 'Job type deleted.');
+        this.selectedEmployees = null;
+        this.messageToast.showSuccess('Successful', 'Employees deleted.');
         this.findAll();
       }
     });
   }
 
-  editJobtype(jobtype: any) {
-    this.jobtype = { ...jobtype };
-    this.jobtypeDialog = true;
+  editEmployee(employee: any) {
+    this.employee = { ...employee };
+    this.employeeDialog = true;
   }
 
-  deleteProduct(product: any) {
+  deleteEmployee(employee: any) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + product.name + '?',
+      message: 'Are you sure you want to delete ' + employee.firstName + " " + employee.lastName + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //ADD DELETE
-        //this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-        this.messageToast.showSuccess('Successful', 'Job type deleted.');
+        this.messageToast.showSuccess('Successful', 'Employee deleted.');
       }
     });
   }
 
   hideDialog() {
-    this.jobtypeDialog = false;
+    this.employeeDialog = false;
   }
 
-  saveJobtype(jobTypeRequest: JobTypeRequest) {
+  saveEmployee(employeeRequest: EmployeeRequest) {
 
-    if (this.jobtype.id) {
-      this.jobtypeService.update(this.jobtype.id, jobTypeRequest).subscribe({
+    if (this.employee.id) {
+      this.employeeService.update(this.employee.id, employeeRequest).subscribe({
         next: () => {
           this.findAll();
-          this.messageToast.showSuccess('Successful', 'Job type updated.');
+          this.messageToast.showSuccess('Successful', 'Employee updated.');
           this.hideDialog();
         },
         error: (error) => {
@@ -96,10 +95,10 @@ export class JobtypeComponent {
         }
       })
     } else {
-      this.jobtypeService.create(jobTypeRequest).subscribe({
+      this.employeeService.create(employeeRequest).subscribe({
         next: () => {
           this.findAll();
-          this.messageToast.showSuccess('Successful', 'Job type created.');
+          this.messageToast.showSuccess('Successful', 'Employee created.');
           this.hideDialog();
         },
         error: (error) => {

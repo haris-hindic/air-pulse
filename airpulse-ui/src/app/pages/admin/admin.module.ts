@@ -9,6 +9,8 @@ import { AircraftOverviewComponent } from './aircraft/aircraft-overview/aircraft
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { JobtypeComponent } from './jobtype/jobtype.component';
 import { JobtypeFormComponent } from './jobtype/jobtype-form/jobtype-form.component';
+import { EmployeeComponent } from './employee/employee.component';
+import { EmployeeFormComponent } from './employee/employee-form/employee-form.component';
 
 @NgModule({
     imports: [
@@ -16,10 +18,12 @@ import { JobtypeFormComponent } from './jobtype/jobtype-form/jobtype-form.compon
         RouterModule.forChild([
             {
                 path: '', component: AdminComponent, children: [
-                    { path: '', component: DashboardComponent },
-                    { path: 'employee', component: EmployeeOverviewComponent },
+                    { path: 'dashboard', component: DashboardComponent },
+                    { path: 'employee', component: EmployeeComponent },
+                    { path: 'employee/:id', component: EmployeeOverviewComponent },
                     { path: 'aircraft', component: AircraftOverviewComponent },
-                    { path: 'jobtype', component: JobtypeComponent }
+                    { path: 'jobtype', component: JobtypeComponent },
+                    { path: '**', redirectTo: 'dashboard' },
                 ]
             },
 
@@ -28,7 +32,7 @@ import { JobtypeFormComponent } from './jobtype/jobtype-form/jobtype-form.compon
         SidebarModule
     ],
     declarations: [
-        AdminComponent, SideMenuComponent, EmployeeOverviewComponent, AircraftOverviewComponent, DashboardComponent, JobtypeComponent, JobtypeFormComponent
+        AdminComponent, SideMenuComponent, EmployeeOverviewComponent, AircraftOverviewComponent, DashboardComponent, JobtypeComponent, JobtypeFormComponent, EmployeeComponent, EmployeeFormComponent
     ],
     exports: []
 })

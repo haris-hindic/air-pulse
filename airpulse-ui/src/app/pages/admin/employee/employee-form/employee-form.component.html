@@ -1,0 +1,61 @@
+<p-dialog [(visible)]="visible" [style]="{ width: '900px' }" header="Employee details" [modal]="true"
+    (onHide)="hideDialog()" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <form id="form" [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
+
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="salaryMin">First name</label>
+                    <input id="firstName" formControlName="firstName" type="text" placeholder="First name" pInputText
+                        class="w-full" [ngClass]="{'ng-invalid ng-dirty' : !form.get('firstName')?.valid &&
+                        form.get('firstName')?.touched}">
+                </div>
+                <div class="field col">
+                    <label for="salaryMax">Last name</label>
+                    <input id="lastName" formControlName="lastName" type="text" placeholder="Last name" pInputText
+                        class="w-full" [ngClass]="{'ng-invalid ng-dirty' : !form.get('lastName')?.valid &&
+                    form.get('lastName')?.touched}">
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="name">Gender</label>
+                <input id="gender" formControlName="gender" type="text" placeholder="Gender" pInputText class="w-full"
+                    [ngClass]="{'ng-invalid ng-dirty' : !form.get('gender')?.valid &&
+                        form.get('gender')?.touched}">
+            </div>
+
+            <div class="field">
+                <label for="email1" class="block text-900 font-medium">Email</label>
+                <small style="color: red;" *ngIf="form.get('email')!.hasError('email')">
+                    Must be a valid email addres (example@email.com).
+                </small>
+                <input id="email1" formControlName="email" type="email" placeholder="Email address" pInputText
+                    class="w-full" [ngClass]="{'ng-invalid ng-dirty' : !form.get('email')?.valid &&
+                form.get('email')?.touched}">
+            </div>
+
+            <div class="field">
+                <label for="phoneNumber" class="block text-900 font-medium">Phone number</label>
+                <small style="color: red;" *ngIf="form.get('phoneNumber')!.hasError('pattern')">
+                    Must be a valid phone number (+919367788755,8989829304,786-307-3615).
+                </small>
+                <input id="phoneNumber" formControlName="phoneNumber" type="text" placeholder="Phone number" pInputText
+                    class="w-full" [ngClass]="{'ng-invalid ng-dirty' : !form.get('phoneNumber')?.valid &&
+                form.get('phoneNumber')?.touched}">
+            </div>
+
+            <div class="field">
+                <label for="dateOfBirth" class="block text-900 font-medium">Date of birth</label>
+                <p-calendar formControlName="dateOfBirth" [showIcon]="true" [ngClass]="{'ng-invalid ng-dirty' : !form.get('dateOfBirth')?.valid &&
+                  form.get('dateOfBirth')?.touched}"></p-calendar>
+            </div>
+
+        </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" form="form" icon="pi pi-check" class="p-button-text"></button>
+    </ng-template>
+</p-dialog>

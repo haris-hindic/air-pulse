@@ -20,7 +20,7 @@ export class SideMenuComponent implements OnInit {
       { label: 'Admin Panel', styleClass: MenuConstant.MENU_ITEM_CLASS },
       {
         separator: true, items: [
-          { label: 'Dashboard', icon: 'pi pi-fw pi-bookmark', routerLink: ['/admin'], ...this.itemOptions },
+          { label: 'Dashboard', icon: 'pi pi-fw pi-bookmark', routerLink: ['/admin/dashboard'], ...this.itemOptions },
           { label: 'Employee', icon: 'pi pi-fw pi-id-card', routerLink: ['employee'], ...this.itemOptions },
           { label: 'Aircraft', icon: 'pi pi-fw pi-check-square', routerLink: ['aircraft'], ...this.itemOptions },
           { label: 'Job Type', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['jobtype'], ...this.itemOptions },

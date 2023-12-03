@@ -1,0 +1,68 @@
+<div *ngIf="employees" class="card">
+    <p-table id="myTable" #dt [value]="employees" [rows]="5" [paginator]="true" [tableStyle]="{ 'min-width': '70rem' }"
+        [(selection)]="selectedEmployees" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="{first} to {last} of {totalRecords}" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Manage Employees</h5>
+                <span class="p-input-icon-left">
+                    <p-button icon="pi pi-plus" [rounded]="true" [text]="true" (click)="openNew()"></p-button>
+                    <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true"
+                        (click)="deleteSelectedEmployees()"
+                        [disabled]="!selectedEmployees || !selectedEmployees.length"></p-button>
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:2%">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="id" style="width:3%">Id <p-sortIcon field="id"></p-sortIcon></th>
+                <!-- <th>Image</th> -->
+                <th pSortableColumn="title" style="width:10%">Name <p-sortIcon field="firstName"></p-sortIcon></th>
+                <th pSortableColumn="title" style="width:10%">Email <p-sortIcon field="email"></p-sortIcon></th>
+                <th pSortableColumn="title" style="width:10%">Date of birth <p-sortIcon
+                        field="dateOfBirth"></p-sortIcon></th>
+                <th pSortableColumn="title" style="width:10%">Phone number <p-sortIcon field="phoneNumber"></p-sortIcon>
+                </th>
+                <th pSortableColumn="title" style="width:5%">Gender <p-sortIcon field="gender"></p-sortIcon></th>
+                <th style="width:5%" pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+                <th style="width:10%">Created</th>
+                <th style="width:10%">Modified</th>
+                <th style="width:5%"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-employee>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="employee"></p-tableCheckbox>
+                </td>
+                <td><a [routerLink]="['/admin/employee/'+employee.id]"
+                        class="font-medium no-underline text-blue-500 cursor-pointer">{{employee.id}}</a></td>
+                <td><a [routerLink]="['/admin/employee/'+employee.id]"
+                        class="font-medium no-underline text-blue-500 cursor-pointer">{{employee.firstName +"
+                        "+employee.lastName}}</a></td>
+                <td>{{ employee.email }}</td>
+                <td>{{ employee.dateOfBirth | date }}</td>
+                <td>{{ employee.phoneNumber }}</td>
+                <td>{{ employee.gender }}</td>
+                <td><p-tag [value]="employee.status" [severity]="getSeverity(employee.status.toUpperCase())"></p-tag>
+                </td>
+                <td>{{ (employee.created | date)+ " (" +employee.createdBy+")" }}</td>
+                <td>{{ employee.modified ? (employee.modified | date)+ " (" +employee.modifiedBy+")" : '' }}</td>
+                <td>
+                    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="warning"
+                        (click)="editEmployee(employee)"></p-button>
+                    <!-- <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
+              (click)="deleteProduct(jobtype)"></p-button> -->
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<app-employee-form [visible]="employeeDialog" [employee]="employee || {}" (saveButtonClicked)="saveEmployee($event)"
+    (hideButtonClicked)="hideDialog()"></app-employee-form>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

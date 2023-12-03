@@ -25,6 +25,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
     imports: [],
@@ -55,7 +56,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
         HttpClientModule,
         ReactiveFormsModule,
         InputTextareaModule,
-        InputNumberModule
+        InputNumberModule,
+        CalendarModule
     ]
 })
 export class SharedModule { }
