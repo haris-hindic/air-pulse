@@ -14,11 +14,13 @@ public class JobTypeRequest implements Serializable {
 	@NotNull(message = "Rsponsibilities are mandatory!")
 	private String responsibilities;
 	@NotNull(message = "Minimal salary is mandatory!")
-	@Min(value = 1)
+	@Min(value = 1, message = "Min. salary must be equal or greater than 1.")
 	private BigDecimal salaryMin;
 	@NotNull(message = "Maximal salary is mandatory!")
-	@Min(value = 1)
+	@Min(value = 1, message = "Max. salary must be equal or greater than 1.")
 	private BigDecimal salaryMax;
 	@NotNull(message = "Title is mandatory!")
 	private String title;
+	@NotNull(message = "Status is mandatory!")
+	private String status;
 }

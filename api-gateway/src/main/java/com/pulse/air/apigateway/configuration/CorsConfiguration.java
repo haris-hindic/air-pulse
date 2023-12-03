@@ -16,7 +16,7 @@ public class CorsConfiguration {
 		final var corsConfig = new org.springframework.web.cors.CorsConfiguration();
 		corsConfig.setAllowedOrigins(Collections.singletonList("*"));
 		corsConfig.setMaxAge(3600L);
-		corsConfig.setAllowedMethods(Arrays.asList("GET", "POST"));
+		corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT"));
 		corsConfig.addAllowedHeader("*");
 
 		final var source = new UrlBasedCorsConfigurationSource();

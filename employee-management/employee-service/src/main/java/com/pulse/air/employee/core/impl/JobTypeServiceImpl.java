@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiUpdateRequest;
-import com.pulse.air.commons.enums.Status;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 import com.pulse.air.employee.contract.JobTypeService;
 import com.pulse.air.employee.core.mapper.JobTypeMapper;
@@ -27,7 +26,6 @@ public class JobTypeServiceImpl
 
 	@Override
 	public void beforeInsert(final JobTypeEntity entity, final ApiRequest<JobTypeRequest> request) throws ApiException {
-		entity.setStatus(Status.ACTIVE.getValue());
 		entity.setCreated(LocalDateTime.now());
 		entity.setCreatedBy(request.getUsername());
 		super.beforeInsert(entity, request);
