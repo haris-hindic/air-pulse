@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.pulse.air.common.model.ApiException;
+import com.pulse.air.common.model.ApiListResponse;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiUpdateRequest;
 import com.pulse.air.commons.enums.Status;
@@ -26,12 +27,16 @@ public class PositionServiceImpl extends
 
 	private EmployeeRepository employeeRepository;
 	private JobTypeRepository jobTypeRepository;
+	private PositionRepository positionRepository;
+	private PositionMapper positionMapper;
 
 	public PositionServiceImpl(final PositionMapper mapper, final PositionRepository repository,
 			final EmployeeRepository employeeRepository, final JobTypeRepository jobTypeRepository) {
 		super(mapper, repository);
 		this.employeeRepository = employeeRepository;
 		this.jobTypeRepository = jobTypeRepository;
+		this.positionRepository = repository;
+		this.positionMapper = mapper;
 	}
 
 	@Override
@@ -59,6 +64,19 @@ public class PositionServiceImpl extends
 		entity.setModified(LocalDateTime.now());
 		entity.setModifiedBy(request.getUsername());
 		super.beforeUpdate(entity, request);
+	}
+
+	@Override
+	public ApiListResponse<PositionResponse> findByEmployeeId(final ApiRequest<Long> request) throws ApiException {
+
+		var employee = employeeRepository.findById(request.getObject());
+		if (Boolean.FALSE.equals(employee.isPresent())) {
+			throw new ApiException(HttpStatus.BAD_REQUEST, "Employee does not exist!");
+		}
+
+		var entities = positionRepository.findByEmployeeId(request.getObject());
+		return new ApiListResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
+				positionMapper.entitesToDtos(entities));
 	}
 
 }

@@ -2,8 +2,10 @@ package com.pulse.air.commons.services;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pulse.air.common.model.ApiException;
+import com.pulse.air.common.model.ApiListRequest;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiResponse;
 import com.pulse.air.common.model.ApiUpdateRequest;
@@ -24,6 +26,7 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends B
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public ApiResponse<TResponse> create(final ApiRequest<TRequest> request) throws ApiException {
 		var entity = mapper.dtoToEntity(request.getObject());
 		beforeInsert(entity, request);
@@ -39,6 +42,7 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends B
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public ApiResponse<TResponse> update(final ApiUpdateRequest<TRequest> request) throws ApiException {
 		var entityOptional = repository.findById(request.getId());
 
@@ -61,6 +65,7 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends B
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public ApiResponse<String> delete(final ApiRequest<Long> request) throws ApiException {
 		var entity = repository.findById(request.getObject());
 
@@ -72,6 +77,26 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends B
 			throw new ApiException(HttpStatus.NOT_FOUND,
 					String.format("There is no entity with id -> %s", request.getObject()));
 		}
+	}
+
+	public void beforeDelete(final TEntity entity, final ApiRequest<Long> request) {
+		// TO BE OVERRIDEN
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public ApiResponse<String> bulkDelete(final ApiListRequest<Long> request) throws ApiException {
+
+		var ids = request.getObject();
+		ids.removeIf(x -> x == null);
+
+		if (!ids.isEmpty()) {
+			repository.deleteAllById(request.getObject());
+			return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), "Successfully deleted.");
+		} else {
+			throw new ApiException(HttpStatus.NOT_FOUND, "No valid items provided.");
+		}
+
 	}
 
 }

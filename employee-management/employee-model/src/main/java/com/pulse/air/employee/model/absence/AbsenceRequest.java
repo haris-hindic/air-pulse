@@ -21,4 +21,6 @@ public class AbsenceRequest implements Serializable {
 	private LocalDateTime startDate;
 	@NotNull(message = "Type is mandatory!")
 	private String type;
+	@NotNull(message = "Status is mandatory!")
+	private String status;
 }

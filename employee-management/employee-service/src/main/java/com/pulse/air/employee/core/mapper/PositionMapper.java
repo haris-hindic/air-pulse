@@ -19,6 +19,9 @@ public interface PositionMapper extends BaseMapper<PositionEntity, PositionRespo
 
 	@AfterMapping
 	default void setFullName(@MappingTarget final PositionResponse response, final PositionEntity entity) {
-		response.setEmployeeFullName(entity.getEmployee().getFirstName() + " " + entity.getEmployee().getLastName());
+		if (entity.getEmployee() != null) {
+			response.setEmployeeFullName(
+					entity.getEmployee().getFirstName() + " " + entity.getEmployee().getLastName());
+		}
 	}
 }

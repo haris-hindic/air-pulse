@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -60,15 +61,15 @@ public class EmployeeEntity implements Serializable {
 	private String status;
 
 	// bi-directional many-to-one association to AbsenceEntity
-	@OneToMany(mappedBy = "employee")
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
 	private List<AbsenceEntity> absences;
 
 	// bi-directional many-to-one association to PositionEntity
-	@OneToMany(mappedBy = "employee")
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
 	private List<PositionEntity> positions;
 
 	// bi-directional many-to-one association to QualificationEntity
-	@OneToMany(mappedBy = "employee")
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
 	private List<QualificationEntity> qualifications;
 
 }

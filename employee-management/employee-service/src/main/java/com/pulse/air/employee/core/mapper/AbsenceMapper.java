@@ -14,6 +14,9 @@ public interface AbsenceMapper extends BaseMapper<AbsenceEntity, AbsenceResponse
 
 	@AfterMapping
 	default void setFullName(@MappingTarget final AbsenceResponse response, final AbsenceEntity entity) {
-		response.setEmployeeFullName(entity.getEmployee().getFirstName() + " " + entity.getEmployee().getLastName());
+		if (entity.getEmployee() != null) {
+			response.setEmployeeFullName(
+					entity.getEmployee().getFirstName() + " " + entity.getEmployee().getLastName());
+		}
 	}
 }
