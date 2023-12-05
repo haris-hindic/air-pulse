@@ -15,6 +15,8 @@ import { AbsenceComponent } from './absence/absence.component';
 import { AbsenceFormComponent } from './absence/absence-form/absence-form.component';
 import { PositionComponent } from './position/position.component';
 import { PositionFormComponent } from './position/position-form/position-form.component';
+import { AirportComponent } from './airport/airport.component';
+import { AirportFormComponent } from './airport/airport-form/airport-form.component';
 
 @NgModule({
     imports: [
@@ -26,6 +28,7 @@ import { PositionFormComponent } from './position/position-form/position-form.co
                     { path: 'employee', component: EmployeeComponent },
                     { path: 'employee/:id', component: EmployeeOverviewComponent },
                     { path: 'aircraft', component: AircraftOverviewComponent },
+                    { path: 'airport', component: AirportComponent },
                     { path: 'jobtype', component: JobtypeComponent },
                     { path: '**', redirectTo: 'dashboard' },
                 ]
@@ -36,7 +39,7 @@ import { PositionFormComponent } from './position/position-form/position-form.co
         SidebarModule
     ],
     declarations: [
-        AdminComponent, SideMenuComponent, EmployeeOverviewComponent, AircraftOverviewComponent, DashboardComponent, JobtypeComponent, JobtypeFormComponent, EmployeeComponent, EmployeeFormComponent, AbsenceComponent, AbsenceFormComponent, PositionComponent, PositionFormComponent
+        AdminComponent, SideMenuComponent, EmployeeOverviewComponent, AircraftOverviewComponent, DashboardComponent, JobtypeComponent, JobtypeFormComponent, EmployeeComponent, EmployeeFormComponent, AbsenceComponent, AbsenceFormComponent, PositionComponent, PositionFormComponent, AirportComponent, AirportFormComponent
     ],
     exports: []
 })

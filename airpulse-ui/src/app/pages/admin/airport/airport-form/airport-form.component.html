@@ -1,0 +1,61 @@
+<p-dialog [(visible)]="visible" [style]="{ width: '650px' }" header="Airport details" [modal]="true"
+    (onHide)="hideDialog()" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <form id="form" [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
+
+            <div class="field">
+                <label for="name">Name</label>
+                <input type="text" pInputText id="name" formControlName="name" required />
+                <small class="p-error" *ngIf="form.get('name')!.hasError('required')">Name is required.</small>
+            </div>
+
+            <div class="formgrid grid mb-1">
+                <div class="col-6">
+                    <label for="country">Country</label>
+                    <input type="text" pInputText id="country" formControlName="country" required />
+                </div>
+                <div class="col-6">
+                    <label for="city">City</label>
+                    <input type="text" pInputText id="city" formControlName="city" required />
+                </div>
+                <div class="col-6">
+                    <small class="p-error"
+                        *ngIf="form.get('country')!.touched &&form.get('country')!.hasError('required')">Country is
+                        required.</small>
+                </div>
+                <div class="col-6">
+                    <small class="p-error"
+                        *ngIf="form.get('city')!.touched && form.get('city')!.hasError('required')">City
+                        is required.</small>
+                </div>
+            </div>
+
+            <div class="formgrid grid mb-1">
+                <div class="col-6">
+                    <label for="iataCode">iata Code</label>
+                    <input type="text" pInputText id="iataCode" formControlName="iataCode" required />
+                </div>
+                <div class="col-6">
+                    <label for="icaoCode">icao Code</label>
+                    <input type="text" pInputText id="icaoCode" formControlName="icaoCode" required />
+                </div>
+                <div class="col-6">
+                    <small class="p-error"
+                        *ngIf="form.get('iataCode')!.touched&&form.get('iataCode')!.hasError('required')">iata Code is
+                        required.</small>
+                </div>
+                <div class="col-6">
+                    <small class="p-error"
+                        *ngIf="form.get('icaoCode')!.touched&&form.get('icaoCode')!.hasError('required')">icao Code is
+                        required.</small>
+                </div>
+            </div>
+
+        </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" form="form" icon="pi pi-check" class="p-button-text"></button>
+    </ng-template>
+</p-dialog>
