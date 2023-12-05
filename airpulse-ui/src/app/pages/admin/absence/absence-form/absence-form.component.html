@@ -1,0 +1,64 @@
+<p-dialog [(visible)]="visible" [style]="{ width: '600px' }" header="Absence details" [modal]="true"
+    (onHide)="hideDialog()" styleClass="p-fluid">
+    <ng-template *ngIf="employees" pTemplate="content">
+        <form id="form" [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
+
+            <div class="field">
+                <label for="status">Employee</label>
+                <p-dropdown formControlName="employeeId" inputId="employeeId" [options]="employeesLov"></p-dropdown>
+                <small class="p-error"
+                    *ngIf="form.get('employeeId')?.touched && form.get('employeeId')!.hasError('required')">Employee is
+                    required.</small>
+            </div>
+
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="type">Type</label>
+                    <input id="type" formControlName="type" type="text" placeholder="Type" pInputText class="w-full"
+                        [ngClass]="{'ng-invalid ng-dirty' : !form.get('type')?.valid &&
+                        form.get('type')?.touched}">
+                </div>
+                <div class="field col">
+                    <label for="reason">Reason</label>
+                    <input id="reason" formControlName="reason" type="text" placeholder="Reason" pInputText
+                        class="w-full" [ngClass]="{'ng-invalid ng-dirty' : !form.get('reason')?.valid &&
+                    form.get('reason')?.touched}">
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="comments">Comments</label>
+                <input id="comments" formControlName="comments" type="text" placeholder="Comments" rows="5" cols="30"
+                    pInputTextarea class="w-full" [ngClass]="{'ng-invalid ng-dirty' : !form.get('comments')?.valid &&
+                        form.get('comments')?.touched}">
+            </div>
+
+            <div class="field">
+                <label for="status">Status</label>
+                <p-dropdown formControlName="status" inputId="status" [options]="statuses">
+                    <ng-template pTemplate="status">
+                        <p-tag [value]="absence.status" [severity]="getSeverity(absence.status.toUpperCase())"></p-tag>
+                    </ng-template>
+                    <ng-template let-option pTemplate="item">
+                        <p-tag [value]="option.label" [severity]="getSeverity(option.label)"></p-tag>
+                    </ng-template>
+                </p-dropdown>
+                <small class="p-error"
+                    *ngIf="form.get('status')?.touched && form.get('status')!.hasError('required')">Status is
+                    required.</small>
+            </div>
+
+            <div class="field">
+                <label for="dateRange" class="block text-900 font-medium">Valid From/To</label>
+                <p-calendar formControlName="dateRange" selectionMode="range" [showIcon]="true" [ngClass]="{'ng-invalid ng-dirty' : !form.get('dateRange')?.valid &&
+                  form.get('dateRange')?.touched}"></p-calendar>
+            </div>
+
+        </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" form="form" icon="pi pi-check" class="p-button-text"></button>
+    </ng-template>
+</p-dialog>

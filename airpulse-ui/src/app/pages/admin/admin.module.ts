@@ -11,6 +11,10 @@ import { JobtypeComponent } from './jobtype/jobtype.component';
 import { JobtypeFormComponent } from './jobtype/jobtype-form/jobtype-form.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { EmployeeFormComponent } from './employee/employee-form/employee-form.component';
+import { AbsenceComponent } from './absence/absence.component';
+import { AbsenceFormComponent } from './absence/absence-form/absence-form.component';
+import { PositionComponent } from './position/position.component';
+import { PositionFormComponent } from './position/position-form/position-form.component';
 
 @NgModule({
     imports: [
@@ -32,7 +36,7 @@ import { EmployeeFormComponent } from './employee/employee-form/employee-form.co
         SidebarModule
     ],
     declarations: [
-        AdminComponent, SideMenuComponent, EmployeeOverviewComponent, AircraftOverviewComponent, DashboardComponent, JobtypeComponent, JobtypeFormComponent, EmployeeComponent, EmployeeFormComponent
+        AdminComponent, SideMenuComponent, EmployeeOverviewComponent, AircraftOverviewComponent, DashboardComponent, JobtypeComponent, JobtypeFormComponent, EmployeeComponent, EmployeeFormComponent, AbsenceComponent, AbsenceFormComponent, PositionComponent, PositionFormComponent
     ],
     exports: []
 })

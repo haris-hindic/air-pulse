@@ -1,1 +1,85 @@
-<p>employee-overview works!</p>
+<div *ngIf="employee" class="grid">
+    <div class="col-12 pt-0 mt-0">
+        <p-toolbar id="myToolbar" styleClass="h-2.2rem">
+            <div class="p-toolbar-group-start">
+                <p-button icon="pi pi-arrow-circle-left" [routerLink]="'/admin/employee'" [rounded]="true"
+                    [text]="true"></p-button>
+                <i class="p-toolbar-separator pi pi-ellipsis-v mr-2 ml-2" style="vertical-align: middle"></i>
+                <p-button label="Change image" icon="pi pi-upload" styleClass="p-button-success"
+                    [text]="true"></p-button>
+            </div>
+            <div class="p-toolbar-group-end">
+                <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (click)="editEmployee()"></p-button>
+                <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true"></p-button>
+            </div>
+        </p-toolbar>
+    </div>
+    <div class="col-12">
+        <div class="formgrid grid">
+            <div class="col-3 mr-4 mb-4">
+                <p-image class="field" [imageClass]="'image'" src="assets/user/user.png" alt="Image" width="300"
+                    height="250" [preview]="true"></p-image>
+            </div>
+            <div class="col-8 grid">
+                <div class="field col-6">
+                    <label for="salaryMin">First name</label>
+                    <input [(ngModel)]="employee.firstName" id="firstName" type="text" placeholder="First name"
+                        pInputText class="w-full" disabled>
+                </div>
+                <div class="field col-6">
+                    <label for="salaryMax">Last name</label>
+                    <input [(ngModel)]="employee.lastName" id="lastName" type="text" placeholder="Last name" pInputText
+                        class="w-full" disabled>
+                </div>
+                <div class="field col-8">
+                    <label for="name">Gender</label>
+                    <input [(ngModel)]="employee.gender" id="gender" type="text" placeholder="Gender" pInputText
+                        class="w-full" disabled>
+                </div>
+
+                <div class="field col-4">
+                    <label for="dateOfBirth" class="block">Date of birth</label>
+                    <p-calendar [(ngModel)]="date" [disabled]="true"></p-calendar>
+                </div>
+            </div>
+        </div>
+
+        <div class="formgrid grid">
+            <div class="field col">
+                <label for="email1" class="block text-900 font-medium">Email</label>
+                <input [(ngModel)]="employee.email" id="email1" type="email" placeholder="Email address" pInputText
+                    class="w-full" disabled>
+            </div>
+
+            <div class="field col">
+                <label for="phoneNumber" class="block text-900 font-medium">Phone number</label>
+                <input [(ngModel)]="employee.phoneNumber" id="phoneNumber" type="text" placeholder="Phone number"
+                    pInputText class="w-full" disabled>
+            </div>
+        </div>
+    </div>
+    <p-divider class="col-12"></p-divider>
+    <div class="col-12">
+        <p-tabView>
+            <p-tabPanel header="Positions">
+                <app-position [employee]="employee"></app-position>
+            </p-tabPanel>
+            <p-tabPanel header="Absences">
+                <app-absence [employee]="employee"></app-absence>
+            </p-tabPanel>
+            <!-- <p-tabPanel header="Qualifications">
+                <p>
+                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                    laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
+                    beatae vitae dicta sunt explicabo. Nemo enim
+                    ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
+                    dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non
+                    numquam eius modi.
+                </p>
+            </p-tabPanel> -->
+        </p-tabView>
+    </div>
+</div>
+
+<app-employee-form [visible]="employeeDialog" [employee]="employee || {}" (saveButtonClicked)="saveEmployee($event)"
+    (hideButtonClicked)="hideDialog()"></app-employee-form>

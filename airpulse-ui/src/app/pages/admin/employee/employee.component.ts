@@ -17,7 +17,7 @@ export class EmployeeComponent {
 
   employee!: EmployeeResponse;
 
-  selectedEmployees!: any | null;
+  selectedEmployees!: any[] | null;
 
 
   constructor(private messageToast: MessageToast, private confirmationService: ConfirmationService,
@@ -52,10 +52,17 @@ export class EmployeeComponent {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        //BULK DELETE
-        this.selectedEmployees = null;
-        this.messageToast.showSuccess('Successful', 'Employees deleted.');
-        this.findAll();
+        this.employeeService.bulkDelete({ ids: this.selectedEmployees!.map(x => x.id) }).subscribe({
+          next: result => {
+            this.selectedEmployees = null;
+            this.messageToast.showSuccess('Successful', 'Employees deleted.');
+            this.loader.hide();
+            this.findAll();
+          },
+          error: err => {
+            this.handleError(err);
+          }
+        });
       }
     });
   }
@@ -71,8 +78,16 @@ export class EmployeeComponent {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        //ADD DELETE
-        this.messageToast.showSuccess('Successful', 'Employee deleted.');
+        this.employeeService.delete(employee.id).subscribe({
+          next: result => {
+            this.messageToast.showSuccess('Successful', 'Employee deleted.');
+            this.loader.hide();
+            this.findAll();
+          },
+          error: err => {
+            this.handleError(err);
+          }
+        });
       }
     });
   }

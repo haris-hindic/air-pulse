@@ -1,0 +1,60 @@
+<div *ngIf="positions" class="card">
+    <p-table id="myTable" #dt [value]="positions" [rows]="5" [paginator]="true" [tableStyle]="{ 'min-width': '70rem' }"
+        [(selection)]="selectedpositions" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="{first} to {last} of {totalRecords}" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Manage Positions</h5>
+                <span class="p-input-icon-left">
+                    <p-button icon="pi pi-plus" [rounded]="true" [text]="true" (click)="openNew()"></p-button>
+                    <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true"
+                        (click)="deleteSelectedPositions()"
+                        [disabled]="!selectedpositions || !selectedpositions.length"></p-button>
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:2%">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="id" style="width:3%">Id <p-sortIcon field="id"></p-sortIcon></th>
+                <!-- <th>Image</th> -->
+                <th pSortableColumn="title" style="width:5%">Title <p-sortIcon field="title"></p-sortIcon></th>
+                <th pSortableColumn="title" style="width:10%">Salary <p-sortIcon field="Salary"></p-sortIcon></th>
+                <th pSortableColumn="title" style="width:15%">Duration <p-sortIcon field="startDate"></p-sortIcon>
+                </th>
+                <th style="width:10%" pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+                <th style="width:10%">Created</th>
+                <th style="width:10%">Modified</th>
+                <th style="width:10%"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-position>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="position"></p-tableCheckbox>
+                </td>
+                <td>{{position.id}}</td>
+                <td>{{position.title}}</td>
+                <td>{{position.salary | currency}}</td>
+                <td>{{ (position.startDate | date) + " - " + ((position.endDate | date) || 'N/A') }}</td>
+                <td><p-tag [value]="position.status" [severity]="getSeverity(position.status.toUpperCase())"></p-tag>
+                </td>
+                <td>{{ (position.created | date)+ " (" +position.createdBy+")" }}</td>
+                <td>{{ position.modified ? (position.modified | date)+ " (" +position.modifiedBy+")" : '' }}</td>
+                <td>
+                    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="warning"
+                        (click)="editPosition(position)"></p-button>
+                    <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
+                        (click)="deletePosition(position)"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<app-position-form [visible]="positionDialog" [employee]="employee" [position]="position || {}"
+    (saveButtonClicked)="savePosition($event)" (hideButtonClicked)="hideDialog()"></app-position-form>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

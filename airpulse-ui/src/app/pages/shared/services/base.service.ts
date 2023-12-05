@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable, map } from "rxjs";
 import { devEnvironment } from "src/environments/devenv";
 import { ApiListResponse, ApiResponse } from "../model/api-response";
-import { getQueryString } from "../utils/query-sting";
+import { getQueryString, serialize } from "../utils/query-sting";
 import { LoaderService } from "./loader.service";
 
 
@@ -65,6 +65,24 @@ export abstract class BaseService<TResponse, TRequest> {
   delete(id: number): Observable<string> {
     this.loader.show();
     return this.http.delete<ApiResponse<string>>(`${this.url}/${this.endpoint}/${id}`).pipe(
+      map((response) => {
+        this.loader.hide();
+        return response['data'];
+      })
+    );
+  }
+
+  bulkDelete(ids = {}): Observable<TResponse[]> {
+    this.loader.show();
+
+    console.log('ids :>> ', ids);
+    const queryString = serialize(ids);
+    let url = `${this.url}/${this.endpoint}/bulk-delete`;
+    if (queryString) {
+      url = `${url}?${queryString}`;
+    }
+    console.log('bulkdelete :>> ', url);
+    return this.http.delete<ApiListResponse<TResponse>>(`${url}`).pipe(
       map((response) => {
         this.loader.hide();
         return response['data'];
