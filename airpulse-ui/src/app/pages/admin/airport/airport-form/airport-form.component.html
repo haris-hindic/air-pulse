@@ -33,11 +33,11 @@
             <div class="formgrid grid mb-1">
                 <div class="col-6">
                     <label for="iataCode">iata Code</label>
-                    <input type="text" pInputText id="iataCode" formControlName="iataCode" required />
+                    <input type="text" [maxlength]="3" pInputText id="iataCode" formControlName="iataCode" required />
                 </div>
                 <div class="col-6">
                     <label for="icaoCode">icao Code</label>
-                    <input type="text" pInputText id="icaoCode" formControlName="icaoCode" required />
+                    <input type="text" [maxlength]="4" pInputText id="icaoCode" formControlName="icaoCode" required />
                 </div>
                 <div class="col-6">
                     <small class="p-error"
@@ -56,6 +56,7 @@
 
     <ng-template pTemplate="footer">
         <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-        <button pButton pRipple label="Save" form="form" icon="pi pi-check" class="p-button-text"></button>
+        <button pButton pRipple label="Save" form="form" icon="pi pi-check" class="p-button-text"
+            [disabled]="!form.valid"></button>
     </ng-template>
 </p-dialog>

@@ -1,0 +1,64 @@
+<div *ngIf="aircraftseats" class="card">
+    <p-table id="myTable" #dt [value]="aircraftseats" [rows]="5" [paginator]="true"
+        [tableStyle]="{ 'min-width': '70rem' }" [(selection)]="selectedAircraftseats" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="{first} to {last} of {totalRecords}" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Manage aircraftseats</h5>
+                <span class="p-input-icon-left">
+                    <p-button icon="pi pi-plus" [rounded]="true" [text]="true" (click)="openNew()"></p-button>
+                    <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true"
+                        (click)="deleteSelectedAircraftseats()"
+                        [disabled]="!selectedAircraftseats || !selectedAircraftseats.length"></p-button>
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:2%">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="id" style="width:3%">Id <p-sortIcon field="id"></p-sortIcon></th>
+                <!-- <th>Image</th> -->
+                <th pSortableColumn="seatClass" style="width:10%">Seat class <p-sortIcon field="seatClass"></p-sortIcon>
+                </th>
+                <th pSortableColumn="quantity" style="width:10%">Quantity <p-sortIcon field="quantity"></p-sortIcon>
+                </th>
+                <th pSortableColumn="priceModifier" style="width:5%">Price modifier <p-sortIcon
+                        field="priceModifier"></p-sortIcon>
+                <th style="width:10%" pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+                <th style="width:10%">Created</th>
+                <th style="width:10%">Modified</th>
+                <th style="width:10%"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-aircraftseat>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="aircraftseat"></p-tableCheckbox>
+                </td>
+                <td>{{aircraftseat.id}}</td>
+                <td>{{aircraftseat.seatClass}}</td>
+                <td>{{aircraftseat.quantity}}</td>
+                <td>{{aircraftseat.priceModifier | percent }}</td>
+                <td><p-tag [value]="aircraftseat.status"
+                        [severity]="getSeverity(aircraftseat.status.toUpperCase())"></p-tag>
+                </td>
+                <td>{{ (aircraftseat.created | date)+ " (" +aircraftseat.createdBy+")" }}</td>
+                <td>{{ aircraftseat.modified ? (aircraftseat.modified | date)+ " (" +aircraftseat.modifiedBy+")" : '' }}
+                </td>
+                <td>
+                    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="warning"
+                        (click)="editAircraftseat(aircraftseat)"></p-button>
+                    <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
+                        (click)="deleteAircraftseat(aircraftseat)"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<app-aircraftseat-form [visible]="aircraftseatDialog" [aircraft]="aircraft" [aircraftseat]="aircraftseat || {}"
+    (saveButtonClicked)="saveAircraftseat($event)" (hideButtonClicked)="hideDialog()"></app-aircraftseat-form>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

@@ -39,6 +39,7 @@
 
     <ng-template pTemplate="footer">
         <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-        <button pButton pRipple label="Save" form="form" icon="pi pi-check" class="p-button-text"></button>
+        <button pButton pRipple label="Save" form="form" icon="pi pi-check" class="p-button-text"
+            [disabled]="!form.valid"></button>
     </ng-template>
 </p-dialog>

@@ -18,7 +18,7 @@ export abstract class BaseService<TResponse, TRequest> {
   getAll(search = {}): Observable<TResponse[]> {
     this.loader.show();
 
-    const queryString = getQueryString(search);
+    const queryString = serialize(search);
     let url = `${this.url}/${this.endpoint}`;
     if (queryString) {
       url = `${url}?${queryString}`;

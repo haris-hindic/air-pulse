@@ -1,0 +1,56 @@
+<p-dialog [(visible)]="visible" [style]="{ width: '900px' }" header="Employee details" [modal]="true"
+    (onHide)="hideDialog()" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <form id="form" [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
+
+
+            <div class="field">
+                <label for="manufacturer">Manufacturer</label>
+                <input id="manufacturer" formControlName="manufacturer" type="text" pInputText class="w-full" [ngClass]="{'ng-invalid ng-dirty' : !form.get('manufacturer')?.valid &&
+                        form.get('manufacturer')?.touched}">
+            </div>
+
+            <div class="field">
+                <label for="model">Model</label>
+                <input id="model" formControlName="model" type="text" pInputText class="w-full" [ngClass]="{'ng-invalid ng-dirty' : !form.get('model')?.valid &&
+                        form.get('model')?.touched}">
+            </div>
+
+            <div class="field">
+                <label for="status">Status</label>
+                <p-dropdown formControlName="status" inputId="status" [options]="statuses">
+                    <ng-template pTemplate="aircraft">
+                        <p-tag [value]="aircraft.status.toUpperCase()"
+                            [severity]="getSeverity(aircraft.status.toUpperCase())"></p-tag>
+                    </ng-template>
+                    <ng-template let-option pTemplate="item">
+                        <p-tag [value]="option.label" [severity]="getSeverity(option.label)"></p-tag>
+                    </ng-template>
+                </p-dropdown>
+                <small class="p-error" *ngIf="form.get('status')!.hasError('required')">Status is required.</small>
+            </div>
+
+            <div class="formgrid grid">
+
+                <div class="field col-6">
+                    <label for="buildDate" class="block text-900 font-medium">Build date</label>
+                    <p-calendar formControlName="buildDate" [showIcon]="true" [ngClass]="{'ng-invalid ng-dirty' : !form.get('buildDate')?.valid &&
+                  form.get('buildDate')?.touched}"></p-calendar>
+                </div>
+
+                <div class="field col-6">
+                    <label for="averageSpeed" class="block text-900 font-medium">Average speed (knots)</label>
+                    <p-inputNumber [min]="1" formControlName="averageSpeed" inputId="knot" suffix=" knot" [ngClass]="{'ng-invalid ng-dirty' : !form.get('averageSpeed')?.valid &&
+                    form.get('averageSpeed')?.touched}"> </p-inputNumber>
+                </div>
+            </div>
+
+        </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" form="form" icon="pi pi-check" class="p-button-text"
+            [disabled]="!form.valid"></button>
+    </ng-template>
+</p-dialog>

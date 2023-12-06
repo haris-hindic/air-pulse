@@ -5,7 +5,6 @@ import { AdminComponent } from "./admin.component";
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { EmployeeOverviewComponent } from './employee/employee-overview/employee-overview.component';
-import { AircraftOverviewComponent } from './aircraft/aircraft-overview/aircraft-overview.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { JobtypeComponent } from './jobtype/jobtype.component';
 import { JobtypeFormComponent } from './jobtype/jobtype-form/jobtype-form.component';
@@ -17,6 +16,13 @@ import { PositionComponent } from './position/position.component';
 import { PositionFormComponent } from './position/position-form/position-form.component';
 import { AirportComponent } from './airport/airport.component';
 import { AirportFormComponent } from './airport/airport-form/airport-form.component';
+import { AircraftComponent } from './aircraft/aircraft.component';
+import { AircraftFormComponent } from './aircraft/aircraft-form/aircraft-form.component';
+import { AircraftOverviewComponent } from './aircraft/aircraft-overview/aircraft-overview.component';
+import { AircraftseatComponent } from './aircraftseat/aircraftseat.component';
+import { AircraftseatFormComponent } from './aircraftseat/aircraftseat-form/aircraftseat-form.component';
+import { StaffComponent } from './staff/staff.component';
+import { StaffFormComponent } from './staff/staff-form/staff-form.component';
 
 @NgModule({
     imports: [
@@ -27,7 +33,8 @@ import { AirportFormComponent } from './airport/airport-form/airport-form.compon
                     { path: 'dashboard', component: DashboardComponent },
                     { path: 'employee', component: EmployeeComponent },
                     { path: 'employee/:id', component: EmployeeOverviewComponent },
-                    { path: 'aircraft', component: AircraftOverviewComponent },
+                    { path: 'aircraft', component: AircraftComponent },
+                    { path: 'aircraft/:id', component: AircraftOverviewComponent },
                     { path: 'airport', component: AirportComponent },
                     { path: 'jobtype', component: JobtypeComponent },
                     { path: '**', redirectTo: 'dashboard' },
@@ -39,7 +46,7 @@ import { AirportFormComponent } from './airport/airport-form/airport-form.compon
         SidebarModule
     ],
     declarations: [
-        AdminComponent, SideMenuComponent, EmployeeOverviewComponent, AircraftOverviewComponent, DashboardComponent, JobtypeComponent, JobtypeFormComponent, EmployeeComponent, EmployeeFormComponent, AbsenceComponent, AbsenceFormComponent, PositionComponent, PositionFormComponent, AirportComponent, AirportFormComponent
+        AdminComponent, SideMenuComponent, EmployeeOverviewComponent, DashboardComponent, JobtypeComponent, JobtypeFormComponent, EmployeeComponent, EmployeeFormComponent, AbsenceComponent, AbsenceFormComponent, PositionComponent, PositionFormComponent, AirportComponent, AirportFormComponent, AircraftComponent, AircraftFormComponent, AircraftOverviewComponent, AircraftseatComponent, AircraftseatFormComponent, StaffComponent, StaffFormComponent
     ],
     exports: []
 })

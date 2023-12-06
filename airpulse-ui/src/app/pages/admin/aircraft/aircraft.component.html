@@ -1,0 +1,67 @@
+<div *ngIf="aircrafts" class="card">
+    <p-table id="myTable" #dt [value]="aircrafts" [rows]="5" [paginator]="true" [tableStyle]="{ 'min-width': '70rem' }"
+        [(selection)]="selectedAircrafts" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="{first} to {last} of {totalRecords}" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Manage Aircrafts</h5>
+                <span class="p-input-icon-left">
+                    <p-button icon="pi pi-plus" [rounded]="true" [text]="true" (click)="openNew()"></p-button>
+                    <!-- <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true"
+                        (click)="deleteSelectedAircrafts()"
+                        [disabled]="!selectedAircrafts || !selectedAircrafts.length"></p-button> -->
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:2%">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="id" style="width:3%">Id <p-sortIcon field="id"></p-sortIcon></th>
+                <!-- <th>Image</th> -->
+                <th pSortableColumn="model" style="width:10%">Model <p-sortIcon field="model"></p-sortIcon></th>
+                <th pSortableColumn="manufacturer" style="width:10%">Manufacturer <p-sortIcon
+                        field="manufacturer"></p-sortIcon></th>
+                <th pSortableColumn="averageSpeed" style="width:10%">Average Speed <p-sortIcon
+                        field="averageSpeed"></p-sortIcon>
+                </th>
+                <th pSortableColumn="buildDate" style="width:10%">Build Date <p-sortIcon field="buildDate"></p-sortIcon>
+                </th>
+                <th style="width:5%" pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+                <th style="width:10%">Created</th>
+                <th style="width:10%">Modified</th>
+                <th style="width:5%"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-aircraft>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="aircraft"></p-tableCheckbox>
+                </td>
+                <td><a [routerLink]="['/admin/aircraft/'+aircraft.id]"
+                        class="font-medium no-underline text-blue-500 cursor-pointer">{{aircraft.id}}</a></td>
+                <td><a [routerLink]="['/admin/aircraft/'+aircraft.id]"
+                        class="font-medium no-underline text-blue-500 cursor-pointer">{{aircraft.model}}</a></td>
+                <td>{{ aircraft.manufacturer }}</td>
+                <td>{{ aircraft.averageSpeed + " knots" }}</td>
+                <td>{{ aircraft.buildDate | date }}</td>
+                <td><p-tag [value]="aircraft.status" [severity]="getSeverity(aircraft.status.toUpperCase())"></p-tag>
+                </td>
+                <td>{{ (aircraft.created | date)+ " (" +aircraft.createdBy+")" }}</td>
+                <td>{{ aircraft.modified ? (aircraft.modified | date)+ " (" +aircraft.modifiedBy+")" : '' }}</td>
+                <td>
+                    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="warning"
+                        (click)="editAircraft(aircraft)"></p-button>
+                    <!-- <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
+                        (click)="deletAaircraft(aircraft)"></p-button> -->
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<app-aircraft-form [visible]="aircraftDialog" [aircraft]="aircraft || {}" (saveButtonClicked)="saveAircraft($event)"
+    (hideButtonClicked)="hideDialog()"></app-aircraft-form>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
