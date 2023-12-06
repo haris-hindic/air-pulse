@@ -9,6 +9,7 @@ import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiListResponse;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiUpdateRequest;
+import com.pulse.air.common.model.BaseSearchRequest;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 import com.pulse.air.employee.contract.AbsenceService;
 import com.pulse.air.employee.core.mapper.AbsenceMapper;
@@ -20,7 +21,8 @@ import com.pulse.air.employee.model.absence.AbsenceResponse;
 
 @Service
 public class AbsenceServiceImpl
-		extends BaseCRUDServiceImpl<AbsenceEntity, AbsenceResponse, AbsenceRequest, AbsenceMapper, AbsenceRepository>
+		extends
+		BaseCRUDServiceImpl<AbsenceEntity, AbsenceResponse, AbsenceRequest, BaseSearchRequest, AbsenceMapper, AbsenceRepository>
 		implements AbsenceService {
 
 	private AbsenceRepository absenceRepository;

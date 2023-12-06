@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiUpdateRequest;
+import com.pulse.air.common.model.BaseSearchRequest;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 import com.pulse.air.employee.contract.JobTypeService;
 import com.pulse.air.employee.core.mapper.JobTypeMapper;
@@ -17,7 +18,8 @@ import com.pulse.air.employee.model.jobtype.JobTypeResponse;
 
 @Service
 public class JobTypeServiceImpl
-		extends BaseCRUDServiceImpl<JobTypeEntity, JobTypeResponse, JobTypeRequest, JobTypeMapper, JobTypeRepository>
+		extends
+		BaseCRUDServiceImpl<JobTypeEntity, JobTypeResponse, JobTypeRequest, BaseSearchRequest, JobTypeMapper, JobTypeRepository>
 		implements JobTypeService {
 
 	public JobTypeServiceImpl(final JobTypeMapper mapper, final JobTypeRepository repository) {

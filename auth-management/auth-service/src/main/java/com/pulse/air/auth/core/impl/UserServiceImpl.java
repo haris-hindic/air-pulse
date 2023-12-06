@@ -13,12 +13,14 @@ import com.pulse.air.auth.model.user.UserRequest;
 import com.pulse.air.auth.model.user.UserResponse;
 import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiRequest;
+import com.pulse.air.common.model.BaseSearchRequest;
 import com.pulse.air.commons.enums.Status;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 
 @Service
 public class UserServiceImpl extends
-		BaseCRUDServiceImpl<UserEntity, UserResponse, UserRequest, UserMapper, UserRepository> implements UserService {
+		BaseCRUDServiceImpl<UserEntity, UserResponse, UserRequest, BaseSearchRequest, UserMapper, UserRepository>
+		implements UserService {
 
 	private PasswordEncoder passwordEncoder;
 

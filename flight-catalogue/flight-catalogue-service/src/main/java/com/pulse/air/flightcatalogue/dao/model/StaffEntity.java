@@ -55,6 +55,8 @@ public class StaffEntity implements Serializable {
 	@Column(name = "valid_to")
 	private LocalDateTime validTo;
 
+	private String summary;
+
 	// bi-directional many-to-one association to AircraftEntity
 	@ManyToOne
 	@JoinColumn(name = "aircraft_id", insertable = false, updatable = false)

@@ -9,6 +9,7 @@ import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiListResponse;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiUpdateRequest;
+import com.pulse.air.common.model.BaseSearchRequest;
 import com.pulse.air.commons.enums.Status;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 import com.pulse.air.employee.contract.PositionService;
@@ -22,7 +23,7 @@ import com.pulse.air.employee.model.position.PositionResponse;
 
 @Service
 public class PositionServiceImpl extends
-		BaseCRUDServiceImpl<PositionEntity, PositionResponse, PositionRequest, PositionMapper, PositionRepository>
+		BaseCRUDServiceImpl<PositionEntity, PositionResponse, PositionRequest, BaseSearchRequest, PositionMapper, PositionRepository>
 		implements PositionService {
 
 	private EmployeeRepository employeeRepository;

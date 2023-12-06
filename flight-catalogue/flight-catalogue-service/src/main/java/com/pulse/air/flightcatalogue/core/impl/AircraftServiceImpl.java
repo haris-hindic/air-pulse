@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiUpdateRequest;
-import com.pulse.air.commons.enums.Status;
+import com.pulse.air.common.model.BaseSearchRequest;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 import com.pulse.air.flightcatalogue.contract.AircraftService;
 import com.pulse.air.flightcatalogue.core.mapper.AircraftMapper;
@@ -18,7 +18,8 @@ import com.pulse.air.flightcatalogue.model.aircraft.AircraftResponse;
 
 @Service
 public class AircraftServiceImpl
-		extends BaseCRUDServiceImpl<AircraftEntity, AircraftResponse, AircraftRequest, AircraftMapper, AircraftRepository>
+		extends
+		BaseCRUDServiceImpl<AircraftEntity, AircraftResponse, AircraftRequest, BaseSearchRequest, AircraftMapper, AircraftRepository>
 		implements AircraftService {
 
 	public AircraftServiceImpl(final AircraftMapper mapper, final AircraftRepository repository) {
@@ -27,8 +28,6 @@ public class AircraftServiceImpl
 
 	@Override
 	public void beforeInsert(final AircraftEntity entity, final ApiRequest<AircraftRequest> request) throws ApiException {
-
-		entity.setStatus(Status.ACTIVE.getValue());
 		entity.setCreated(LocalDateTime.now());
 		entity.setCreatedBy(request.getUsername());
 		super.beforeInsert(entity, request);

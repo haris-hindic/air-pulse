@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiListResponse;
 import com.pulse.air.common.model.ApiRequest;
+import com.pulse.air.common.model.BaseSearchRequest;
 import com.pulse.air.commons.rest.BaseCRUDController;
 import com.pulse.air.employee.contract.AbsenceService;
 import com.pulse.air.employee.model.absence.AbsenceRequest;
@@ -16,7 +17,7 @@ import com.pulse.air.employee.model.absence.AbsenceResponse;
 
 @RestController
 @RequestMapping("absence")
-public class AbsenceManagementRest extends BaseCRUDController<AbsenceResponse, AbsenceRequest> {
+public class AbsenceManagementRest extends BaseCRUDController<AbsenceResponse, AbsenceRequest, BaseSearchRequest> {
 
 	private AbsenceService absenceService;
 

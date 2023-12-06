@@ -17,5 +17,6 @@ public class StaffRequest implements Serializable {
 	@NotNull(message = "Valid from is mandatory!")
 	private LocalDateTime validFrom;
 	private LocalDateTime validTo;
-
+	private String summary;
+	private String status;
 }

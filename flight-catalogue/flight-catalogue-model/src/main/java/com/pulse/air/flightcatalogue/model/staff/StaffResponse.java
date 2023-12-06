@@ -19,6 +19,7 @@ public class StaffResponse implements Serializable {
 	private String status;
 	private LocalDateTime validFrom;
 	private LocalDateTime validTo;
+	private String summary;
 
 	// private AircraftEntity aircraft;
 

@@ -2,11 +2,13 @@ package com.pulse.air.employee.core.impl;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiUpdateRequest;
+import com.pulse.air.common.model.BaseSearchRequest;
 import com.pulse.air.commons.enums.Status;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 import com.pulse.air.employee.contract.EmployeeService;
@@ -16,13 +18,28 @@ import com.pulse.air.employee.dao.model.EmployeeEntity;
 import com.pulse.air.employee.model.employee.EmployeeRequest;
 import com.pulse.air.employee.model.employee.EmployeeResponse;
 
+import io.micrometer.common.util.StringUtils;
+
 @Service
 public class EmployeeServiceImpl extends
-		BaseCRUDServiceImpl<EmployeeEntity, EmployeeResponse, EmployeeRequest, EmployeeMapper, EmployeeRepository>
+		BaseCRUDServiceImpl<EmployeeEntity, EmployeeResponse, EmployeeRequest, BaseSearchRequest, EmployeeMapper, EmployeeRepository>
 		implements EmployeeService {
 
 	public EmployeeServiceImpl(final EmployeeMapper mapper, final EmployeeRepository repository) {
 		super(mapper, repository);
+	}
+
+	@Override
+	public Example<EmployeeEntity> getExample(final ApiRequest<BaseSearchRequest> request) {
+		BaseSearchRequest search = request.getObject();
+		if (search != null && StringUtils.isNotEmpty(search.getStatus())) {
+			var example = new EmployeeEntity();
+			example.setStatus(search.getStatus());
+			return Example.of(example);
+		} else {
+			return super.getExample(request);
+		}
+
 	}
 
 	@Override

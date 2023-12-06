@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiUpdateRequest;
+import com.pulse.air.common.model.BaseSearchRequest;
 import com.pulse.air.commons.enums.Status;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 import com.pulse.air.flightcatalogue.contract.FlightService;
@@ -18,7 +19,8 @@ import com.pulse.air.flightcatalogue.model.flight.FlightResponse;
 
 @Service
 public class FlightServiceImpl
-		extends BaseCRUDServiceImpl<FlightEntity, FlightResponse, FlightRequest, FlightMapper, FlightRepository>
+		extends
+		BaseCRUDServiceImpl<FlightEntity, FlightResponse, FlightRequest, BaseSearchRequest, FlightMapper, FlightRepository>
 		implements FlightService {
 
 	public FlightServiceImpl(final FlightMapper mapper, final FlightRepository repository) {

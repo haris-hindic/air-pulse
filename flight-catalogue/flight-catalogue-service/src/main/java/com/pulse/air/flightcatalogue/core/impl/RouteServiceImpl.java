@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiUpdateRequest;
+import com.pulse.air.common.model.BaseSearchRequest;
 import com.pulse.air.commons.enums.Status;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 import com.pulse.air.flightcatalogue.contract.RouteService;
@@ -18,7 +19,8 @@ import com.pulse.air.flightcatalogue.model.route.RouteResponse;
 
 @Service
 public class RouteServiceImpl
-		extends BaseCRUDServiceImpl<RouteEntity, RouteResponse, RouteRequest, RouteMapper, RouteRepository>
+		extends
+		BaseCRUDServiceImpl<RouteEntity, RouteResponse, RouteRequest, BaseSearchRequest, RouteMapper, RouteRepository>
 		implements RouteService {
 
 	public RouteServiceImpl(final RouteMapper mapper, final RouteRepository repository) {

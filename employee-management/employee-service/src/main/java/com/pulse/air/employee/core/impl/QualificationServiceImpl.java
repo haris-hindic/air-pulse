@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiUpdateRequest;
+import com.pulse.air.common.model.BaseSearchRequest;
 import com.pulse.air.commons.enums.Status;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 import com.pulse.air.employee.contract.QualificationService;
@@ -20,7 +21,7 @@ import com.pulse.air.employee.model.qualification.QualificationResponse;
 
 @Service
 public class QualificationServiceImpl extends
-		BaseCRUDServiceImpl<QualificationEntity, QualificationResponse, QualificationRequest, QualificationMapper, QualificationRepository>
+		BaseCRUDServiceImpl<QualificationEntity, QualificationResponse, QualificationRequest, BaseSearchRequest, QualificationMapper, QualificationRepository>
 		implements QualificationService {
 
 	private EmployeeRepository employeeRepository;

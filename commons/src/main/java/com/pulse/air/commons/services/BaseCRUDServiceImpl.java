@@ -9,12 +9,13 @@ import com.pulse.air.common.model.ApiListRequest;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiResponse;
 import com.pulse.air.common.model.ApiUpdateRequest;
+import com.pulse.air.common.model.BaseSearchRequest;
 import com.pulse.air.commons.contract.BaseCRUDService;
 import com.pulse.air.commons.contract.BaseMapper;
 
-public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TMapper extends BaseMapper<TEntity, TResponse, TRequest>, TRepository extends JpaRepository<TEntity, Long>>
-		extends BaseServiceImpl<TEntity, TResponse, TRequest, TMapper, TRepository>
-		implements BaseCRUDService<TResponse, TRequest> {
+public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TSearch extends BaseSearchRequest, TMapper extends BaseMapper<TEntity, TResponse, TRequest>, TRepository extends JpaRepository<TEntity, Long>>
+		extends BaseServiceImpl<TEntity, TResponse, TRequest, TSearch, TMapper, TRepository>
+		implements BaseCRUDService<TResponse, TRequest, TSearch> {
 
 	private TMapper mapper;
 	private TRepository repository;
