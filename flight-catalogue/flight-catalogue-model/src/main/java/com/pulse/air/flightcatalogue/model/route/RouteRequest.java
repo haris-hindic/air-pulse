@@ -20,10 +20,6 @@ public class RouteRequest implements Serializable {
 	@NotNull(message = "Duration is mandatory!")
 	private Long duration;
 	private String note;
-
-	// private List<FlightEntity> flights;
-	// private AircraftEntity aircraft;
-	// private AirportEntity arrivalAirport;
-	// private AirportEntity departureAirport;
+	private String status;
 
 }

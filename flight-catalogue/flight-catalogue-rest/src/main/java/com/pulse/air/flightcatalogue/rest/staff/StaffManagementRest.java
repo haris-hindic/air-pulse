@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiListResponse;
 import com.pulse.air.common.model.ApiRequest;
-import com.pulse.air.common.model.BaseSearchRequest;
 import com.pulse.air.commons.rest.BaseCRUDController;
 import com.pulse.air.flightcatalogue.contract.StaffService;
 import com.pulse.air.flightcatalogue.model.staff.StaffRequest;
 import com.pulse.air.flightcatalogue.model.staff.StaffResponse;
+import com.pulse.air.flightcatalogue.model.staff.StaffSearchRequest;
 
 @RestController
 @RequestMapping("staff")
-public class StaffManagementRest extends BaseCRUDController<StaffResponse, StaffRequest, BaseSearchRequest> {
+public class StaffManagementRest extends BaseCRUDController<StaffResponse, StaffRequest, StaffSearchRequest> {
 
 	private StaffService absenceService;
 

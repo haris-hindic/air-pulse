@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.pulse.air.flightcatalogue.model.route.RouteResponse;
+
 import lombok.Data;
 
 @Data
@@ -12,15 +14,14 @@ public class FlightResponse implements Serializable {
 
 	private Long id;
 	private LocalDateTime arrival;
+	private LocalDateTime departure;
 	private BigDecimal basePrice;
 	private LocalDateTime created;
 	private String createdBy;
-	private LocalDateTime departure;
 	private LocalDateTime modified;
 	private String modifiedBy;
-	private Long routeId;
 	private String status;
+	private Long routeId;
 
-	// private RouteEntity route;
-
+	private RouteResponse route;
 }

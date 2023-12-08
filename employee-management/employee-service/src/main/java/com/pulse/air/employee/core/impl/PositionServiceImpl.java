@@ -2,6 +2,8 @@ package com.pulse.air.employee.core.impl;
 
 import java.time.LocalDateTime;
 
+import org.apache.commons.lang.StringUtils;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +40,21 @@ public class PositionServiceImpl extends
 		this.jobTypeRepository = jobTypeRepository;
 		this.positionRepository = repository;
 		this.positionMapper = mapper;
+	}
+
+	@Override
+	public Example<PositionEntity> getExample(final ApiRequest<BaseSearchRequest> request) {
+		BaseSearchRequest search = request.getObject();
+		if (search == null) {
+			return super.getExample(request);
+		}
+
+		var example = new PositionEntity();
+		if (StringUtils.isNotEmpty(search.getStatus())) {
+			example.setStatus(search.getStatus());
+		}
+
+		return Example.of(example);
 	}
 
 	@Override

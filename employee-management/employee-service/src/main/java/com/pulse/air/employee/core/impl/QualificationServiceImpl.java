@@ -2,6 +2,8 @@ package com.pulse.air.employee.core.impl;
 
 import java.time.LocalDateTime;
 
+import org.apache.commons.lang.StringUtils;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import com.pulse.air.employee.dao.model.QualificationEntity;
 import com.pulse.air.employee.model.qualification.QualificationRequest;
 import com.pulse.air.employee.model.qualification.QualificationResponse;
 
+
 @Service
 public class QualificationServiceImpl extends
 		BaseCRUDServiceImpl<QualificationEntity, QualificationResponse, QualificationRequest, BaseSearchRequest, QualificationMapper, QualificationRepository>
@@ -30,6 +33,21 @@ public class QualificationServiceImpl extends
 			final EmployeeRepository employeeRepository) {
 		super(mapper, repository);
 		this.employeeRepository = employeeRepository;
+	}
+
+	@Override
+	public Example<QualificationEntity> getExample(final ApiRequest<BaseSearchRequest> request) {
+		BaseSearchRequest search = request.getObject();
+		if (search == null) {
+			return super.getExample(request);
+		}
+
+		var example = new QualificationEntity();
+		if (StringUtils.isNotEmpty(search.getStatus())) {
+			example.setStatus(search.getStatus());
+		}
+
+		return Example.of(example);
 	}
 
 	@Override

@@ -2,6 +2,8 @@ package com.pulse.air.flightcatalogue.core.impl;
 
 import java.time.LocalDateTime;
 
+import org.apache.commons.lang.StringUtils;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.pulse.air.common.model.ApiException;
@@ -25,6 +27,21 @@ public class FlightServiceImpl
 
 	public FlightServiceImpl(final FlightMapper mapper, final FlightRepository repository) {
 		super(mapper, repository);
+	}
+
+	@Override
+	public Example<FlightEntity> getExample(final ApiRequest<BaseSearchRequest> request) {
+		BaseSearchRequest search = request.getObject();
+		if (search == null) {
+			return super.getExample(request);
+		}
+
+		var example = new FlightEntity();
+		if (StringUtils.isNotEmpty(search.getStatus())) {
+			example.setStatus(search.getStatus());
+		}
+
+		return Example.of(example);
 	}
 
 	@Override

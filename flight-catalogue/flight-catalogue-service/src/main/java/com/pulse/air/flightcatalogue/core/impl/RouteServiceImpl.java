@@ -2,13 +2,14 @@ package com.pulse.air.flightcatalogue.core.impl;
 
 import java.time.LocalDateTime;
 
+import org.apache.commons.lang.StringUtils;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiUpdateRequest;
 import com.pulse.air.common.model.BaseSearchRequest;
-import com.pulse.air.commons.enums.Status;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 import com.pulse.air.flightcatalogue.contract.RouteService;
 import com.pulse.air.flightcatalogue.core.mapper.RouteMapper;
@@ -28,9 +29,22 @@ public class RouteServiceImpl
 	}
 
 	@Override
-	public void beforeInsert(final RouteEntity entity, final ApiRequest<RouteRequest> request) throws ApiException {
+	public Example<RouteEntity> getExample(final ApiRequest<BaseSearchRequest> request) {
+		BaseSearchRequest search = request.getObject();
+		if (search == null) {
+			return super.getExample(request);
+		}
 
-		entity.setStatus(Status.ACTIVE.getValue());
+		var example = new RouteEntity();
+		if (StringUtils.isNotEmpty(search.getStatus())) {
+			example.setStatus(search.getStatus());
+		}
+
+		return Example.of(example);
+	}
+
+	@Override
+	public void beforeInsert(final RouteEntity entity, final ApiRequest<RouteRequest> request) throws ApiException {
 		entity.setCreated(LocalDateTime.now());
 		entity.setCreatedBy(request.getUsername());
 		super.beforeInsert(entity, request);

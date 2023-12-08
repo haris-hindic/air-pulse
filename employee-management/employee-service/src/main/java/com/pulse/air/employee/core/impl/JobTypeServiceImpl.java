@@ -2,6 +2,8 @@ package com.pulse.air.employee.core.impl;
 
 import java.time.LocalDateTime;
 
+import org.apache.commons.lang.StringUtils;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.pulse.air.common.model.ApiException;
@@ -24,6 +26,21 @@ public class JobTypeServiceImpl
 
 	public JobTypeServiceImpl(final JobTypeMapper mapper, final JobTypeRepository repository) {
 		super(mapper, repository);
+	}
+
+	@Override
+	public Example<JobTypeEntity> getExample(final ApiRequest<BaseSearchRequest> request) {
+		BaseSearchRequest search = request.getObject();
+		if (search == null) {
+			return super.getExample(request);
+		}
+
+		var example = new JobTypeEntity();
+		if (StringUtils.isNotEmpty(search.getStatus())) {
+			example.setStatus(search.getStatus());
+		}
+
+		return Example.of(example);
 	}
 
 	@Override

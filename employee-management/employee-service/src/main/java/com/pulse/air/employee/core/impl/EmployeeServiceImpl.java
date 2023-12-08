@@ -2,6 +2,7 @@ package com.pulse.air.employee.core.impl;
 
 import java.time.LocalDateTime;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,6 @@ import com.pulse.air.employee.dao.model.EmployeeEntity;
 import com.pulse.air.employee.model.employee.EmployeeRequest;
 import com.pulse.air.employee.model.employee.EmployeeResponse;
 
-import io.micrometer.common.util.StringUtils;
-
 @Service
 public class EmployeeServiceImpl extends
 		BaseCRUDServiceImpl<EmployeeEntity, EmployeeResponse, EmployeeRequest, BaseSearchRequest, EmployeeMapper, EmployeeRepository>
@@ -32,14 +31,16 @@ public class EmployeeServiceImpl extends
 	@Override
 	public Example<EmployeeEntity> getExample(final ApiRequest<BaseSearchRequest> request) {
 		BaseSearchRequest search = request.getObject();
-		if (search != null && StringUtils.isNotEmpty(search.getStatus())) {
-			var example = new EmployeeEntity();
-			example.setStatus(search.getStatus());
-			return Example.of(example);
-		} else {
+		if (search == null) {
 			return super.getExample(request);
 		}
 
+		var example = new EmployeeEntity();
+		if (StringUtils.isNotEmpty(search.getStatus())) {
+			example.setStatus(search.getStatus());
+		}
+
+		return Example.of(example);
 	}
 
 	@Override

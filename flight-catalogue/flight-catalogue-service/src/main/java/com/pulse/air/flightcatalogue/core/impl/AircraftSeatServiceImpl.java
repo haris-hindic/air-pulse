@@ -2,6 +2,8 @@ package com.pulse.air.flightcatalogue.core.impl;
 
 import java.time.LocalDateTime;
 
+import org.apache.commons.lang.StringUtils;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,21 @@ public class AircraftSeatServiceImpl
 		this.mapper = mapper;
 		this.aircraftSeatrepository = repository;
 		this.aircraftRepository = aircraftRepository;
+	}
+
+	@Override
+	public Example<AircraftSeatEntity> getExample(final ApiRequest<BaseSearchRequest> request) {
+		BaseSearchRequest search = request.getObject();
+		if (search == null) {
+			return super.getExample(request);
+		}
+
+		var example = new AircraftSeatEntity();
+		if (StringUtils.isNotEmpty(search.getStatus())) {
+			example.setStatus(search.getStatus());
+		}
+
+		return Example.of(example);
 	}
 
 	@Override

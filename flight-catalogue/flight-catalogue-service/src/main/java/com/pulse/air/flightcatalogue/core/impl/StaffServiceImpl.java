@@ -2,6 +2,8 @@ package com.pulse.air.flightcatalogue.core.impl;
 
 import java.time.LocalDateTime;
 
+import org.apache.commons.lang.StringUtils;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +11,6 @@ import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiListResponse;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiUpdateRequest;
-import com.pulse.air.common.model.BaseSearchRequest;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 import com.pulse.air.flightcatalogue.contract.StaffService;
 import com.pulse.air.flightcatalogue.core.mapper.StaffMapper;
@@ -18,11 +19,12 @@ import com.pulse.air.flightcatalogue.dao.StaffRepository;
 import com.pulse.air.flightcatalogue.dao.model.StaffEntity;
 import com.pulse.air.flightcatalogue.model.staff.StaffRequest;
 import com.pulse.air.flightcatalogue.model.staff.StaffResponse;
+import com.pulse.air.flightcatalogue.model.staff.StaffSearchRequest;
 
 @Service
 public class StaffServiceImpl
 		extends
-		BaseCRUDServiceImpl<StaffEntity, StaffResponse, StaffRequest, BaseSearchRequest, StaffMapper, StaffRepository>
+		BaseCRUDServiceImpl<StaffEntity, StaffResponse, StaffRequest, StaffSearchRequest, StaffMapper, StaffRepository>
 		implements StaffService {
 
 	private StaffMapper mapper;
@@ -34,6 +36,25 @@ public class StaffServiceImpl
 		this.mapper = mapper;
 		this.repository = repository;
 		this.aircraftRepository = aircraftRepository;
+	}
+
+	@Override
+	public Example<StaffEntity> getExample(final ApiRequest<StaffSearchRequest> request) {
+		StaffSearchRequest search = request.getObject();
+		if (search == null) {
+			return super.getExample(request);
+		}
+
+		var example = new StaffEntity();
+		if (StringUtils.isNotEmpty(search.getStatus())) {
+			example.setStatus(search.getStatus());
+		}
+
+		if (search.getAircraftId() != null) {
+			example.setAircraftId(search.getAircraftId());
+		}
+
+		return Example.of(example);
 	}
 
 	@Override
