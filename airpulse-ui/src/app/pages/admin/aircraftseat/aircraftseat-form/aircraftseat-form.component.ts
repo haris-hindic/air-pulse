@@ -112,11 +112,11 @@ export class AircraftseatFormComponent {
       case 'FIRST CLASS':
         return 'success';
       case 'BUSINESS':
-        return 'primary';
-      case 'PREMIUM ECONOMY':
         return 'info';
+      case 'PREMIUM ECONOMY':
+        return 'warning';
       case 'ECONOMY':
-        return 'secondary';
+        return 'danger';
     }
 
     return 'N/A';

@@ -23,6 +23,10 @@ import { AircraftseatComponent } from './aircraftseat/aircraftseat.component';
 import { AircraftseatFormComponent } from './aircraftseat/aircraftseat-form/aircraftseat-form.component';
 import { StaffComponent } from './staff/staff.component';
 import { StaffFormComponent } from './staff/staff-form/staff-form.component';
+import { RouteComponent } from './route/route.component';
+import { RouteFormComponent } from './route/route-form/route-form.component';
+import { FlightComponent } from './flight/flight.component';
+import { FlightFormComponent } from './flight/flight-form/flight-form.component';
 
 @NgModule({
     imports: [
@@ -36,7 +40,9 @@ import { StaffFormComponent } from './staff/staff-form/staff-form.component';
                     { path: 'aircraft', component: AircraftComponent },
                     { path: 'aircraft/:id', component: AircraftOverviewComponent },
                     { path: 'airport', component: AirportComponent },
+                    { path: 'route', component: RouteComponent },
                     { path: 'jobtype', component: JobtypeComponent },
+                    { path: 'flight', component: FlightComponent },
                     { path: '**', redirectTo: 'dashboard' },
                 ]
             },
@@ -46,7 +52,7 @@ import { StaffFormComponent } from './staff/staff-form/staff-form.component';
         SidebarModule
     ],
     declarations: [
-        AdminComponent, SideMenuComponent, EmployeeOverviewComponent, DashboardComponent, JobtypeComponent, JobtypeFormComponent, EmployeeComponent, EmployeeFormComponent, AbsenceComponent, AbsenceFormComponent, PositionComponent, PositionFormComponent, AirportComponent, AirportFormComponent, AircraftComponent, AircraftFormComponent, AircraftOverviewComponent, AircraftseatComponent, AircraftseatFormComponent, StaffComponent, StaffFormComponent
+        AdminComponent, SideMenuComponent, EmployeeOverviewComponent, DashboardComponent, JobtypeComponent, JobtypeFormComponent, EmployeeComponent, EmployeeFormComponent, AbsenceComponent, AbsenceFormComponent, PositionComponent, PositionFormComponent, AirportComponent, AirportFormComponent, AircraftComponent, AircraftFormComponent, AircraftOverviewComponent, AircraftseatComponent, AircraftseatFormComponent, StaffComponent, StaffFormComponent, RouteComponent, RouteFormComponent, FlightComponent, FlightFormComponent
     ],
     exports: []
 })

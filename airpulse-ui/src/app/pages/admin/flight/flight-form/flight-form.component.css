@@ -1,0 +1,17 @@
+::ng-deep .p-timepicker .p-datepicker table td {
+    padding: 0.15rem !important;
+}
+
+::ng-deep .p-datepicker table td>span {
+    width: 1rem;
+    height: 1rem;
+}
+
+::ng-deep .p-datepicker table {
+    font-size: 10pt;
+    margin: -0.143rem 0;
+}
+
+::ng-deep .p-timepicker .p-datepicker .p-datepicker-header {
+    padding: 0.1rem;
+}

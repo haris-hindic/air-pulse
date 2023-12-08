@@ -4,7 +4,7 @@
         currentPageReportTemplate="{first} to {last} of {totalRecords}" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0">Manage aircraftseats</h5>
+                <h5 class="m-0">Manage Aircraft seats</h5>
                 <span class="p-input-icon-left">
                     <p-button icon="pi pi-plus" [rounded]="true" [text]="true" (click)="openNew()"></p-button>
                     <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true"
@@ -40,7 +40,7 @@
                 <td>{{aircraftseat.id}}</td>
                 <td>{{aircraftseat.seatClass}}</td>
                 <td>{{aircraftseat.quantity}}</td>
-                <td>{{aircraftseat.priceModifier | percent }}</td>
+                <td>{{aircraftseat.priceModifier}}</td>
                 <td><p-tag [value]="aircraftseat.status"
                         [severity]="getSeverity(aircraftseat.status.toUpperCase())"></p-tag>
                 </td>

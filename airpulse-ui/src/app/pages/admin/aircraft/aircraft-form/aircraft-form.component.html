@@ -1,20 +1,7 @@
-<p-dialog [(visible)]="visible" [style]="{ width: '900px' }" header="Employee details" [modal]="true"
+<p-dialog [(visible)]="visible" [style]="{ width: '900px' }" header="Aircraft details" [modal]="true"
     (onHide)="hideDialog()" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <form id="form" [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
-
-
-            <div class="field">
-                <label for="manufacturer">Manufacturer</label>
-                <input id="manufacturer" formControlName="manufacturer" type="text" pInputText class="w-full" [ngClass]="{'ng-invalid ng-dirty' : !form.get('manufacturer')?.valid &&
-                        form.get('manufacturer')?.touched}">
-            </div>
-
-            <div class="field">
-                <label for="model">Model</label>
-                <input id="model" formControlName="model" type="text" pInputText class="w-full" [ngClass]="{'ng-invalid ng-dirty' : !form.get('model')?.valid &&
-                        form.get('model')?.touched}">
-            </div>
 
             <div class="field">
                 <label for="status">Status</label>
@@ -28,6 +15,18 @@
                     </ng-template>
                 </p-dropdown>
                 <small class="p-error" *ngIf="form.get('status')!.hasError('required')">Status is required.</small>
+            </div>
+
+            <div class="field">
+                <label for="manufacturer">Manufacturer</label>
+                <input id="manufacturer" formControlName="manufacturer" type="text" pInputText class="w-full" [ngClass]="{'ng-invalid ng-dirty' : !form.get('manufacturer')?.valid &&
+                        form.get('manufacturer')?.touched}">
+            </div>
+
+            <div class="field">
+                <label for="model">Model</label>
+                <input id="model" formControlName="model" type="text" pInputText class="w-full" [ngClass]="{'ng-invalid ng-dirty' : !form.get('model')?.valid &&
+                        form.get('model')?.touched}">
             </div>
 
             <div class="formgrid grid">

@@ -117,6 +117,7 @@ export class StaffFormComponent {
     if (this.staff.id) {
       this.form.get('employeeId')?.patchValue(this.staff.employeeId);
       this.form.get('aircraftId')?.patchValue(this.staff.aircraftId);
+      this.form.get('status')?.patchValue(this.staff.status);
       this.form.get('dateRange')?.patchValue([new Date(this.staff.validFrom), new Date(this.staff.validTo)]);
     } else {
       this.initForm();
@@ -143,10 +144,11 @@ export class StaffFormComponent {
     request.validTo = this.form.get('dateRange')?.value[1];
     const selectedEmployee = this.employees.find(x => x.id === request.employeeId);
     request.summary = selectedEmployee?.firstName + " " + selectedEmployee?.lastName;
+    request.status = this.form.get('status')?.value;
 
     return request;
   }
 
-  onSubmit() { this.saveButtonClicked.emit(this.populateRequest()) }
+  onSubmit() { this.saveButtonClicked.emit(this.populateRequest()); }
   hideDialog() { this.hideButtonClicked.emit(); }
 }

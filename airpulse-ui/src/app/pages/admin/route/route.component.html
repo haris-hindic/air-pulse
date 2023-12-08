@@ -1,0 +1,72 @@
+<div *ngIf="routes" class="card">
+    <p-table id="myTable" #dt [value]="routes" [rows]="5" [paginator]="true"
+        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+        [tableStyle]="{ 'min-width': '70rem' }" [(selection)]="selectedRoutes" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="{first} to {last} of {totalRecords}" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Manage routes</h5>
+                <span class="p-input-icon-left">
+                    <p-button icon="pi pi-plus" [rounded]="true" [text]="true" (click)="openNew()"></p-button>
+                    <!-- <p-button icon="pi pi-ban" severity="danger" [rounded]="true" [text]="true"
+              (click)="deactivateSelectedProducts()"
+              [disabled]="!selectedroutes || !selectedroutes.length"></p-button> -->
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <!-- <th style="width:2%">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th> -->
+                <th pSortableColumn="id" style="width:3%">Id <p-sortIcon field="id"></p-sortIcon></th>
+                <!-- <th>Image</th> -->
+                <th pSortableColumn="aircraftDetails" style="width:10%">Aircraft <p-sortIcon
+                        field="aircraftDetails"></p-sortIcon>
+                </th>
+                <th pSortableColumn="departureAirportDetails" style="width:12%">Departure Airport <p-sortIcon
+                        field="departureAirportDetails"></p-sortIcon></th>
+                <th pSortableColumn="arrivalAirportDetails" style="width:12%">Arrival Airport <p-sortIcon
+                        field="arrivalAirportDetails"></p-sortIcon></th>
+                <th pSortableColumn="distance" style="width:3%">Distance <p-sortIcon field="distance"></p-sortIcon>
+                </th>
+                <th pSortableColumn="duration" style="width:3%">Duration <p-sortIcon field="duration"></p-sortIcon>
+                </th>
+                <th style="width:10%">Note</th>
+                <th style="width:10%">Created</th>
+                <th style="width:10%">Modified</th>
+                <th style="width:5%">Status</th>
+
+                <th style="width:5%"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-route>
+            <tr>
+                <!-- <td>
+            <p-tableCheckbox [value]="route"></p-tableCheckbox>
+          </td> -->
+                <td>{{ route.id }}</td>
+                <td>{{ route.aircraftDetails }}</td>
+                <td>{{ route.departureAirportDetails }}</td>
+                <td>{{ route.arrivalAirportDetails }}</td>
+                <td>{{ route.distance +" km" }}</td>
+                <td>{{ route.duration +" hr"}}</td>
+                <td>{{ route.note }}</td>
+                <td>{{ (route.created | date)+ " (" +route.createdBy+")" }}</td>
+                <td>{{ route.modified ? (route.modified | date)+ " (" +route.modifiedBy+")" : '' }}</td>
+                <td><p-tag [value]="route.status" [severity]="getSeverity(route.status.toUpperCase())"></p-tag></td>
+                <td>
+                    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="warning"
+                        (click)="editRoute(route)"></p-button>
+                    <!-- <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
+              (click)="deleteProduct(route)"></p-button> -->
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<app-route-form [visible]="routeDialog" [route]="route || {}" (saveButtonClicked)="saveRoute($event)"
+    (hideButtonClicked)="hideDialog()"></app-route-form>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

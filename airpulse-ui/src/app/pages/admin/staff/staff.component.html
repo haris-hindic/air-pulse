@@ -4,7 +4,7 @@
         currentPageReportTemplate="{first} to {last} of {totalRecords}" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0">Manage staffs</h5>
+                <h5 class="m-0">Manage staff</h5>
                 <span class="p-input-icon-left">
                     <p-button icon="pi pi-plus" [rounded]="true" [text]="true" (click)="openNew()"></p-button>
                     <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true"
@@ -37,7 +37,7 @@
                 <td>{{staff.id}}</td>
                 <td><a [routerLink]="['/admin/employee/'+staff.employeeId]"
                         class="font-medium no-underline text-blue-500 cursor-pointer">{{staff.summary}}</a></td>
-                <td>{{ (staff.startDate | date) + "-" + (staff.endDate | date) }}</td>
+                <td>{{ (staff.validFrom | date) + "-" + (staff.validTo | date) }}</td>
                 <td><p-tag [value]="staff.status" [severity]="getSeverity(staff.status.toUpperCase())"></p-tag>
                 </td>
                 <td>{{ (staff.created | date)+ " (" +staff.createdBy+")" }}</td>

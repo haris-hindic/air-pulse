@@ -6,7 +6,7 @@
                 <label for="status">Seat class</label>
                 <p-dropdown formControlName="seatClass" inputId="seatClass" [options]="seatClasses">
                     <ng-template pTemplate="seatClass">
-                        <p-tag [value]="aircraftseat.seatClass"
+                        <p-tag [value]="aircraftseat.seatClass"q
                             [severity]="getSeverity(aircraftseat.seatClass.toUpperCase())"></p-tag>
                     </ng-template>
                     <ng-template let-option pTemplate="item">

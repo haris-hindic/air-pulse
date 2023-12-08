@@ -21,12 +21,12 @@ export class SideMenuComponent implements OnInit {
       {
         separator: true, items: [
           { label: 'Dashboard', icon: 'pi pi-fw pi-bookmark', routerLink: ['/admin/dashboard'], ...this.itemOptions },
-          { label: 'Employee', icon: 'pi pi-fw pi-id-card', routerLink: ['employee'], ...this.itemOptions },
-          { label: 'Job Type', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['jobtype'], ...this.itemOptions },
-          { label: 'Aircraft', icon: 'pi pi-fw pi-check-square', routerLink: ['aircraft'], ...this.itemOptions },
-          { label: 'Airport', icon: 'pi pi-fw pi-box', routerLink: ['airport'], ...this.itemOptions },
-          { label: 'Table', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table'], ...this.itemOptions },
-          { label: 'List', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/list'], ...this.itemOptions }]
+          { label: 'Employees', icon: 'pi pi-fw pi-id-card', routerLink: ['employee'], ...this.itemOptions },
+          { label: 'Job Types', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['jobtype'], ...this.itemOptions },
+          { label: 'Aircrafts', icon: 'pi pi-fw pi-check-square', routerLink: ['aircraft'], ...this.itemOptions },
+          { label: 'Airports', icon: 'pi pi-fw pi-box', routerLink: ['airport'], ...this.itemOptions },
+          { label: 'Routes', icon: 'pi pi-fw pi-table', routerLink: ['route'], ...this.itemOptions },
+          { label: 'Flights', icon: 'pi pi-fw pi-list', routerLink: ['flight'], ...this.itemOptions }]
       }
     ];
   }
