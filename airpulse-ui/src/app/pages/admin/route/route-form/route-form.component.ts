@@ -67,7 +67,7 @@ export class RouteFormComponent {
         next: (result) => {
           this.aircrafts = result;
           this.aircraftsLov = result.map(x => {
-            return { label: x.model + " (" + x.manufacturer + ")", value: x.id }
+            return { label: x.model + " (" + x.manufacturer + ")", value: x.id };
           });
         }, error: (error) => {
           this.messageToast.showError("Error", error);
@@ -85,7 +85,7 @@ export class RouteFormComponent {
         next: (result) => {
           this.airports = result;
           this.airportsLov = result.map(x => {
-            return { label: x.name + " (" + x.iataCode + ")", value: x.id }
+            return { label: x.name + " (" + x.iataCode + ")", value: x.id };
           });
         }, error: (error) => {
           this.messageToast.showError("Error", error);
@@ -104,8 +104,8 @@ export class RouteFormComponent {
       aircraftId: ['', Validators.required],
       departureAirportId: ['', Validators.required],
       arrivalAirportId: [{ value: '', disabled: true }, Validators.required],
-      distance: [0, Validators.required],
-      duration: [0, Validators.required],
+      distance: [1, Validators.required],
+      duration: [1, Validators.required],
       note: ['', Validators.required],
       status: ['', Validators.required],
     });
@@ -121,7 +121,7 @@ export class RouteFormComponent {
     const airportsWihtoutSelectedForDeparture = this.airports.filter(x => x.id !== departureAirport);
     this.arrivalAirportsLov = [];
     this.arrivalAirportsLov = airportsWihtoutSelectedForDeparture.map(x => {
-      return { label: x.name + " (" + x.iataCode + ")", value: x.id }
+      return { label: x.name + " (" + x.iataCode + ")", value: x.id };
     });
     this.form.get('arrivalAirportId')?.enable();
   }
@@ -154,7 +154,7 @@ export class RouteFormComponent {
     return 'N/A';
   }
 
-  onSubmit() { this.submitted = true; this.saveButtonClicked.emit(this.form.value) }
+  onSubmit() { this.submitted = true; this.saveButtonClicked.emit(this.form.value); }
   hideDialog() { this.hideButtonClicked.emit(); }
 }
 

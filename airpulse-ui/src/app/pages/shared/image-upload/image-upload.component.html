@@ -1,0 +1,12 @@
+<p-dialog [(visible)]="visible" [style]="{ width: '900px' }" header="Image upload" [modal]="true"
+  (onHide)="hideDialog()" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <p-fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)="readFile($event)"></p-fileUpload>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" form="form" icon="pi pi-check" class="p-button-text" (click)="saveImage()"
+      [disabled]="!selectedImage"></button>
+  </ng-template>
+</p-dialog>

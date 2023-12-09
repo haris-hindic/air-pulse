@@ -11,6 +11,7 @@ export class EmployeeResponse {
     modifiedBy!: string;
     phoneNumber!: string;
     status!: string;
+    image!: string;
 }
 
 export class EmployeeRequest {
@@ -20,4 +21,18 @@ export class EmployeeRequest {
     gender!: string;
     lastName!: string;
     phoneNumber!: string;
+    imageData!: string;
+
+    public static createFromResponse(employeeResponse: EmployeeResponse) {
+        const emp = new EmployeeRequest();
+
+        emp.dateOfBirth = employeeResponse.dateOfBirth;
+        emp.email = employeeResponse.email;
+        emp.firstName = employeeResponse.firstName;
+        emp.gender = employeeResponse.gender;
+        emp.lastName = employeeResponse.lastName;
+        emp.phoneNumber = employeeResponse.phoneNumber;
+
+        return emp;
+    }
 }

@@ -26,38 +26,47 @@ import { HttpClientModule } from '@angular/common/http';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CalendarModule } from 'primeng/calendar';
+import { ImageUploadComponent } from './image-upload/image-upload.component';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
-    imports: [],
-    declarations: [],
-    exports: [CommonModule,
-        ButtonModule,
-        CheckboxModule,
-        InputTextModule,
-        FormsModule,
-        RouterModule,
-        DividerModule,
-        CardModule,
-        BadgeModule,
-        SkeletonModule,
-        AvatarModule,
-        TabViewModule,
-        ChipModule,
-        ImageModule,
-        DialogModule,
-        MenuModule,
-        TableModule,
-        ConfirmDialogModule,
-        TagModule,
-        ToastModule,
-        ToolbarModule,
-        RatingModule,
-        DropdownModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        InputTextareaModule,
-        InputNumberModule,
-        CalendarModule
-    ]
+  imports: [
+    DialogModule,
+    FileUploadModule,
+    ImageModule
+  ],
+  declarations: [
+    ImageUploadComponent
+  ],
+  exports: [CommonModule,
+    ButtonModule,
+    CheckboxModule,
+    InputTextModule,
+    FormsModule,
+    RouterModule,
+    DividerModule,
+    CardModule,
+    BadgeModule,
+    SkeletonModule,
+    AvatarModule,
+    TabViewModule,
+    ChipModule,
+    ImageModule,
+    DialogModule,
+    MenuModule,
+    TableModule,
+    ConfirmDialogModule,
+    TagModule,
+    ToastModule,
+    ToolbarModule,
+    RatingModule,
+    DropdownModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    InputTextareaModule,
+    InputNumberModule,
+    CalendarModule,
+    ImageUploadComponent
+  ]
 })
 export class SharedModule { }

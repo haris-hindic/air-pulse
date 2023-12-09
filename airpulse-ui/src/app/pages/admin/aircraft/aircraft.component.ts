@@ -6,6 +6,7 @@ import { AircraftResponse, AircraftRequest } from '../model/aircraft.model';
 import { AircraftService } from '../services/aircraft.service';
 
 @Component({
+  providers: [ConfirmationService],
   selector: 'app-aircraft',
   templateUrl: './aircraft.component.html',
   styleUrls: ['./aircraft.component.css']
@@ -108,7 +109,7 @@ export class AircraftComponent {
         error: (error) => {
           this.handleError(error);
         }
-      })
+      });
     } else {
       this.aircraftService.create(aircraftRequest).subscribe({
         next: () => {

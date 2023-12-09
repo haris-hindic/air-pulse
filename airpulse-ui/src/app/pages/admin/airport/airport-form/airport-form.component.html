@@ -9,6 +9,20 @@
                 <small class="p-error" *ngIf="form.get('name')!.hasError('required')">Name is required.</small>
             </div>
 
+            <div class="field">
+                <label for="status">Status</label>
+                <p-dropdown formControlName="status" inputId="status" [options]="statuses">
+                    <ng-template pTemplate="aircraft">
+                        <p-tag [value]="airport.status.toUpperCase()"
+                            [severity]="getSeverity(airport.status.toUpperCase())"></p-tag>
+                    </ng-template>
+                    <ng-template let-option pTemplate="item">
+                        <p-tag [value]="option.label" [severity]="getSeverity(option.label)"></p-tag>
+                    </ng-template>
+                </p-dropdown>
+                <small class="p-error" *ngIf="form.get('status')!.hasError('required')">Status is required.</small>
+            </div>
+
             <div class="formgrid grid mb-1">
                 <div class="col-6">
                     <label for="country">Country</label>

@@ -6,6 +6,7 @@ import { FlightResponse, FlightRequest } from '../model/flight.model';
 import { FlightService } from '../services/flight.service';
 
 @Component({
+  providers: [ConfirmationService],
   selector: 'app-flight',
   templateUrl: './flight.component.html',
   styleUrls: ['./flight.component.css']
@@ -108,7 +109,7 @@ export class FlightComponent {
         error: (error) => {
           this.handleError(error);
         }
-      })
+      });
     } else {
       this.flightService.create(flightRequest).subscribe({
         next: () => {

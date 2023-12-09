@@ -6,6 +6,7 @@ import { MessageToast } from '../../shared/services/message-toast.service';
 import { LoaderService } from '../../shared/services/loader.service';
 
 @Component({
+  providers: [ConfirmationService],
   selector: 'app-jobtype',
   templateUrl: './jobtype.component.html',
   styleUrls: ['./jobtype.component.css']
@@ -94,7 +95,7 @@ export class JobtypeComponent {
         error: (error) => {
           this.handleError(error);
         }
-      })
+      });
     } else {
       this.jobtypeService.create(jobTypeRequest).subscribe({
         next: () => {

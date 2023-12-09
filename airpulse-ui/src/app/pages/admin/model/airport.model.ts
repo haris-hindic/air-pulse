@@ -18,4 +18,5 @@ export class AirportRequest {
     iataCode!: string;
     icaoCode!: string;
     name!: string;
+    status!: string;
 }

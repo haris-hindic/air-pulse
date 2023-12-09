@@ -6,6 +6,7 @@ import { ConfirmationService } from 'primeng/api';
 import { LoaderService } from '../../shared/services/loader.service';
 
 @Component({
+  providers: [ConfirmationService],
   selector: 'app-employee',
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.css']
@@ -73,11 +74,13 @@ export class EmployeeComponent {
   }
 
   deleteEmployee(employee: any) {
+    console.log('object :>> ', this.confirmationService);
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete ' + employee.firstName + " " + employee.lastName + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+        console.log('aaa');
         this.employeeService.delete(employee.id).subscribe({
           next: result => {
             this.messageToast.showSuccess('Successful', 'Employee deleted.');
@@ -108,7 +111,7 @@ export class EmployeeComponent {
         error: (error) => {
           this.handleError(error);
         }
-      })
+      });
     } else {
       this.employeeService.create(employeeRequest).subscribe({
         next: () => {

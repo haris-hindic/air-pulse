@@ -7,6 +7,7 @@ import { PositionRequest, PositionResponse } from '../model/position.model';
 import { PositionService } from '../services/position.service';
 
 @Component({
+  providers: [ConfirmationService],
   selector: 'app-position',
   templateUrl: './position.component.html',
   styleUrls: ['./position.component.css']
@@ -111,7 +112,7 @@ export class PositionComponent {
         error: (error) => {
           this.handleError(error);
         }
-      })
+      });
     } else {
       this.positionService.create(positionRequest).subscribe({
         next: () => {

@@ -16,6 +16,7 @@ export class AircraftOverviewComponent {
   modified!: string | null;
   aircraftDialog: boolean = false;
   statuses: { label: string; value: string; }[];
+  imageDialog: boolean = false;
 
   constructor(private aircraftService: AircraftService,
     private route: ActivatedRoute,
@@ -34,15 +35,13 @@ export class AircraftOverviewComponent {
         this.aircraft = result;
         this.statuses.push({ label: result.status.toUpperCase(), value: result.status });
         this.date = new Date(this.aircraft.buildDate);
-        this.created = new Date(this.aircraft.created).toDateString() + " (" + this.aircraft.createdBy + ")";
-        this.modified = this.aircraft.modified ? new Date(this.aircraft.modified).toDateString() + " (" + this.aircraft.modifiedBy + ")" : '';
-        console.log('this.created :>> ', this.created);
-        console.log('this.modified :>> ', this.modified);
+        this.created = new Date(this.aircraft.created).toUTCString() + " (" + this.aircraft.createdBy + ")";
+        this.modified = this.aircraft.modified ? new Date(this.aircraft.modified).toUTCString() + " (" + this.aircraft.modifiedBy + ")" : '';
       },
       error: (err) => {
         this.handleError(err);
       },
-    })
+    });
   }
 
   editAircraft() {
@@ -51,6 +50,14 @@ export class AircraftOverviewComponent {
 
   hideDialog() {
     this.aircraftDialog = false;
+  }
+
+  hideImageDialog() {
+    this.imageDialog = false;
+  }
+
+  changeImage() {
+    this.imageDialog = true;
   }
 
   saveAircraft(aircraftRequest: AircraftRequest) {
@@ -64,7 +71,14 @@ export class AircraftOverviewComponent {
       error: (error) => {
         this.handleError(error);
       }
-    })
+    });
+  }
+
+  saveImage(image: any) {
+    const aircraftRequest = AircraftRequest.createFromResponse(this.aircraft);
+    aircraftRequest.imageData = image;
+    this.hideImageDialog();
+    this.saveAircraft(aircraftRequest);
   }
 
   handleError(error: any) {

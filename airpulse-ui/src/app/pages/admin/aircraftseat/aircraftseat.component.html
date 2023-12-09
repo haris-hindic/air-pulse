@@ -59,6 +59,7 @@
 </div>
 
 <app-aircraftseat-form [visible]="aircraftseatDialog" [aircraft]="aircraft" [aircraftseat]="aircraftseat || {}"
-    (saveButtonClicked)="saveAircraftseat($event)" (hideButtonClicked)="hideDialog()"></app-aircraftseat-form>
+    [seatClasses]="availabelSeatClasses" (saveButtonClicked)="saveAircraftseat($event)"
+    (hideButtonClicked)="hideDialog()"></app-aircraftseat-form>
 
 <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

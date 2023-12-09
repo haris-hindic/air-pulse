@@ -5,7 +5,7 @@
                 <p-button icon="pi pi-arrow-circle-left" [routerLink]="'/admin/aircraft'" [rounded]="true"
                     [text]="true"></p-button>
                 <i class="p-toolbar-separator pi pi-ellipsis-v mr-2 ml-2" style="vertical-align: middle"></i>
-                <p-button label="Change image" icon="pi pi-upload" styleClass="p-button-success"
+                <p-button label="Change image" icon="pi pi-upload" styleClass="p-button-success" (click)="changeImage()"
                     [text]="true"></p-button>
             </div>
             <div class="p-toolbar-group-end">
@@ -17,7 +17,7 @@
     <div class="col-12">
         <div class="formgrid grid">
             <div class="col-3 mr-4 mb-4">
-                <p-image class="field" [imageClass]="'image'" src="assets/aircraft/aircraft.jpg" alt="Image" width="300"
+                <p-image class="field" [imageClass]="'image'" [src]="aircraft.image" alt="Image" width="300"
                     height="250" [preview]="true"></p-image>
             </div>
             <div class="col-8 grid">
@@ -86,3 +86,6 @@
 
 <app-aircraft-form [visible]="aircraftDialog" [aircraft]="aircraft || {}" (saveButtonClicked)="saveAircraft($event)"
     (hideButtonClicked)="hideDialog()"></app-aircraft-form>
+
+<app-image-upload [visible]="imageDialog" (saveButtonClicked)="saveImage($event)"
+    (hideButtonClicked)="hideImageDialog()"></app-image-upload>

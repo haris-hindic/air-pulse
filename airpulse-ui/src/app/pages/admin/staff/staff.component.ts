@@ -7,6 +7,7 @@ import { StaffResponse, StaffRequest } from '../model/staff.model';
 import { StaffService } from '../services/staff.service';
 
 @Component({
+  providers: [ConfirmationService],
   selector: 'app-staff',
   templateUrl: './staff.component.html',
   styleUrls: ['./staff.component.css']
@@ -112,7 +113,7 @@ export class StaffComponent {
         error: (error) => {
           this.handleError(error);
         }
-      })
+      });
     } else {
       this.staffService.create(staffRequest).subscribe({
         next: () => {

@@ -27,6 +27,7 @@ export class AircraftseatFormComponent {
 
   form!: FormGroup;
 
+  @Input()
   seatClasses!: any[];
 
   @Input()
@@ -37,12 +38,6 @@ export class AircraftseatFormComponent {
 
   constructor(private formBuilder: FormBuilder, private aircraftService: AircraftService, private messageToast: MessageToast,
     private loader: LoaderService) {
-    this.seatClasses = [
-      { label: 'ECONOMY', value: 'Economy' },
-      { label: 'BUSINESS', value: 'Business' },
-      { label: 'FIRST CLASS', value: 'First Class' },
-      { label: 'PREMIUM ECONOMY', value: 'Premium Economy' }
-    ];
   }
 
   ngOnInit() {
@@ -64,7 +59,7 @@ export class AircraftseatFormComponent {
           next: (result) => {
             this.aircrafts = result;
             this.aircraftsLov = result.map(x => {
-              return { label: this.aircraft.model + " (" + this.aircraft.manufacturer + ")", value: x.id }
+              return { label: this.aircraft.model + " (" + this.aircraft.manufacturer + ")", value: x.id };
             });
           }, error: (error) => {
             this.messageToast.showError("Error", error);
@@ -73,7 +68,7 @@ export class AircraftseatFormComponent {
         }
       );
     } else {
-      this.aircraftsLov.push({ label: this.aircraft.model + " (" + this.aircraft.manufacturer + ")", value: this.aircraft.id })
+      this.aircraftsLov.push({ label: this.aircraft.model + " (" + this.aircraft.manufacturer + ")", value: this.aircraft.id });
     }
   }
 
@@ -133,6 +128,6 @@ export class AircraftseatFormComponent {
     return request;
   }
 
-  onSubmit() { this.saveButtonClicked.emit(this.populateRequest()) }
+  onSubmit() { this.saveButtonClicked.emit(this.populateRequest()); }
   hideDialog() { this.hideButtonClicked.emit(); }
 }

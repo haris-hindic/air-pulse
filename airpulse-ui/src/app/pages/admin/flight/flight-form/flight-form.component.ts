@@ -33,6 +33,8 @@ export class FlightFormComponent {
   routes!: RouteResponse[];
   routesLov!: any[];
 
+  dialogStyle: any = { width: '600px' };
+
   constructor(private formBuilder: FormBuilder, private routeService: RouteService, private messageToast: MessageToast,
     private loader: LoaderService) {
   }
@@ -47,6 +49,13 @@ export class FlightFormComponent {
     this.loadRoutes();
   }
 
+  increaseModalSize(height: any) {
+    this.dialogStyle = { width: '600px', height: height };
+  }
+
+  decreaseModalSize() {
+    this.dialogStyle = { width: '600px' };
+  }
 
   loadRoutes() {
     this.routes = [];
@@ -57,7 +66,7 @@ export class FlightFormComponent {
         next: (result) => {
           this.routes = result;
           this.routesLov = result.map(x => {
-            return { label: x.departureAirportDetails + "-" + x.arrivalAirportDetails, value: x.id }
+            return { label: x.departureAirportDetails + "-" + x.arrivalAirportDetails, value: x.id };
           });
         }, error: (error) => {
           this.messageToast.showError("Error", error);
@@ -109,7 +118,7 @@ export class FlightFormComponent {
   populateRequest(): FlightRequest {
     const request = new FlightRequest();
 
-    request.routeId = this.form.get('routeeId')?.value;
+    request.routeId = this.form.get('routeId')?.value;
     request.departure = this.form.get('dateRange')?.value[0];
     request.arrival = this.form.get('dateRange')?.value[1];
     request.basePrice = this.form.get('basePrice')?.value;
@@ -117,6 +126,6 @@ export class FlightFormComponent {
     return request;
   }
 
-  onSubmit() { this.saveButtonClicked.emit(this.populateRequest()) }
+  onSubmit() { this.saveButtonClicked.emit(this.populateRequest()); }
   hideDialog() { this.hideButtonClicked.emit(); }
 }

@@ -6,6 +6,7 @@ import { AirportResponse, AirportRequest } from '../model/airport.model';
 import { AirportService } from '../services/airport.service';
 
 @Component({
+  providers: [ConfirmationService],
   selector: 'app-airport',
   templateUrl: './airport.component.html',
   styleUrls: ['./airport.component.css']
@@ -93,7 +94,7 @@ export class AirportComponent {
         error: (error) => {
           this.handleError(error);
         }
-      })
+      });
     } else {
       this.airportService.create(airportRequest).subscribe({
         next: () => {

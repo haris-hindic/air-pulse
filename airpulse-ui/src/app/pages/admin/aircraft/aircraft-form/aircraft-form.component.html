@@ -31,13 +31,13 @@
 
             <div class="formgrid grid">
 
-                <div class="field col-6">
+                <div class="field col-4">
                     <label for="buildDate" class="block text-900 font-medium">Build date</label>
                     <p-calendar formControlName="buildDate" [showIcon]="true" [ngClass]="{'ng-invalid ng-dirty' : !form.get('buildDate')?.valid &&
                   form.get('buildDate')?.touched}"></p-calendar>
                 </div>
 
-                <div class="field col-6">
+                <div class="field col-8">
                     <label for="averageSpeed" class="block text-900 font-medium">Average speed (knots)</label>
                     <p-inputNumber [min]="1" formControlName="averageSpeed" inputId="knot" suffix=" knot" [ngClass]="{'ng-invalid ng-dirty' : !form.get('averageSpeed')?.valid &&
                     form.get('averageSpeed')?.touched}"> </p-inputNumber>

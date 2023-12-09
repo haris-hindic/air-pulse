@@ -7,6 +7,7 @@ import { AircraftseatResponse, AircraftseatRequest } from '../model/aircraftseat
 import { AircraftSeatService } from '../services/aircraftseat.service';
 
 @Component({
+  providers: [ConfirmationService],
   selector: 'app-aircraftseat',
   templateUrl: './aircraftseat.component.html',
   styleUrls: ['./aircraftseat.component.css']
@@ -23,6 +24,14 @@ export class AircraftseatComponent {
 
   selectedAircraftseats!: any[] | null;
 
+  seatClasses = [
+    { label: 'ECONOMY', value: 'Economy' },
+    { label: 'BUSINESS', value: 'Business' },
+    { label: 'FIRST CLASS', value: 'First Class' },
+    { label: 'PREMIUM ECONOMY', value: 'Premium Economy' }
+  ];
+
+  availabelSeatClasses!: any[];
 
   constructor(private messageToast: MessageToast, private confirmationService: ConfirmationService,
     private aircraftseatService: AircraftSeatService, private loader: LoaderService) { }
@@ -46,8 +55,17 @@ export class AircraftseatComponent {
   }
 
   openNew() {
+    this.setAvailableSeatClasses();
+    if (this.availabelSeatClasses.length === 0) {
+      return this.messageToast.showWarn('Error', 'All available seat classes are already assigned.');
+    }
     this.aircraftseat = new AircraftseatResponse();
     this.aircraftseatDialog = true;
+  }
+
+  setAvailableSeatClasses() {
+    this.availabelSeatClasses = [];
+    this.availabelSeatClasses = this.seatClasses.filter(x => !this.aircraftseats.some(y => y.seatClass === x.value));
   }
 
   deleteSelectedAircraftseats() {
@@ -113,7 +131,7 @@ export class AircraftseatComponent {
         error: (error) => {
           this.handleError(error);
         }
-      })
+      });
     } else {
       this.aircraftseatService.create(aircraftseatRequest).subscribe({
         next: () => {

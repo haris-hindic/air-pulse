@@ -1,4 +1,4 @@
-<p-dialog [(visible)]="visible" [style]="{ width: '650px' }" header="Airport details" [modal]="true"
+<p-dialog [(visible)]="visible" [style]="{ width: '650px' }" header="Route details" [modal]="true"
     (onHide)="hideDialog()" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <form id="form" [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
@@ -51,11 +51,11 @@
             <div class="formgrid grid mb-1">
                 <div class="col-6">
                     <label for="distance">Distance</label>
-                    <input type="text" [maxlength]="3" pInputText id="distance" formControlName="distance" required />
+                    <input type="text" pInputText id="distance" formControlName="distance" required />
                 </div>
                 <div class="col-6">
                     <label for="duration">Duration</label>
-                    <input type="text" [maxlength]="4" pInputText id="duration" formControlName="duration" required />
+                    <input type="text" pInputText id="duration" formControlName="duration" required />
                 </div>
                 <div class="col-6">
                     <small class="p-error"

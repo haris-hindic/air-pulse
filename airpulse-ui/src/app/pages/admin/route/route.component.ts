@@ -6,6 +6,7 @@ import { RouteResponse, RouteRequest } from '../model/route.model';
 import { RouteService } from '../services/route.service';
 
 @Component({
+  providers: [ConfirmationService],
   selector: 'app-route',
   templateUrl: './route.component.html',
   styleUrls: ['./route.component.css']
@@ -93,7 +94,7 @@ export class RouteComponent {
         error: (error) => {
           this.handleError(error);
         }
-      })
+      });
     } else {
       this.routeService.create(routeRequest).subscribe({
         next: () => {

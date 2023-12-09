@@ -7,6 +7,7 @@ import { AbsenceService } from '../services/absence.service';
 import { EmployeeResponse } from '../model/employee.model';
 
 @Component({
+  providers: [ConfirmationService],
   selector: 'app-absence',
   templateUrl: './absence.component.html',
   styleUrls: ['./absence.component.css']
@@ -113,7 +114,7 @@ export class AbsenceComponent {
         error: (error) => {
           this.handleError(error);
         }
-      })
+      });
     } else {
       this.absenceService.create(absenceRequest).subscribe({
         next: () => {

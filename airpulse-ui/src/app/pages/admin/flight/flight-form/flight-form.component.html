@@ -1,11 +1,20 @@
-<p-dialog [(visible)]="visible" [style]="{ width: '800px' }" header="Flight details" [modal]="true"
-    (onHide)="hideDialog()" styleClass="p-fluid">
+<p-dialog [(visible)]="visible" [style]="dialogStyle" header="Flight details" [modal]="true" (onHide)="hideDialog()"
+    styleClass="p-fluid">
     <ng-template *ngIf="routes" pTemplate="content">
         <form id="form" [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
 
+
+            <div class="field">
+                <label for="dateRange" class="block text-900 font-medium">Departure/Arrival</label>
+                <p-calendar (onShow)="increaseModalSize('800px')" (onClose)="decreaseModalSize()"
+                    formControlName="dateRange" selectionMode="range" [showIcon]="true" [showTime]="true" [ngClass]="{'ng-invalid ng-dirty' : !form.get('dateRange')?.valid &&
+                  form.get('dateRange')?.touched}"></p-calendar>
+            </div>
+
             <div class="field">
                 <label for="status">Route</label>
-                <p-dropdown formControlName="routeId" inputId="routeId" [options]="routesLov"></p-dropdown>
+                <p-dropdown (onShow)="increaseModalSize('550px')" (onHide)="decreaseModalSize()"
+                    formControlName="routeId" inputId="routeId" [options]="routesLov"></p-dropdown>
                 <small class="p-error"
                     *ngIf="form.get('routeId')?.touched && form.get('routeId')!.hasError('required')">Route is
                     required.</small>
@@ -19,12 +28,9 @@
                     range is required.</small>
             </div>
 
-            <div class="field">
-                <label for="dateRange" class="block text-900 font-medium">Departure/Arrival</label>
-                <p-calendar formControlName="dateRange" selectionMode="range" [showIcon]="true" [showTime]="true"
-                    [ngClass]="{'ng-invalid ng-dirty' : !form.get('dateRange')?.valid &&
-                  form.get('dateRange')?.touched}"></p-calendar>
-            </div>
+
+
+
 
         </form>
     </ng-template>

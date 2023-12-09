@@ -14,7 +14,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { UserModule } from './pages/user/user.module';
 import { NotificationsModule } from './pages/notifications/notification.module';
 import { MessageService } from 'primeng/api';
-import { ConfirmationService } from 'primeng/api';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './pages/shared/services/auth-interceptor.service';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -43,8 +42,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
       useClass: AuthInterceptor,
       multi: true,
     },
-    MessageService,
-    ConfirmationService
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

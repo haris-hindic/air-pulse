@@ -51,6 +51,7 @@ export class AirportFormComponent {
       iataCode: ['', Validators.required],
       icaoCode: ['', Validators.required],
       name: ['', Validators.required],
+      status: ['', Validators.required],
     });
   }
 
@@ -66,6 +67,7 @@ export class AirportFormComponent {
       this.form.get('iataCode')?.patchValue(this.airport.iataCode);
       this.form.get('icaoCode')?.patchValue(this.airport.icaoCode);
       this.form.get('name')?.patchValue(this.airport.name);
+      this.form.get('status')?.patchValue(this.airport.status);
     } else {
       this.initForm();
     }
@@ -83,6 +85,6 @@ export class AirportFormComponent {
     return 'N/A';
   }
 
-  onSubmit() { this.submitted = true; this.saveButtonClicked.emit(this.form.value) }
+  onSubmit() { this.submitted = true; this.saveButtonClicked.emit(this.form.value); }
   hideDialog() { this.hideButtonClicked.emit(); }
 }
