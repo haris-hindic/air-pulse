@@ -23,8 +23,7 @@ import com.pulse.air.flightcatalogue.model.aircraftseat.AircraftSeatRequest;
 import com.pulse.air.flightcatalogue.model.aircraftseat.AircraftSeatResponse;
 
 @Service
-public class AircraftSeatServiceImpl
-		extends
+public class AircraftSeatServiceImpl extends
 		BaseCRUDServiceImpl<AircraftSeatEntity, AircraftSeatResponse, AircraftSeatRequest, BaseSearchRequest, AircraftSeatMapper, AircraftSeatRepository>
 		implements AircraftSeatService {
 
@@ -42,7 +41,7 @@ public class AircraftSeatServiceImpl
 
 	@Override
 	public Example<AircraftSeatEntity> getExample(final ApiRequest<BaseSearchRequest> request) {
-		BaseSearchRequest search = request.getObject();
+		var search = request.getObject();
 		if (search == null) {
 			return super.getExample(request);
 		}
@@ -56,7 +55,8 @@ public class AircraftSeatServiceImpl
 	}
 
 	@Override
-	public void beforeInsert(final AircraftSeatEntity entity, final ApiRequest<AircraftSeatRequest> request) throws ApiException {
+	public void beforeInsert(final AircraftSeatEntity entity, final ApiRequest<AircraftSeatRequest> request)
+			throws ApiException {
 
 		entity.setStatus(Status.ACTIVE.getValue());
 		entity.setCreated(LocalDateTime.now());
@@ -65,7 +65,8 @@ public class AircraftSeatServiceImpl
 	}
 
 	@Override
-	public void beforeUpdate(final AircraftSeatEntity entity, final ApiUpdateRequest<AircraftSeatRequest> request) {
+	public void beforeUpdate(final AircraftSeatEntity entity, final ApiUpdateRequest<AircraftSeatRequest> request)
+			throws ApiException {
 		entity.setModified(LocalDateTime.now());
 		entity.setModifiedBy(request.getUsername());
 		super.beforeUpdate(entity, request);

@@ -60,4 +60,6 @@ public class UserEntity implements Serializable {
 	private String status;
 
 	private String role;
+
+	private String image;
 }

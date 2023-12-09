@@ -10,7 +10,6 @@ import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiUpdateRequest;
 import com.pulse.air.common.model.BaseSearchRequest;
-import com.pulse.air.commons.enums.Status;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
 import com.pulse.air.flightcatalogue.contract.AirportService;
 import com.pulse.air.flightcatalogue.core.mapper.AirportMapper;
@@ -20,8 +19,7 @@ import com.pulse.air.flightcatalogue.model.airport.AirportRequest;
 import com.pulse.air.flightcatalogue.model.airport.AirportResponse;
 
 @Service
-public class AirportServiceImpl
-		extends
+public class AirportServiceImpl extends
 		BaseCRUDServiceImpl<AirportEntity, AirportResponse, AirportRequest, BaseSearchRequest, AirportMapper, AirportRepository>
 		implements AirportService {
 
@@ -31,7 +29,7 @@ public class AirportServiceImpl
 
 	@Override
 	public Example<AirportEntity> getExample(final ApiRequest<BaseSearchRequest> request) {
-		BaseSearchRequest search = request.getObject();
+		var search = request.getObject();
 		if (search == null) {
 			return super.getExample(request);
 		}
@@ -47,14 +45,14 @@ public class AirportServiceImpl
 	@Override
 	public void beforeInsert(final AirportEntity entity, final ApiRequest<AirportRequest> request) throws ApiException {
 
-		entity.setStatus(Status.ACTIVE.getValue());
 		entity.setCreated(LocalDateTime.now());
 		entity.setCreatedBy(request.getUsername());
 		super.beforeInsert(entity, request);
 	}
 
 	@Override
-	public void beforeUpdate(final AirportEntity entity, final ApiUpdateRequest<AirportRequest> request) {
+	public void beforeUpdate(final AirportEntity entity, final ApiUpdateRequest<AirportRequest> request)
+			throws ApiException {
 		entity.setModified(LocalDateTime.now());
 		entity.setModifiedBy(request.getUsername());
 		super.beforeUpdate(entity, request);

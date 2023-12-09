@@ -18,6 +18,7 @@ CREATE TABLE fc_aircraft (
   "build_date"        TIMESTAMP(2) NOT NULL,
   "average_speed"     numeric(10,2) NOT NULL,
   "manufacturer"      VARCHAR(60) NOT NULL,
+  "image"      		  VARCHAR(100),
 CONSTRAINT fc_aircraft_pk PRIMARY KEY ("id")
 ) 
 ;
@@ -140,6 +141,59 @@ ALTER TABLE "fc_flight"
         FOREIGN KEY ("route_id")
             REFERENCES "fc_route" ("id")
  ;
+
+/*============================================================================*/
+/*                               SEQUENCES                                    */
+/*============================================================================*/
+
+CREATE SEQUENCE fc_route_seq
+	INCREMENT BY 1
+	MINVALUE 11
+	MAXVALUE 9223372036854775807
+	START 11
+	CACHE 1
+	NO CYCLE;
+
+CREATE SEQUENCE fc_staff_seq
+	INCREMENT BY 1
+	MINVALUE 11
+	MAXVALUE 9223372036854775807
+	START 11
+	CACHE 1
+	NO CYCLE;
+
+CREATE SEQUENCE fc_flight_seq
+	INCREMENT BY 1
+	MINVALUE 11
+	MAXVALUE 9223372036854775807
+	START 11
+	CACHE 1
+	NO CYCLE;
+
+CREATE SEQUENCE fc_aircraft_seq
+	INCREMENT BY 1
+	MINVALUE 11
+	MAXVALUE 9223372036854775807
+	START 11
+	CACHE 1
+	NO CYCLE;
+
+CREATE SEQUENCE fc_aircraft_seats_seq
+	INCREMENT BY 1
+	MINVALUE 11
+	MAXVALUE 9223372036854775807
+	START 11
+	CACHE 1
+	NO CYCLE;
+
+CREATE SEQUENCE fc_airport_seq
+	INCREMENT BY 1
+	MINVALUE 11
+	MAXVALUE 9223372036854775807
+	START 11
+	CACHE 1
+	NO CYCLE;
+ 
  
  /*============================================================================*/
 /*                               SAMPLE DATA                                 */

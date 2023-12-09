@@ -61,7 +61,7 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TSearch extends B
 		}
 	}
 
-	public void beforeUpdate(final TEntity entity, final ApiUpdateRequest<TRequest> request) {
+	public void beforeUpdate(final TEntity entity, final ApiUpdateRequest<TRequest> request) throws ApiException {
 		// TO BE OVERRIDEN
 	}
 

@@ -21,7 +21,6 @@ import com.pulse.air.employee.dao.model.QualificationEntity;
 import com.pulse.air.employee.model.qualification.QualificationRequest;
 import com.pulse.air.employee.model.qualification.QualificationResponse;
 
-
 @Service
 public class QualificationServiceImpl extends
 		BaseCRUDServiceImpl<QualificationEntity, QualificationResponse, QualificationRequest, BaseSearchRequest, QualificationMapper, QualificationRepository>
@@ -37,7 +36,7 @@ public class QualificationServiceImpl extends
 
 	@Override
 	public Example<QualificationEntity> getExample(final ApiRequest<BaseSearchRequest> request) {
-		BaseSearchRequest search = request.getObject();
+		var search = request.getObject();
 		if (search == null) {
 			return super.getExample(request);
 		}
@@ -66,7 +65,8 @@ public class QualificationServiceImpl extends
 	}
 
 	@Override
-	public void beforeUpdate(final QualificationEntity entity, final ApiUpdateRequest<QualificationRequest> request) {
+	public void beforeUpdate(final QualificationEntity entity, final ApiUpdateRequest<QualificationRequest> request)
+			throws ApiException {
 		entity.setModified(LocalDateTime.now());
 		entity.setModifiedBy(request.getUsername());
 		super.beforeUpdate(entity, request);

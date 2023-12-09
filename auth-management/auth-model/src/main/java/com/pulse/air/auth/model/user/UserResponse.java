@@ -22,4 +22,5 @@ public class UserResponse implements Serializable {
 	private String phoneNumber;
 	private String status;
 	private String role;
+	private String image;
 }

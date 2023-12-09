@@ -20,8 +20,7 @@ import com.pulse.air.flightcatalogue.model.flight.FlightRequest;
 import com.pulse.air.flightcatalogue.model.flight.FlightResponse;
 
 @Service
-public class FlightServiceImpl
-		extends
+public class FlightServiceImpl extends
 		BaseCRUDServiceImpl<FlightEntity, FlightResponse, FlightRequest, BaseSearchRequest, FlightMapper, FlightRepository>
 		implements FlightService {
 
@@ -31,7 +30,7 @@ public class FlightServiceImpl
 
 	@Override
 	public Example<FlightEntity> getExample(final ApiRequest<BaseSearchRequest> request) {
-		BaseSearchRequest search = request.getObject();
+		var search = request.getObject();
 		if (search == null) {
 			return super.getExample(request);
 		}
@@ -54,7 +53,8 @@ public class FlightServiceImpl
 	}
 
 	@Override
-	public void beforeUpdate(final FlightEntity entity, final ApiUpdateRequest<FlightRequest> request) {
+	public void beforeUpdate(final FlightEntity entity, final ApiUpdateRequest<FlightRequest> request)
+			throws ApiException {
 		entity.setModified(LocalDateTime.now());
 		entity.setModifiedBy(request.getUsername());
 		super.beforeUpdate(entity, request);

@@ -1,11 +1,17 @@
 package com.pulse.air.employee.core.impl;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Base64;
+import java.util.Map;
+import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.Example;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.cloudinary.Cloudinary;
 import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiUpdateRequest;
@@ -24,13 +30,17 @@ public class EmployeeServiceImpl extends
 		BaseCRUDServiceImpl<EmployeeEntity, EmployeeResponse, EmployeeRequest, BaseSearchRequest, EmployeeMapper, EmployeeRepository>
 		implements EmployeeService {
 
-	public EmployeeServiceImpl(final EmployeeMapper mapper, final EmployeeRepository repository) {
+	private Cloudinary cloudinary;
+
+	public EmployeeServiceImpl(final EmployeeMapper mapper, final EmployeeRepository repository,
+			final Cloudinary cloudinary) {
 		super(mapper, repository);
+		this.cloudinary = cloudinary;
 	}
 
 	@Override
 	public Example<EmployeeEntity> getExample(final ApiRequest<BaseSearchRequest> request) {
-		BaseSearchRequest search = request.getObject();
+		var search = request.getObject();
 		if (search == null) {
 			return super.getExample(request);
 		}
@@ -53,9 +63,29 @@ public class EmployeeServiceImpl extends
 	}
 
 	@Override
-	public void beforeUpdate(final EmployeeEntity entity, final ApiUpdateRequest<EmployeeRequest> request) {
+	public void beforeUpdate(final EmployeeEntity entity, final ApiUpdateRequest<EmployeeRequest> request)
+			throws ApiException {
 		entity.setModified(LocalDateTime.now());
 		entity.setModifiedBy(request.getUsername());
+		if (StringUtils.isNotEmpty(request.getObject().getImageData())) {
+
+			try {
+				entity.setImage(handleImageUpload(request));
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+			}
+		}
 		super.beforeUpdate(entity, request);
+	}
+
+	private String handleImageUpload(final ApiUpdateRequest<EmployeeRequest> request) throws IOException {
+		var base64image = request.getObject().getImageData().split(",")[1];
+		var decodedImage = Base64.getMimeDecoder().decode(base64image.getBytes());
+
+		var cloudinaryResponse = cloudinary.uploader().upload(decodedImage,
+				Map.of("public_id", UUID.randomUUID().toString()));
+
+		return (String) cloudinaryResponse.get("url");
 	}
 }

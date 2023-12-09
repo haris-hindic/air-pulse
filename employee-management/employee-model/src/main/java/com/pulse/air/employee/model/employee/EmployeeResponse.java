@@ -27,8 +27,5 @@ public class EmployeeResponse implements Serializable {
 	private String modifiedBy;
 	private String phoneNumber;
 	private String status;
-
-//	private List<AbsenceEntity> absences;
-//	private List<PositionEntity> positions;
-//	private List<QualificationEntity> qualifications;
+	private String image;
 }

@@ -20,10 +20,6 @@ public class AircraftResponse implements Serializable {
 	private LocalDateTime modified;
 	private String modifiedBy;
 	private String status;
-
-//	private List<AircraftSeatEntity> aircraftSeats;
-//	private List<RouteEntity> routes;
-//	private List<StaffEntity> staff;
+	private String image;
 
 }
-

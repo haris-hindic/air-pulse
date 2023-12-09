@@ -19,8 +19,7 @@ import com.pulse.air.employee.model.jobtype.JobTypeRequest;
 import com.pulse.air.employee.model.jobtype.JobTypeResponse;
 
 @Service
-public class JobTypeServiceImpl
-		extends
+public class JobTypeServiceImpl extends
 		BaseCRUDServiceImpl<JobTypeEntity, JobTypeResponse, JobTypeRequest, BaseSearchRequest, JobTypeMapper, JobTypeRepository>
 		implements JobTypeService {
 
@@ -30,7 +29,7 @@ public class JobTypeServiceImpl
 
 	@Override
 	public Example<JobTypeEntity> getExample(final ApiRequest<BaseSearchRequest> request) {
-		BaseSearchRequest search = request.getObject();
+		var search = request.getObject();
 		if (search == null) {
 			return super.getExample(request);
 		}
@@ -51,7 +50,8 @@ public class JobTypeServiceImpl
 	}
 
 	@Override
-	public void beforeUpdate(final JobTypeEntity entity, final ApiUpdateRequest<JobTypeRequest> request) {
+	public void beforeUpdate(final JobTypeEntity entity, final ApiUpdateRequest<JobTypeRequest> request)
+			throws ApiException {
 		entity.setModified(LocalDateTime.now());
 		entity.setModifiedBy(request.getUsername());
 		super.beforeUpdate(entity, request);

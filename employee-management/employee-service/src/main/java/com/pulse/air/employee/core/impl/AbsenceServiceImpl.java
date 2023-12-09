@@ -22,8 +22,7 @@ import com.pulse.air.employee.model.absence.AbsenceRequest;
 import com.pulse.air.employee.model.absence.AbsenceResponse;
 
 @Service
-public class AbsenceServiceImpl
-		extends
+public class AbsenceServiceImpl extends
 		BaseCRUDServiceImpl<AbsenceEntity, AbsenceResponse, AbsenceRequest, BaseSearchRequest, AbsenceMapper, AbsenceRepository>
 		implements AbsenceService {
 
@@ -41,7 +40,7 @@ public class AbsenceServiceImpl
 
 	@Override
 	public Example<AbsenceEntity> getExample(final ApiRequest<BaseSearchRequest> request) {
-		BaseSearchRequest search = request.getObject();
+		var search = request.getObject();
 		if (search == null) {
 			return super.getExample(request);
 		}
@@ -62,7 +61,8 @@ public class AbsenceServiceImpl
 	}
 
 	@Override
-	public void beforeUpdate(final AbsenceEntity entity, final ApiUpdateRequest<AbsenceRequest> request) {
+	public void beforeUpdate(final AbsenceEntity entity, final ApiUpdateRequest<AbsenceRequest> request)
+			throws ApiException {
 		entity.setModified(LocalDateTime.now());
 		entity.setModifiedBy(request.getUsername());
 		super.beforeUpdate(entity, request);

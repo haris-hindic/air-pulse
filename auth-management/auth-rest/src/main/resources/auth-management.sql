@@ -22,6 +22,7 @@ CREATE TABLE "as_user" (
   "modified"          TIMESTAMP(2),
   "modified_by"       VARCHAR(100),
   "status"            VARCHAR(100) NOT NULL,
+  "image"            VARCHAR(100),
   "role"              VARCHAR(100) NOT NULL,
 CONSTRAINT "as_user_pk" PRIMARY KEY ("id")
 ) 

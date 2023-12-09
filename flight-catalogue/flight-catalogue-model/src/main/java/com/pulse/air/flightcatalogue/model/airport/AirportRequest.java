@@ -19,4 +19,6 @@ public class AirportRequest implements Serializable {
 	private String icaoCode;
 	@NotBlank(message = "Name is mandatory!")
 	private String name;
+	@NotBlank(message = "Status")
+	private String status;
 }

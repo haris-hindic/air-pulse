@@ -25,4 +25,5 @@ public class EmployeeRequest implements Serializable {
 	@NotNull(message = "Phone number is mandatory!")
 	@Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$", message = "Must be a valid phone number (+919367788755,8989829304,786-307-3615)")
 	private String phoneNumber;
+	private String imageData;
 }

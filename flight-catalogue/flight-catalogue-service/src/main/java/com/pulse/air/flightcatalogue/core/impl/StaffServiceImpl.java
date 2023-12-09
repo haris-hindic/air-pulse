@@ -22,8 +22,7 @@ import com.pulse.air.flightcatalogue.model.staff.StaffResponse;
 import com.pulse.air.flightcatalogue.model.staff.StaffSearchRequest;
 
 @Service
-public class StaffServiceImpl
-		extends
+public class StaffServiceImpl extends
 		BaseCRUDServiceImpl<StaffEntity, StaffResponse, StaffRequest, StaffSearchRequest, StaffMapper, StaffRepository>
 		implements StaffService {
 
@@ -31,7 +30,8 @@ public class StaffServiceImpl
 	private StaffRepository repository;
 	private AircraftRepository aircraftRepository;
 
-	public StaffServiceImpl(final StaffMapper mapper, final StaffRepository repository,final AircraftRepository aircraftRepository) {
+	public StaffServiceImpl(final StaffMapper mapper, final StaffRepository repository,
+			final AircraftRepository aircraftRepository) {
 		super(mapper, repository);
 		this.mapper = mapper;
 		this.repository = repository;
@@ -40,7 +40,7 @@ public class StaffServiceImpl
 
 	@Override
 	public Example<StaffEntity> getExample(final ApiRequest<StaffSearchRequest> request) {
-		StaffSearchRequest search = request.getObject();
+		var search = request.getObject();
 		if (search == null) {
 			return super.getExample(request);
 		}
@@ -65,7 +65,8 @@ public class StaffServiceImpl
 	}
 
 	@Override
-	public void beforeUpdate(final StaffEntity entity, final ApiUpdateRequest<StaffRequest> request) {
+	public void beforeUpdate(final StaffEntity entity, final ApiUpdateRequest<StaffRequest> request)
+			throws ApiException {
 		entity.setModified(LocalDateTime.now());
 		entity.setModifiedBy(request.getUsername());
 		super.beforeUpdate(entity, request);

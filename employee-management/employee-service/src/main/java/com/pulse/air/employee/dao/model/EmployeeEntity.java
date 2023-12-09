@@ -60,6 +60,8 @@ public class EmployeeEntity implements Serializable {
 
 	private String status;
 
+	private String image;
+
 	// bi-directional many-to-one association to AbsenceEntity
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
 	private List<AbsenceEntity> absences;

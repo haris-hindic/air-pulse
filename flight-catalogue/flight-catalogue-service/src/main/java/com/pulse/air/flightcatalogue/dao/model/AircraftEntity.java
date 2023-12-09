@@ -66,5 +66,6 @@ public class AircraftEntity implements Serializable {
 	@OneToMany(mappedBy = "aircraft")
 	private List<StaffEntity> staff;
 
-}
+	private String image;
 
+}

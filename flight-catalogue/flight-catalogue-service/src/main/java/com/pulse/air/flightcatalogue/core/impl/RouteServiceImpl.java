@@ -19,8 +19,7 @@ import com.pulse.air.flightcatalogue.model.route.RouteRequest;
 import com.pulse.air.flightcatalogue.model.route.RouteResponse;
 
 @Service
-public class RouteServiceImpl
-		extends
+public class RouteServiceImpl extends
 		BaseCRUDServiceImpl<RouteEntity, RouteResponse, RouteRequest, BaseSearchRequest, RouteMapper, RouteRepository>
 		implements RouteService {
 
@@ -30,7 +29,7 @@ public class RouteServiceImpl
 
 	@Override
 	public Example<RouteEntity> getExample(final ApiRequest<BaseSearchRequest> request) {
-		BaseSearchRequest search = request.getObject();
+		var search = request.getObject();
 		if (search == null) {
 			return super.getExample(request);
 		}
@@ -51,7 +50,8 @@ public class RouteServiceImpl
 	}
 
 	@Override
-	public void beforeUpdate(final RouteEntity entity, final ApiUpdateRequest<RouteRequest> request) {
+	public void beforeUpdate(final RouteEntity entity, final ApiUpdateRequest<RouteRequest> request)
+			throws ApiException {
 		entity.setModified(LocalDateTime.now());
 		entity.setModifiedBy(request.getUsername());
 		super.beforeUpdate(entity, request);

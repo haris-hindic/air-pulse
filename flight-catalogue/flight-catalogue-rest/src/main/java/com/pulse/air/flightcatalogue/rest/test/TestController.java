@@ -15,7 +15,6 @@ import com.cloudinary.Cloudinary;
 import com.pulse.air.common.model.ApiListResponse;
 import com.pulse.air.employee.model.employee.EmployeeResponse;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -28,22 +27,20 @@ public class TestController {
 	@GetMapping
 	public ApiListResponse<EmployeeResponse> findAll() {
 
-		Dotenv dotenv = Dotenv.load();
-		Cloudinary cloudinary = new Cloudinary(dotenv.get("CLOUDINARY_URL"));
-		cloudinary.config.secure = true;
-		System.out.println(cloudinary.config.cloudName);
+//		Dotenv dotenv = Dotenv.load();
+//		Cloudinary cloudinary = new Cloudinary(dotenv.get("CLOUDINARY_URL"));
+//		cloudinary.config.secure = true;
+//		System.out.println(cloudinary.config.cloudName);
 		return null;
 	}
 
 	@PostMapping(value = "/upload")
-	public Map uploadPhoto(@RequestBody final String file)
-			throws IOException {
-		String base64image = file.split(",")[1];
-		byte[] decodedImage = Base64.getMimeDecoder().decode(base64image.getBytes());
+	public Map uploadPhoto(@RequestBody final String file) throws IOException {
+		var base64image = file.split(",")[1];
+		var decodedImage = Base64.getMimeDecoder().decode(base64image.getBytes());
 
-		return cloudinary.uploader().upload(decodedImage,
-				Map.of("public_id", UUID.randomUUID().toString()));
-		
+		return cloudinary.uploader().upload(decodedImage, Map.of("public_id", UUID.randomUUID().toString()));
+
 	}
 
 }

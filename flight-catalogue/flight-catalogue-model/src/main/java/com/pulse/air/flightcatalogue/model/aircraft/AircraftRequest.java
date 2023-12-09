@@ -22,5 +22,5 @@ public class AircraftRequest implements Serializable {
 	private String model;
 	@NotBlank(message = "Status is mandatory!")
 	private String status;
-
+	private String imageData;
 }

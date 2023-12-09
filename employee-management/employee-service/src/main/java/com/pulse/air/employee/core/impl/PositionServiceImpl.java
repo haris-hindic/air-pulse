@@ -44,7 +44,7 @@ public class PositionServiceImpl extends
 
 	@Override
 	public Example<PositionEntity> getExample(final ApiRequest<BaseSearchRequest> request) {
-		BaseSearchRequest search = request.getObject();
+		var search = request.getObject();
 		if (search == null) {
 			return super.getExample(request);
 		}
@@ -78,7 +78,8 @@ public class PositionServiceImpl extends
 	}
 
 	@Override
-	public void beforeUpdate(final PositionEntity entity, final ApiUpdateRequest<PositionRequest> request) {
+	public void beforeUpdate(final PositionEntity entity, final ApiUpdateRequest<PositionRequest> request)
+			throws ApiException {
 		entity.setModified(LocalDateTime.now());
 		entity.setModifiedBy(request.getUsername());
 		super.beforeUpdate(entity, request);

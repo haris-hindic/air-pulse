@@ -16,4 +16,5 @@ public class UserRequest implements Serializable {
 	private String password;
 	private String lastName;
 	private String phoneNumber;
+	private String imageData;
 }
