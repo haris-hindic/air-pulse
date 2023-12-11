@@ -1,7 +1,10 @@
 package com.pulse.air.flightcatalogue.dao;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.pulse.air.flightcatalogue.dao.model.FlightEntity;
@@ -33,12 +36,12 @@ public class FlightRepositoryCustom {
 	}
 
 	private void handleConditions(final FlightSearchRequest request, final StringBuilder hql) {
-		Boolean firstCondition = Boolean.TRUE;
+		var firstCondition = Boolean.TRUE;
 		if (request.getStatus() != null) {
 			hql.append("where status = :status ");
 			firstCondition = Boolean.FALSE;
 		}
-		if (request.getRouteId() != null) {
+		if (request.getRouteId() != null && request.getRouteId() != 0L) {
 			if (Boolean.TRUE.equals(firstCondition)) {
 				hql.append("where f.routeId=:routeId ");
 				firstCondition = Boolean.FALSE;
@@ -46,7 +49,7 @@ public class FlightRepositoryCustom {
 				hql.append("and f.routeId=:routeId ");
 			}
 		}
-		if (request.getDepartOn() != null) {
+		if (StringUtils.isNotEmpty(request.getDepartOn())) {
 			hql.append(Boolean.TRUE.equals(firstCondition) ? "where extract(day from f.departure) = :day "
 					: "and extract(day from f.departure) = :day ");
 			hql.append("and extract(month from f.departure) = :month ");
@@ -58,13 +61,15 @@ public class FlightRepositoryCustom {
 		if (request.getStatus() != null) {
 			query.setParameter("status", request.getStatus());
 		}
-		if (request.getRouteId() != null) {
+		if (request.getRouteId() != null && request.getRouteId() != 0L) {
 			query.setParameter("routeId", request.getRouteId());
 		}
-		if (request.getDepartOn() != null) {
-			query.setParameter("day", request.getDepartOn().getDayOfMonth());
-			query.setParameter("month", request.getDepartOn().getMonthValue());
-			query.setParameter("year", request.getDepartOn().getYear());
+		if (StringUtils.isNotEmpty(request.getDepartOn())) {
+			var formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+			var departOn = LocalDateTime.parse(request.getDepartOn(), formatter);
+			query.setParameter("day", departOn.getDayOfMonth());
+			query.setParameter("month", departOn.getMonthValue());
+			query.setParameter("year", departOn.getYear());
 		}
 	}
 
@@ -77,8 +82,7 @@ public class FlightRepositoryCustom {
 				"r1.arrivalAirportId = (select r2.departureAirportId from RouteEntity r2 where r2.id = :routeId) and ");
 		hql.append("r1.departureAirportId (select r3.arrivalAirportId from RouteEntity r3 where r3.id = :routeId))");
 
-		TypedQuery<FlightEntity> query = entityManager.createQuery(hql.toString(), FlightEntity.class)
-				.setParameter("routeId", routeId);
+		var query = entityManager.createQuery(hql.toString(), FlightEntity.class).setParameter("routeId", routeId);
 		return query.getResultList();
 	}
 }

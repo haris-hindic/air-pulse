@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { RouteService } from '../../admin/services/route.service';
 import { LoaderService } from '../../shared/services/loader.service';
 import { MessageToast } from '../../shared/services/message-toast.service';
-import { FlightResponse } from '../../admin/model/flight.model';
+import { FlightResponse, FlightSearchRequest } from '../../admin/model/flight.model';
 import { FlightService } from '../../admin/services/flight.service';
 
 @Component({
@@ -19,11 +19,10 @@ export class FlightSearchComponent {
 
   flights!: FlightResponse[];
 
-  searchRequest: { routeId: number | null, departOn: Date | null, status: string } = {
-    routeId: null,
-    departOn: null,
-    status: 'Active'
-  };
+  searchRequest: FlightSearchRequest = new FlightSearchRequest();
+
+  returnAt!: any;
+  departOn!: any;
 
   seatClasses = [
     { label: 'ECONOMY', value: 'Economy' },
@@ -81,11 +80,15 @@ export class FlightSearchComponent {
 
 
   searchFlights() {
-    this.searchRequest.status = 'Active';
-    if (this.searchRequest.departOn) {
-      this.searchRequest.departOn = new Date(this.searchRequest.departOn);
+    if (this.departOn != null && this.departOn !== '') {
+      this.searchRequest.departOn = new Date(this.departOn).toJSON().replace('Z', '');
     }
+    //console.log('this.searchRequest :>> ', new Date(this.departOn).toJSON());
     this.loadFlights(this.searchRequest);
+  }
+
+  clearFilter() {
+    this.departOn = null; this.returnAt = null; this.searchRequest.routeId = 0; this.searchRequest.departOn = '';
   }
 
   getSeverity(status: string) {

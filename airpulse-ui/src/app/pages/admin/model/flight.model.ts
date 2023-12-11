@@ -20,3 +20,9 @@ export class FlightRequest {
     departure!: Date;
     routeId!: number;
 }
+
+export class FlightSearchRequest {
+    routeId!: number;
+    departOn!: string;
+    status!: string;
+}
