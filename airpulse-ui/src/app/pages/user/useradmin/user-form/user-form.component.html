@@ -1,0 +1,6 @@
+<p-dialog [(visible)]="visible" [style]="{ width: '900px' }" header="User details" [modal]="true"
+    (onHide)="hideDialog()" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <app-register-form [user]="user" (formSubmitted)="saveUser($event)"></app-register-form>
+    </ng-template>
+</p-dialog>

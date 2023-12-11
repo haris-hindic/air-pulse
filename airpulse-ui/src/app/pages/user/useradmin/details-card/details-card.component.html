@@ -1,17 +1,17 @@
 <div class="border-round border-1 surface-border pt-2 surface-card">
     <div class="flex justify-content-center mb-3">
-        <p-image [imageClass]="'image'" src="https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg"
-            alt="Image" width="300" [preview]="true"></p-image>
+        <p-image [imageClass]="'image'" [src]="!user.image ? 'assets/user/user.png' : user.image" alt="Image"
+            width="300" [preview]="true"></p-image>
     </div>
     <div class="flex justify-content-start">
-        <h2 class="p-0 m-0 ml-5 mb-0">John Doe</h2>
-        <p-chip styleClass="h-1rem ml-2 mt-2 text-sm" label="@username"></p-chip>
+        <h2 class="p-0 m-0 ml-5 mb-0">{{user.firstName+" "+user.lastName}}</h2>
+        <p-chip styleClass="h-1rem ml-3 mt-2 text-sm" [label]="user.username"></p-chip>
     </div>
     <div class="flex justify-content-between">
-        <p class="text-xs ml-5">joined Jan. 16th, 2017</p>
+        <p class="text-xs ml-5">joined {{user.created|date:'short'}}</p>
     </div>
     <div class="flex justify-content-between mt-1 mb-2 pr-3 pl-3">
-        <p-button label="Edit" [text]="true"></p-button>
-        <p-button label="Smth else" [text]="true"></p-button>
+        <p-button label="Edit" [text]="true" (click)="editUser()"></p-button>
+        <p-button label="Change image" [text]="true" (click)="changeImage()"></p-button>
     </div>
 </div>

@@ -13,39 +13,15 @@ import { LoaderService } from '../../shared/services/loader.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  date: Date | undefined;
-
-
-  registerForm!: FormGroup;
 
   constructor(
     private authService: AuthService,
-    private formBuilder: FormBuilder,
     private messageToast: MessageToast,
     private router: Router,
     private securityService: SecurityService,
     private loader: LoaderService
   ) { }
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      username: ['', Validators.required],
-      //"Must be a valid phone number (+919367788755,8989829304,786-307-3615)")
-      phoneNumber: ['', [Validators.required, Validators.pattern("^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$")]],
-      dateOfBirth: ['', Validators.required],
-      email: ['', [Validators.email, Validators.required]],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
-    });
-  }
-
-  onSubmit() {
-    if (this.registerForm?.valid) {
-      const username = this.registerForm.get('username')?.value;
-      const password = this.registerForm.get('password')?.value;
-      this.register(this.registerForm.value as UserRequest);
-    }
   }
 
   register(UserRequest: UserRequest) {

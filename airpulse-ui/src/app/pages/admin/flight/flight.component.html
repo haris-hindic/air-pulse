@@ -1,5 +1,5 @@
 <div *ngIf="flights" class="card">
-    <p-table id="myTable" #dt [value]="flights" [rows]="5" [paginator]="true" [tableStyle]="{ 'min-width': '70rem' }"
+    <p-table id="myTable" #dt [value]="flights" [rows]="20" [paginator]="true" [tableStyle]="{ 'min-width': '70rem' }"
         [(selection)]="selectedFlights" [rowHover]="true" dataKey="id"
         currentPageReportTemplate="{first} to {last} of {totalRecords}" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">

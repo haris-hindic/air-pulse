@@ -4,10 +4,12 @@ export class RouteResponse {
     aircraftDetails!: string;
     arrivalAirportId!: number;
     arrivalAirportDetails!: string;
+    arrivalAirportCity!: string;
     created!: Date;
     createdBy!: string;
     departureAirportId!: number;
     departureAirportDetails!: string;
+    departureAirportCity!: string;
     distance!: number;
     duration!: number;
     modified!: Date;

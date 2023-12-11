@@ -11,14 +11,28 @@ export class UserResponse {
   modifiedBy!: string;
   phoneNumber!: string;
   status!: string;
+  image!: string;
 }
 
 export class UserRequest {
-  private dateOfBirth!: Date;
-  private email!: string;
-  private firstName!: string;
-  private username!: string;
-  private password!: string;
-  private lastName!: string;
-  private phoneNumber!: string;
+  dateOfBirth!: Date;
+  email!: string;
+  firstName!: string;
+  username!: string;
+  password!: string;
+  lastName!: string;
+  phoneNumber!: string;
+  imageData!: string;
+
+  public static createFromResponse(response: UserResponse) {
+    const request = new UserRequest();
+
+    request.dateOfBirth = response.dateOfBirth;
+    request.email = response.email;
+    request.firstName = response.firstName;
+    request.lastName = response.lastName;
+    request.username = response.username;
+
+    return request;
+  }
 }

@@ -85,10 +85,6 @@ export class AircraftseatFormComponent {
     });
   }
 
-  submitForm() {
-    //this.form
-  }
-
   populateFields() {
 
     if (this.aircraftseat.id) {

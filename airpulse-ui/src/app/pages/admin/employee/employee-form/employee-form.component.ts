@@ -54,10 +54,6 @@ export class EmployeeFormComponent {
     });
   }
 
-  submitForm() {
-    //this.form
-  }
-
   populateFields() {
 
     if (this.employee.id) {

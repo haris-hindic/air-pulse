@@ -1,0 +1,49 @@
+<div class="flex flex-row justify-content-center flex-wrap mt-2">
+    <div class="w-3">
+        <p-card>
+            <!-- <h4>Search flights</h4> -->
+            <div class="formgrid grid">
+
+                <div class="col-12 field">
+                    <label for="routeId" class="block text-900 font-medium">Route</label>
+                    <p-dropdown autoWidth="false" [style]="{'width':'100%'}" class="w-full"
+                        [(ngModel)]="searchRequest.routeId" inputId="routeId" [options]="routesLov"></p-dropdown>
+                </div>
+
+                <div class="col-12 field">
+                    <label for="departOn" class="block text-900 font-medium">Departure</label>
+                    <p-calendar styleClass="w-full" [showIcon]="true" [(ngModel)]="searchRequest.departOn"></p-calendar>
+                </div>
+
+                <div class="col-12 field">
+                    <label for="departOn" class="block text-900 font-medium">Return</label>
+                    <p-calendar [showIcon]="true" styleClass="w-full" [(ngModel)]="searchRequest.returnAt"></p-calendar>
+                </div>
+
+                <!-- <div class="col-12 field">
+                    <label for="status">Seat class</label>
+                    <p-dropdown autoWidth="false" [style]="{'width':'100%'}" inputId="seatClass"
+                        [options]="seatClasses">
+                         <ng-template pTemplate="seatClass">
+                        <p-tag [value]="aircraftseat.seatClass"
+                        [severity]="getSeverity(aircraftseat.seatClass.toUpperCase())"></p-tag>
+                    </ng-template> 
+                        <ng-template let-option pTemplate="item">
+                            <p-tag [value]="option.label" [severity]="getSeverity(option.label)"></p-tag>
+                        </ng-template>
+                    </p-dropdown>
+                </div>-->
+
+                <div class="col-12 field text-center">
+                    <button pButton pRipple label="Search" form="form" icon="pi pi-check" (click)="searchFlights()"
+                        class="p-button-text mt-4"></button>
+                </div>
+            </div>
+        </p-card>
+    </div>
+    <div class="w-8 ml-4" *ngIf="flights">
+        <p-card>
+            <app-flight-list [flights]="flights"></app-flight-list>
+        </p-card>
+    </div>
+</div>

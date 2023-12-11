@@ -1,12 +1,13 @@
-<div class="flex justify-content-start flex-wrap mt-2">
+<div class="flex justify-content-start flex-wrap mt-2" *ngIf="user">
     <div class="w-3 mr-2">
-        <app-details-card></app-details-card>
+        <app-details-card (changeImageButtonClicked)="changeImage()" (editUserButtonClicked)="editUser()"
+            [user]="user"></app-details-card>
     </div>
     <div class="w-8 ml-5">
         <p-card>
             <p-tabView>
                 <p-tabPanel header="User details">
-                    <app-details-panel></app-details-panel>
+                    <app-details-panel [user]="user"></app-details-panel>
                 </p-tabPanel>
                 <p-tabPanel header="Booked flights">
                     <p>
@@ -22,3 +23,9 @@
         </p-card>
     </div>
 </div>
+
+<app-image-upload [visible]="imageDialog" (saveButtonClicked)="saveImage($event)"
+    (hideButtonClicked)="hideImageDialog()"></app-image-upload>
+
+<app-user-form [visible]="dialog" (saveButtonClicked)="saveUser($event)" (hideButtonClicked)="hideDialog()"
+    [user]="user"></app-user-form>

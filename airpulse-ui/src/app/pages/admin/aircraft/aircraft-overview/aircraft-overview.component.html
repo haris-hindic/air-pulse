@@ -17,7 +17,8 @@
     <div class="col-12">
         <div class="formgrid grid">
             <div class="col-3 mr-4 mb-4">
-                <p-image class="field" [imageClass]="'image'" [src]="aircraft.image" alt="Image" width="300"
+                <p-image class="field" [imageClass]="'image'"
+                    [src]="!aircraft.image ? 'assets/aircraft/aircraft.jpg' : aircraft.image" alt="Image" width="300"
                     height="250" [preview]="true"></p-image>
             </div>
             <div class="col-8 grid">

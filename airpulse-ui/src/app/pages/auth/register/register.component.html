@@ -9,75 +9,7 @@
     </div>
 
     <div>
-      <form [formGroup]="registerForm" class="form" (ngSubmit)="onSubmit()">
-        <div class="flex justify-content-between flex-wrap">
-          <div class="block w-max mr-2">
-            <label for="firstName" class="text-900 font-medium">First name</label>
-            <input id="firstName" formControlName="firstName" type="text" placeholder="First name" pInputText
-              class="w-full mb-3" [ngClass]="{'ng-invalid ng-dirty' : !registerForm.get('firstName')?.valid &&
-              registerForm.get('firstName')?.touched}">
-          </div>
-
-          <div class="block w-max ml-2">
-            <label for="lastName" class="text-900 font-medium mb-2">Last name</label>
-            <input id="lastName" formControlName="lastName" type="text" placeholder="Last name" pInputText
-              class="w-full mb-3" [ngClass]="{'ng-invalid ng-dirty' : !registerForm.get('lastName')?.valid &&
-              registerForm.get('lastName')?.touched}">
-          </div>
-        </div>
-
-        <div class="flex justify-content-between flex-wrap">
-          <div class="block w-7 mr-2">
-            <label for="username" class="text-900 font-medium mb-2">Username</label>
-            <input id="username" formControlName="username" type="text" placeholder="Username" pInputText
-              class="w-full mb-3" [ngClass]="{'ng-invalid ng-dirty' : !registerForm.get('username')?.valid &&
-              registerForm.get('username')?.touched}">
-          </div>
-          <div class="block w-4 mb-3">
-
-            <label for="dateOfBirth" class="block text-900 font-medium">Date of birth</label>
-            <p-calendar formControlName="dateOfBirth" [(ngModel)]="date" [showIcon]="true" [ngClass]="{'ng-invalid ng-dirty' : !registerForm.get('dateOfBirth')?.valid &&
-              registerForm.get('dateOfBirth')?.touched}"></p-calendar>
-          </div>
-        </div>
-
-        <label for="phoneNumber" class="block text-900 font-medium mb-2">Phone number</label>
-        <small style="color: red;" *ngIf="registerForm.get('phoneNumber')!.hasError('pattern')">
-          Must be a valid phone number (+919367788755,8989829304,786-307-3615).
-        </small>
-        <input id="phoneNumber" formControlName="phoneNumber" type="text" placeholder="Phone number" pInputText
-          class="w-full mb-3" [ngClass]="{'ng-invalid ng-dirty' : !registerForm.get('phoneNumber')?.valid &&
-          registerForm.get('phoneNumber')?.touched}">
-
-        <label for="email1" class="block text-900 font-medium mb-2">Email</label>
-        <small style="color: red;" *ngIf="registerForm.get('email')!.hasError('email')">
-          Must be a valid email addres (example@email.com).
-        </small>
-        <input id="email1" formControlName="email" type="email" placeholder="Email address" pInputText
-          class="w-full mb-3" [ngClass]="{'ng-invalid ng-dirty' : !registerForm.get('email')?.valid &&
-          registerForm.get('email')?.touched}">
-
-        <label for="password1" class="block text-900 font-medium mb-2">Password</label>
-        <input id="password1" formControlName="password" type="password" placeholder="Password" pInputText
-          class="w-full mb-3" [ngClass]="{'ng-invalid ng-dirty' : !registerForm.get('password')?.valid &&
-          registerForm.get('password')?.touched}">
-
-        <label for="confirmpassword1" class="block text-900 font-medium mb-2">Confrim password</label>
-        <input id="confirmpassword1" formControlName="confirmPassword" type="password" placeholder="Confrim password"
-          pInputText class="w-full mb-3" [ngClass]="{'ng-invalid ng-dirty' : !registerForm.get('confirmPassword')?.valid &&
-          registerForm.get('confirmPassword')?.touched}">
-
-        <!-- <div class="flex align-items-center justify-content-between mb-6">
-          <div class="flex align-items-center">
-            <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>
-            <label for="rememberme1" class="text-900">Remember me</label>
-          </div>
-          <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
-        </div> -->
-
-        <button pButton pRipple label="Register" [disabled]="!registerForm.valid" icon="pi pi-user"
-          class="w-full mt-6"></button>
-      </form>
+      <app-register-form (formSubmitted)="register($event)"></app-register-form>
     </div>
   </div>
 </div>

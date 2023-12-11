@@ -18,7 +18,6 @@ export class ImageUploadComponent {
   saveButtonClicked = new EventEmitter<any>();
 
   selectedImage: any;
-  selectedImageUrl: any;
 
 
   readFile = (event: any) => {
@@ -26,7 +25,6 @@ export class ImageUploadComponent {
       const reader = new FileReader();
 
       reader.onload = (res) => {
-        console.log('res :>> ', res);
         this.selectedImage = res!.target!.result;
         resolve(res!.target!.result);
       };

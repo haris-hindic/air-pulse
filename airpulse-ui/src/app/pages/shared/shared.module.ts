@@ -28,12 +28,14 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { CalendarModule } from 'primeng/calendar';
 import { ImageUploadComponent } from './image-upload/image-upload.component';
 import { FileUploadModule } from 'primeng/fileupload';
+import { DateTimeDiff } from "./pipe/timediff.pipe";
 
 @NgModule({
   imports: [
     DialogModule,
     FileUploadModule,
-    ImageModule
+    ImageModule,
+    DateTimeDiff
   ],
   declarations: [
     ImageUploadComponent
@@ -66,7 +68,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     InputTextareaModule,
     InputNumberModule,
     CalendarModule,
-    ImageUploadComponent
+    ImageUploadComponent, DateTimeDiff
   ]
 })
 export class SharedModule { }
