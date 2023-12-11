@@ -24,7 +24,7 @@ public class AuthConfiguration {
 			// -- Swagger UI v3 (OpenAPI)
 			"/v3/api-docs/**", "/swagger-ui/**",
 			// others
-			"auth", "auth/login", "auth/register", "auth/validate-token" };
+			"auth", "auth/login", "auth/register", "auth/validate-token", "user/**" };
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {

@@ -8,9 +8,11 @@ spring:
     driver-class-name: org.postgresql.Driver
 
   jpa:
+    show-sql: false
     properties:
       hibernate:
         default_schema: testing
+        format_sql: true
     hibernate:
       ddl-auto: validate
 

@@ -14,10 +14,12 @@ public class RouteResponse implements Serializable {
 	private String aircraftDetails;
 	private Long arrivalAirportId;
 	private String arrivalAirportDetails;
+	private String arrivalAirportCity;
 	private LocalDateTime created;
 	private String createdBy;
 	private Long departureAirportId;
 	private String departureAirportDetails;
+	private String departureAirportCity;
 	private Long distance;
 	private Long duration;
 	private LocalDateTime modified;

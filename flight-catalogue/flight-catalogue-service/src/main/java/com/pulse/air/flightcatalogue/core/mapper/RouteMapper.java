@@ -18,10 +18,14 @@ public interface RouteMapper extends BaseMapper<RouteEntity, RouteResponse, Rout
 		if (entity.getArrivalAirport() != null) {
 			response.setArrivalAirportDetails(
 					entity.getArrivalAirport().getName() + " (" + entity.getArrivalAirport().getIataCode() + ")");
+			response.setArrivalAirportCity(
+					entity.getArrivalAirport().getCity() + "," + entity.getArrivalAirport().getIataCode());
 		}
 		if (entity.getDepartureAirport() != null) {
 			response.setDepartureAirportDetails(
 					entity.getDepartureAirport().getName() + " (" + entity.getDepartureAirport().getIataCode() + ")");
+			response.setDepartureAirportCity(
+					entity.getDepartureAirport().getCity() + "," + entity.getDepartureAirport().getIataCode());
 		}
 
 		if (entity.getAircraft() != null) {

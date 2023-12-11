@@ -62,6 +62,12 @@ public class UserServiceImpl extends
 				throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
 			}
 		}
+
+		if (StringUtils.isNotEmpty(request.getObject().getPassword())) {
+
+			entity.setPassword(passwordEncoder.encode(request.getObject().getPassword()));
+		}
+
 		super.beforeUpdate(entity, request);
 	}
 
