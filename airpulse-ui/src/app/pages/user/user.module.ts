@@ -9,6 +9,7 @@ import { AuthModule } from "../auth/auth.module";
 import { UserFormComponent } from './useradmin/user-form/user-form.component';
 import { FlightSearchComponent } from './flight-search/flight-search.component';
 import { FlightListComponent } from './flight-search/flight-list/flight-list.component';
+import { ReturnComponent } from './flight-search/return/return.component';
 
 
 @NgModule({
@@ -21,6 +22,9 @@ import { FlightListComponent } from './flight-search/flight-list/flight-list.com
             {
                 path: 'search', component: FlightSearchComponent, children: []
             },
+            {
+                path: 'search/return/:id', component: ReturnComponent, children: []
+            },
 
             //{ path: '**', redirectTo: '/notfound' }
         ]),
@@ -32,7 +36,8 @@ import { FlightListComponent } from './flight-search/flight-list/flight-list.com
         DetailsPanelComponent,
         UserFormComponent,
         FlightSearchComponent,
-        FlightListComponent
+        FlightListComponent,
+        ReturnComponent
     ],
     exports: []
 })

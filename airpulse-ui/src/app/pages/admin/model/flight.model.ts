@@ -25,4 +25,5 @@ export class FlightSearchRequest {
     routeId!: number;
     departOn!: string;
     status!: string;
+    flightAfter!: string;
 }
