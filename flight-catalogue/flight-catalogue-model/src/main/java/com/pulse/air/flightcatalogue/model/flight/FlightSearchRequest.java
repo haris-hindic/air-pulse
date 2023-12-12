@@ -7,6 +7,7 @@ public class FlightSearchRequest extends BaseSearchRequest {
 
 	private Long routeId;
 	private String departOn;
+	private String flightAfter;
 
 	public Long getRouteId() {
 		return routeId;
@@ -22,6 +23,14 @@ public class FlightSearchRequest extends BaseSearchRequest {
 
 	public void setDepartOn(final String departOn) {
 		this.departOn = departOn;
+	}
+
+	public String getFlightAfter() {
+		return flightAfter;
+	}
+
+	public void setFlightAfter(final String flightAfter) {
+		this.flightAfter = flightAfter;
 	}
 
 }

@@ -20,6 +20,7 @@ import com.pulse.air.flightcatalogue.dao.FlightRepositoryCustom;
 import com.pulse.air.flightcatalogue.dao.RouteRepository;
 import com.pulse.air.flightcatalogue.dao.model.FlightEntity;
 import com.pulse.air.flightcatalogue.dao.model.RouteEntity;
+import com.pulse.air.flightcatalogue.model.flight.FindReturnFlightRequest;
 import com.pulse.air.flightcatalogue.model.flight.FlightRequest;
 import com.pulse.air.flightcatalogue.model.flight.FlightResponse;
 import com.pulse.air.flightcatalogue.model.flight.FlightSearchRequest;
@@ -83,10 +84,22 @@ public class FlightServiceImpl extends
 	}
 
 	@Override
-	public ApiListResponse<FlightResponse> findReturnFligtsByRouteId(final ApiRequest<Long> request)
+	public ApiListResponse<FlightResponse> findReturnFligtsByRouteId(final ApiRequest<FindReturnFlightRequest> request)
 			throws ApiException {
+
+		var route = routeRepository.findByArrivalAirportIdAndDepartureAirportId(
+				request.getObject().getArrivalAirportId(), request.getObject().getDepartureAirportId());
+
+		var searchRequest = new FlightSearchRequest();
+		searchRequest.setRouteId(route.getId());
+		searchRequest.setStatus(Status.ACTIVE.getValue());
+		searchRequest.setDepartOn(request.getObject().getDepartOn());
+		if (StringUtils.isEmpty(request.getObject().getDepartOn())) {
+			searchRequest.setFlightAfter(request.getObject().getFlightAfter());
+		}
+
 		return new ApiListResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
-				mapper.entitesToDtos(repositoryCustom.findReturnFligtsByRouteId(request.getObject())));
+				mapper.entitesToDtos(repositoryCustom.searchFlights(searchRequest)));
 	}
 
 }

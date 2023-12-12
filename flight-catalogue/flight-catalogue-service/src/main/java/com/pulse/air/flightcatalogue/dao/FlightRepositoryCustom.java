@@ -54,6 +54,14 @@ public class FlightRepositoryCustom {
 					: "and extract(day from f.departure) = :day ");
 			hql.append("and extract(month from f.departure) = :month ");
 			hql.append("and extract(year from f.departure) = :year ");
+			if (Boolean.TRUE.equals(firstCondition)) {
+				firstCondition = Boolean.FALSE;
+			}
+		}
+
+		if (StringUtils.isNotEmpty(request.getFlightAfter())) {
+			hql.append(Boolean.TRUE.equals(firstCondition) ? "where f.departure > :flightAfter "
+					: "and f.departure > :flightAfter ");
 		}
 	}
 
@@ -70,6 +78,11 @@ public class FlightRepositoryCustom {
 			query.setParameter("day", departOn.getDayOfMonth());
 			query.setParameter("month", departOn.getMonthValue());
 			query.setParameter("year", departOn.getYear());
+		}
+		if (StringUtils.isNotEmpty(request.getFlightAfter())) {
+			var formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+			var flightAfter = LocalDateTime.parse(request.getFlightAfter(), formatter);
+			query.setParameter("flightAfter", flightAfter);
 		}
 	}
 
