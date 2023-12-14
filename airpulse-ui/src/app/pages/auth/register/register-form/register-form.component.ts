@@ -55,6 +55,7 @@ export class RegisterFormComponent {
       this.registerForm.get('username')?.patchValue(this.user.username);
       this.registerForm.get('phoneNumber')?.patchValue(this.user.phoneNumber);
       this.registerForm.get('dateOfBirth')?.patchValue(new Date(this.user.dateOfBirth));
+
       this.date = this.user.dateOfBirth;
     } else {
       this.initForm();

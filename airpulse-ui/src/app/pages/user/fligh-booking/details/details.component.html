@@ -1,0 +1,33 @@
+<div class="flex flex-row justify-content-center flex-wrap mt-4">
+    <div class="w-5">
+        <app-details-panel *ngIf="user" [user]="user"></app-details-panel>
+    </div>
+    <div class="w-6 ml-4">
+        <h4>Departure flight</h4>
+        <app-flight-list *ngIf="departFlight" [flights]="[departFlight]" [singleReturnFlight]="true"
+            [returnFlights]="false" [noButton]="true"></app-flight-list>
+        <h4>Return flight</h4>
+        <app-flight-list *ngIf="returnFlight" [flights]="[returnFlight]" [singleReturnFlight]="true"
+            [returnFlights]="false" [noButton]="true"></app-flight-list>
+        <div class="field">
+            <label for="status" class="mr-3">Pick seat class</label>
+            <p-dropdown (onChange)="recalculatePrice($event)" inputId="seatClass" [options]="seatClasses">
+                <ng-template let-option pTemplate="item">
+                    <p-tag [value]="option.label" [severity]="getSeverity(option.label)"></p-tag>
+                </ng-template>
+            </p-dropdown>
+            <p-divider></p-divider>
+            <h5 class="text-right">Total price: {{totalPrice|currency}}</h5>
+            <!-- <small class="p-error"
+                    *ngIf="form.get('seatClass')?.touched && form.get('seatClass')!.hasError('required')">Status is
+                    required.</small> -->
+        </div>
+    </div>
+
+
+</div>
+<p-divider></p-divider>
+<div class="text-right">
+
+    <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+</div>

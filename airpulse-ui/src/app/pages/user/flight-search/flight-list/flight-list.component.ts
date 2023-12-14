@@ -11,4 +11,5 @@ export class FlightListComponent {
   @Input() flights!: FlightResponse[];
   @Input() singleReturnFlight!: boolean;
   @Input() returnFlights!: boolean;
+  @Input() noButton!: boolean;
 }

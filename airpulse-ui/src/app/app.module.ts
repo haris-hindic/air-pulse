@@ -34,7 +34,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     UserModule,
     NotificationsModule,
     StyleClassModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
   ],
   providers: [
     {
@@ -42,7 +42,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
       useClass: AuthInterceptor,
       multi: true,
     },
-    MessageService
+    MessageService,
   ],
   bootstrap: [AppComponent]
 })
