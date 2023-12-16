@@ -7,6 +7,8 @@ import { SecurityService } from 'src/app/pages/auth/services/security.service';
 import { MessageToast } from 'src/app/pages/shared/services/message-toast.service';
 import { UserService } from '../../services/user.service';
 import { DropdownChangeEvent } from 'primeng/dropdown';
+import { switchMap } from 'rxjs';
+import { StripeService } from 'ngx-stripe';
 
 @Component({
   selector: 'app-details',
@@ -25,26 +27,36 @@ export class DetailsComponent {
   basePrice: number = 0;
 
   seatClasses = [
-    { label: 'ECONOMY', value: 'Economy' },
-    { label: 'BUSINESS', value: 'Business' },
-    { label: 'FIRST CLASS', value: 'First Class' },
-    { label: 'PREMIUM ECONOMY', value: 'Premium Economy' }
+    { label: 'ECONOMY', value: 1 },
+    { label: 'BUSINESS', value: 2 },
+    { label: 'FIRST CLASS', value: 2.5 },
+    { label: 'PREMIUM ECONOMY', value: 1.5 }
   ];
+
+  luggage = [
+    { label: 'luggage (20kg) + carry on (8kg)', value: 1 },
+    { label: 'luggage (30kg) + carry on (8kg)', value: 1.1 },
+    { label: 'luggage (40kg) + carry on (8kg)', value: 1.2 },
+    { label: 'luggage (40kg) + carry on (12kg)', value: 1.3 }
+  ];
+  selectedLuggage: any = 1;
+  selectedSeatClass: any = 1;
 
   constructor(private route: ActivatedRoute,
     private securityService: SecurityService,
     private userService: UserService,
     private messageToast: MessageToast,
     private flightService: FlightService,
-    private router: Router) {
+    private router: Router,
+    private stripeService: StripeService) {
 
   }
 
   ngOnInit() {
-    this.departFlightId = this.route.snapshot.parent?.paramMap.get('departFlightId') as unknown as number;
-    this.returnFlightId = this.route.snapshot.parent?.paramMap.get('returnFlightId') as unknown as number;
+    this.departFlightId = this.route.snapshot.paramMap.get('departFlightId') as unknown as number;
+    this.returnFlightId = this.route.snapshot.paramMap.get('returnFlightId') as unknown as number;
     this.loadDepartFlight(this.departFlightId);
-    if (this.returnFlightId) {
+    if (this.returnFlightId && !isNaN(this.returnFlightId)) {
       this.loadReturnFlight(this.returnFlightId);
     }
     this.loadUser();
@@ -64,21 +76,12 @@ export class DetailsComponent {
   }
 
   recalculatePrice(event: DropdownChangeEvent) {
+    this.totalPrice = this.basePrice * this.selectedLuggage * this.selectedSeatClass;
+  }
+
+  recalculatePriceLuggage(event: DropdownChangeEvent) {
     console.log('event :>> ', event);
-    switch (event.value) {
-      case 'First Class':
-        this.totalPrice = this.basePrice * 2.5;
-        break;
-      case 'Business':
-        this.totalPrice = this.basePrice * 2;
-        break;
-      case 'Premium Economy':
-        this.totalPrice = this.basePrice * 1.5;
-        break;
-      case 'Economy':
-        this.totalPrice = this.basePrice;
-        break;
-    }
+    this.totalPrice = this.basePrice * event.value;
   }
 
   loadDepartFlight(id: number) {
@@ -121,8 +124,22 @@ export class DetailsComponent {
     }
   }
 
-  nextPage() {
-    this.router.navigate([`/user/booking/${this.departFlightId}/${this.returnFlightId}/payment`]);
+  checkout() {
+    this.flightService.createCheckout({
+      name: this.departFlight.route.departureAirportDetails + " " + this.departFlight.route.arrivalAirportDetails,
+      amount: this.totalPrice,
+      succesUrl: 'http://localhost:4200/user/bookign/success/' + this.departFlightId + '/' + this.totalPrice + '/' + this.userId,
+      failUrl: 'http://localhost:4200/failure',
+    }).subscribe(
+      {
+        next: result => {
+          window.location.href = result;
+        },
+        error: (err) => {
+          this.handleError(err);
+        }
+      },
+    );
   }
 
   getSeverity(status: string) {

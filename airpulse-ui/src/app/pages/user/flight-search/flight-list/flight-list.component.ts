@@ -12,4 +12,5 @@ export class FlightListComponent {
   @Input() singleReturnFlight!: boolean;
   @Input() returnFlights!: boolean;
   @Input() noButton!: boolean;
+  @Input() return!: boolean;
 }

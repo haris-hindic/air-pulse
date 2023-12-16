@@ -20,7 +20,7 @@
 
                 <div class="col-12 field">
                     <label for="departOn" class="block text-900 font-medium">Return</label>
-                    <p-checkbox value="One way" [(ngModel)]="oneWay" inputId="ny"></p-checkbox>
+                    <p-checkbox value="One way" [(ngModel)]="return" inputId="ny"></p-checkbox>
                 </div>
 
                 <div class="col-12 field text-center">
@@ -35,7 +35,8 @@
     </div>
     <div class="w-8 ml-4">
         <p-card>
-            <app-flight-list *ngIf="flights" [flights]="flights"></app-flight-list>
+            <app-flight-list [singleReturnFlight]="false" [returnFlights]="false" [return]="return" *ngIf="flights"
+                [flights]="flights"></app-flight-list>
             <div class="text-center mt-4" *ngIf="!flights ||flights.length===0">
 
                 <span class="block textxxl font-bold mb-1">No flights.</span>

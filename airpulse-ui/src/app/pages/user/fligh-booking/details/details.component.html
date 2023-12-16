@@ -10,12 +10,26 @@
         <app-flight-list *ngIf="returnFlight" [flights]="[returnFlight]" [singleReturnFlight]="true"
             [returnFlights]="false" [noButton]="true"></app-flight-list>
         <div class="field">
-            <label for="status" class="mr-3">Pick seat class</label>
-            <p-dropdown (onChange)="recalculatePrice($event)" inputId="seatClass" [options]="seatClasses">
-                <ng-template let-option pTemplate="item">
-                    <p-tag [value]="option.label" [severity]="getSeverity(option.label)"></p-tag>
-                </ng-template>
-            </p-dropdown>
+            <div class="field">
+
+                <label for="status" class="mr-3">Pick seat class</label>
+                <p-dropdown (onChange)="recalculatePrice($event)" [(ngModel)]="selectedSeatClass" inputId="seatClass"
+                    [options]="seatClasses">
+                    <ng-template let-option pTemplate="item">
+                        <p-tag [value]="option.label" [severity]="getSeverity(option.label)"></p-tag>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+            <div class="field">
+
+                <label for="luggage" class="mr-3">Pick luggage</label>
+                <p-dropdown (onChange)="recalculatePrice($event)" [(ngModel)]="selectedLuggage" inputId="seatClass"
+                    [options]="luggage">
+                    <ng-template let-option pTemplate="item">
+                        <p-tag [value]="option.label" [severity]="getSeverity(option.label)"></p-tag>
+                    </ng-template>
+                </p-dropdown>
+            </div>
             <p-divider></p-divider>
             <h5 class="text-right">Total price: {{totalPrice|currency}}</h5>
             <!-- <small class="p-error"
@@ -29,5 +43,5 @@
 <p-divider></p-divider>
 <div class="text-right">
 
-    <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+    <p-button label="Complete booking" (onClick)="checkout()" icon="pi pi-angle-right" iconPos="right"></p-button>
 </div>

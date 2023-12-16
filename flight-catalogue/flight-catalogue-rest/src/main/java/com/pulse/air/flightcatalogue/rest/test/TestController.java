@@ -1,10 +1,5 @@
 package com.pulse.air.flightcatalogue.rest.test;
 
-import java.io.IOException;
-import java.util.Base64;
-import java.util.Map;
-import java.util.UUID;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cloudinary.Cloudinary;
 import com.pulse.air.common.model.ApiListResponse;
 import com.pulse.air.employee.model.employee.EmployeeResponse;
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.checkout.Session;
+import com.stripe.param.checkout.SessionCreateParams;
 
 import lombok.AllArgsConstructor;
 
@@ -34,13 +33,26 @@ public class TestController {
 		return null;
 	}
 
-	@PostMapping(value = "/upload")
-	public Map uploadPhoto(@RequestBody final String file) throws IOException {
-		var base64image = file.split(",")[1];
-		var decodedImage = Base64.getMimeDecoder().decode(base64image.getBytes());
+	@PostMapping(value = "/create-checkout")
+	public String uploadPhoto(@RequestBody final String file) throws StripeException {
+		Stripe.apiKey = "sk_test_51KR05DIwNGlyHmAKv1n1TGR3LZ5bgvIsSEozrU8rWs8usz8BtEHuhsYwPIlVnDNsZL8rcJV6m65oMudBj4eSQSBE00yEuWupGX";
+		var params = SessionCreateParams.builder().setMode(SessionCreateParams.Mode.PAYMENT)
+				.setSuccessUrl("http://localhost:4200/success").setCancelUrl(
+						"http://localhost:4200/cancel")
+				.addLineItem(
+						SessionCreateParams.LineItem.builder().setQuantity(1L)
+								.setPriceData(
+										SessionCreateParams.LineItem.PriceData.builder().setCurrency("usd")
+												.setUnitAmount(2000L)
+												.setProductData(SessionCreateParams.LineItem.PriceData.ProductData
+														.builder().setName("T-shirt").build())
+												.build())
+								.build())
+				.build();
 
-		return cloudinary.uploader().upload(decodedImage, Map.of("public_id", UUID.randomUUID().toString()));
+		var session = Session.create(params);
 
+		return session.getUrl();
 	}
 
 }

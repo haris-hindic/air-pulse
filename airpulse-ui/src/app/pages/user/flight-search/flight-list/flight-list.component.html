@@ -42,11 +42,14 @@
                         </div>
                         <div class="item it-3 mt-2 ml-1">
                             <div *ngIf="!noButton" class="dr-row">
-                                <button *ngIf="!singleReturnFlight && !returnFlights" pButton pRipple
+                                <button *ngIf="!singleReturnFlight && !returnFlights && return" pButton pRipple
                                     label="Choose flight" [routerLink]="'/user/search/return/'+flight.id"
                                     class="p-button-text"></button>
                                 <button *ngIf="!singleReturnFlight && returnFlights" pButton pRipple
                                     label="Choose flight" [routerLink]="'/user/booking/'+firstFlight.id+'/'+flight.id"
+                                    class="p-button-text"></button>
+                                <button *ngIf="!singleReturnFlight && !returnFlights && !return" pButton pRipple
+                                    label="Choose flight" [routerLink]="'/user/booking/'+flight.id"
                                     class="p-button-text"></button>
                                 <button *ngIf="singleReturnFlight" pButton pRipple label="Go back"
                                     [routerLink]="'/user/search'" class="p-button-text"></button>

@@ -20,7 +20,7 @@ export class FlightSearchComponent {
   searchRequest: FlightSearchRequest = new FlightSearchRequest();
 
   departOn!: any;
-  oneWay!: any;
+  return: any = false;
 
   seatClasses = [
     { label: 'ECONOMY', value: 'Economy' },
@@ -79,10 +79,6 @@ export class FlightSearchComponent {
 
   searchFlights() {
     if (this.departOn != null && this.departOn !== '') {
-      console.log('this.departOn :>> ', this.departOn);
-      console.log('new Date(this.departOn) :>> ', new Date(this.departOn));
-      console.log('new Date(this.departOn).toJSON().replace(, ) :>> ', new Date(this.departOn).toJSON().replace('Z', ''));
-      console.log('ew Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON(); :>> ', new Date(this.departOn.getTime() - (this.departOn.getTimezoneOffset() * 60000)).toJSON());
       this.searchRequest.departOn = new Date(this.departOn.getTime() - (this.departOn.getTimezoneOffset() * 60000)).toJSON().replace('Z', '');
     }
     //console.log('this.searchRequest :>> ', new Date(this.departOn).toJSON());
@@ -90,7 +86,7 @@ export class FlightSearchComponent {
   }
 
   clearFilter() {
-    this.departOn = null; this.oneWay = false; this.searchRequest.routeId = 0; this.searchRequest.departOn = '';
+    this.departOn = null; this.return = false; this.searchRequest.routeId = 0; this.searchRequest.departOn = '';
   }
 
   getSeverity(status: string) {

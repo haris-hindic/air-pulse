@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js';
@@ -33,7 +34,7 @@ export class PaymentComponent {
 
   stripeTest!: FormGroup;
 
-  constructor(private fb: FormBuilder, private stripeService: StripeService) { }
+  constructor(private fb: FormBuilder, private stripeService: StripeService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.stripeTest = this.fb.group({
@@ -42,12 +43,25 @@ export class PaymentComponent {
   }
 
   createToken(): void {
+    const req = {
+      amount: 1099,
+      currency: 'usd',
+      payment_method_types: ['card'],
+    };
+
+
+    this.http.post('https://api.stripe.com/v1/create-checkout-session', req).subscribe({
+      next: result => console.log('result :>> ', result)
+    });
+
+
     const name = this.stripeTest.get('name')!.value;
     this.stripeService
       .createToken(this.card.element, { name })
       .subscribe((result) => {
         if (result.token) {
           // Use the token
+          console.log('result :>> ', result);
           console.log(result.token.id);
         } else if (result.error) {
           // Error creating the token

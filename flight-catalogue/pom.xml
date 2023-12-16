@@ -46,6 +46,12 @@
     		<artifactId>commons</artifactId>
     		<version>1.0-SNAPSHOT</version>
     	</dependency>
+    	
+    	<dependency>
+			  <groupId>com.stripe</groupId>
+			  <artifactId>stripe-java</artifactId>
+			  <version>24.0.0</version>
+			</dependency>
 	</dependencies>
 
 </project>

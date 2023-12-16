@@ -36,6 +36,13 @@ import { PaymentComponent } from './fligh-booking/payment/payment.component';
                     { path: 'confirmation', component: ConfirmationComponent },
                 ]
             },
+            {
+                path: 'booking/:departFlightId', component: FlighBookingComponent, children: [
+                    { path: 'details', component: DetailsComponent },
+                    { path: 'payment', component: PaymentComponent },
+                    { path: 'confirmation', component: ConfirmationComponent },
+                ]
+            },
 
             //{ path: '**', redirectTo: '/notfound' }
         ]),

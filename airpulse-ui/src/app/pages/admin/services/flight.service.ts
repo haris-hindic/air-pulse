@@ -5,7 +5,7 @@ import { LoaderService } from "../../shared/services/loader.service";
 import { FlightResponse, FlightRequest } from "../model/flight.model";
 import { Observable, map } from "rxjs";
 import { devEnvironment } from "src/environments/devenv";
-import { ApiListResponse } from "../../shared/model/api-response";
+import { ApiListResponse, ApiResponse } from "../../shared/model/api-response";
 import { serialize } from "../../shared/utils/query-sting";
 
 @Injectable({
@@ -27,6 +27,17 @@ export class FlightService extends BaseService<FlightResponse, FlightRequest> {
 
         this.loader.show();
         return this.http.get<ApiListResponse<FlightResponse>>(url).pipe(
+            map((response) => {
+                this.loader.hide();
+                return response['data'];
+            })
+        );
+    }
+
+    createCheckout(request: any): Observable<string> {
+        let url = `${devEnvironment.baseUrl}/fc/flight/create-checkout`;
+        this.loader.show();
+        return this.http.post<ApiResponse<string>>(url, request).pipe(
             map((response) => {
                 this.loader.hide();
                 return response['data'];

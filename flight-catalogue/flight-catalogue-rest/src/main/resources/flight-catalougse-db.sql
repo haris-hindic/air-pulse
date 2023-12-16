@@ -103,6 +103,22 @@ CONSTRAINT "fc_flight_pk" PRIMARY KEY ("id")
 ) 
 ;
 
+CREATE TABLE "fc_flight_booking" ( 
+  "id"              INT8 NOT NULL,
+  "created"         TIMESTAMP(2) NOT NULL,
+  "created_by"      VARCHAR(40) NOT NULL,
+  "modified"        TIMESTAMP(2),
+  "modified_by"     VARCHAR(40),
+  "status"          VARCHAR(40) NOT NULL,
+  "user_id"       TIMESTAMP(2) NOT NULL,
+  "total_price"      NUMERIC(10,2) NOT NULL,
+  "flight_id"        INT8 NOT NULL,
+  "return_flight_id"        INT8 NOT NULL,
+CONSTRAINT "fc_flight_booking_pk" PRIMARY KEY ("id")
+) 
+;
+
+
 /*============================================================================*/
 /*                               FOREIGN KEYS                                 */
 /*============================================================================*/
@@ -142,6 +158,16 @@ ALTER TABLE "fc_flight"
             REFERENCES "fc_route" ("id")
  ;
 
+ALTER TABLE "fc_flight_booking"
+    ADD CONSTRAINT "fc_flight_booking_depart_flight"
+        FOREIGN KEY ("flight_id")
+            REFERENCES "fc_flight" ("id")
+ ;
+ALTER TABLE "fc_flight_booking"
+    ADD CONSTRAINT "fc_flight_booking_return_flight"
+        FOREIGN KEY ("return_flight_id")
+            REFERENCES "fc_flight" ("id")
+;
 /*============================================================================*/
 /*                               SEQUENCES                                    */
 /*============================================================================*/
@@ -194,7 +220,13 @@ CREATE SEQUENCE fc_airport_seq
 	CACHE 1
 	NO CYCLE;
  
- 
+CREATE SEQUENCE fc_flight_booking_seq
+	INCREMENT BY 1
+	MINVALUE 11
+	MAXVALUE 9223372036854775807
+	START 11
+	CACHE 1
+	NO CYCLE;
  /*============================================================================*/
 /*                               SAMPLE DATA                                 */
 /*============================================================================*/
