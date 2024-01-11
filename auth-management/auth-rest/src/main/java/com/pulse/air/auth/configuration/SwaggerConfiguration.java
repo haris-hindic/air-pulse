@@ -18,4 +18,10 @@ public class SwaggerConfiguration extends BaseSwaggerConfiguration {
 	public GroupedOpenApi userApi() {
 		return GroupedOpenApi.builder().group("user-api").packagesToScan("com.pulse.air.auth.rest.user").build();
 	}
+
+	@Bean
+	public GroupedOpenApi notificationApi() {
+		return GroupedOpenApi.builder().group("notification-api").packagesToScan("com.pulse.air.auth.rest.notification")
+				.build();
+	}
 }

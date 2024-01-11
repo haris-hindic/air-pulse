@@ -1,5 +1,7 @@
 package com.pulse.air.flightcatalogue.rest.flight;
 
+import java.math.BigDecimal;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,12 +16,14 @@ import com.pulse.air.common.model.ApiListResponse;
 import com.pulse.air.common.model.ApiRequest;
 import com.pulse.air.common.model.ApiResponse;
 import com.pulse.air.commons.rest.BaseCRUDController;
+import com.pulse.air.flightcatalogue.contract.FlightBookingService;
 import com.pulse.air.flightcatalogue.contract.FlightService;
-import com.pulse.air.flightcatalogue.model.flight.FindReturnFlightRequest;
 import com.pulse.air.flightcatalogue.model.flight.CheckoutRequest;
+import com.pulse.air.flightcatalogue.model.flight.FindReturnFlightRequest;
 import com.pulse.air.flightcatalogue.model.flight.FlightRequest;
 import com.pulse.air.flightcatalogue.model.flight.FlightResponse;
 import com.pulse.air.flightcatalogue.model.flight.FlightSearchRequest;
+import com.pulse.air.flightcatalogue.model.flightbooking.FlightBookingRequest;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
@@ -30,6 +34,7 @@ import com.stripe.param.checkout.SessionCreateParams;
 public class FlightManagementRest extends BaseCRUDController<FlightResponse, FlightRequest, FlightSearchRequest> {
 
 	private FlightService flightService;
+	private FlightBookingService flightBookingService;
 
 	public FlightManagementRest(final FlightService service) {
 		super(service);
@@ -46,10 +51,16 @@ public class FlightManagementRest extends BaseCRUDController<FlightResponse, Fli
 	}
 
 	@PostMapping(value = "create-checkout")
-	public ApiResponse<String> createCheckout(@RequestBody final CheckoutRequest request) throws StripeException {
+	public ApiResponse<String> createCheckout(@RequestBody final CheckoutRequest request,
+			@RequestHeader("AP_USER") final String user) throws StripeException, ApiException {
+		var booking = flightBookingService
+				.create(new ApiRequest<>(user, new FlightBookingRequest(BigDecimal.valueOf(request.getAmount()),
+						request.getUserId(), "Draft", request.getFlightId(), request.getReturnFlightId())))
+				.getData();
+
 		Stripe.apiKey = "sk_test_51KR05DIwNGlyHmAKv1n1TGR3LZ5bgvIsSEozrU8rWs8usz8BtEHuhsYwPIlVnDNsZL8rcJV6m65oMudBj4eSQSBE00yEuWupGX";
 		var params = SessionCreateParams.builder().setMode(SessionCreateParams.Mode.PAYMENT)
-				.setSuccessUrl(request.getSuccesUrl()).setCancelUrl(
+				.setSuccessUrl(request.getSuccesUrl().replace("#", booking.getId().toString())).setCancelUrl(
 						request.getFailUrl())
 				.addLineItem(
 						SessionCreateParams.LineItem.builder().setQuantity(1L)
@@ -63,6 +74,7 @@ public class FlightManagementRest extends BaseCRUDController<FlightResponse, Fli
 				.build();
 
 		var session = Session.create(params);
+		
 
 		return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), session.getUrl());
 

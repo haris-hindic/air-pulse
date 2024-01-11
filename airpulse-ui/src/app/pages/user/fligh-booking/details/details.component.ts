@@ -80,7 +80,6 @@ export class DetailsComponent {
   }
 
   recalculatePriceLuggage(event: DropdownChangeEvent) {
-    console.log('event :>> ', event);
     this.totalPrice = this.basePrice * event.value;
   }
 
@@ -128,7 +127,7 @@ export class DetailsComponent {
     this.flightService.createCheckout({
       name: this.departFlight.route.departureAirportDetails + " " + this.departFlight.route.arrivalAirportDetails,
       amount: this.totalPrice,
-      succesUrl: 'http://localhost:4200/user/bookign/success/' + this.departFlightId + '/' + this.totalPrice + '/' + this.userId,
+      succesUrl: 'http://localhost:4200/user/bookign/success/#',
       failUrl: 'http://localhost:4200/failure',
     }).subscribe(
       {
@@ -152,8 +151,8 @@ export class DetailsComponent {
         return 'warning';
       case 'ECONOMY':
         return 'danger';
+      default:
+        return 'N/A';
     }
-
-    return 'N/A';
   }
 }

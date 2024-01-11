@@ -12,4 +12,7 @@ public class CheckoutRequest implements Serializable {
 	private String failUrl;
 	private String name;
 	private Long amount;
+	private Long flightId;
+	private Long returnFlightId;
+	private Long userId;
 }
