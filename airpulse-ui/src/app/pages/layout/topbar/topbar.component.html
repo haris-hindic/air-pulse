@@ -6,7 +6,8 @@
     <div #topbarmenu class="layout-topbar-menu">
         <button *ngIf="securtiyService.isAuthenticated()" class="p-link layout-topbar-button"
             (click)="toggleNotificationModal(true)">
-            <i class="pi pi-bell" pBadge></i>
+            <i *ngIf="notificationCount>0" class="pi pi-bell" pBadge></i>
+            <i *ngIf="notificationCount===0" class="pi pi-bell"></i>
         </button>
         <button class="p-link layout-topbar-button"
             [routerLink]="securtiyService.isAuthenticated() ? '/user' : '/auth/login'">
@@ -23,5 +24,5 @@
     </div>
 </div>
 
-<app-not-overview (onModalHidden)="toggleNotificationModal(false)"
-    [visible]="showNotificationsModal"></app-not-overview>
+<app-not-overview (onModalHidden)="toggleNotificationModal(false)" [visible]="showNotificationsModal"
+    (notLoaded)="setNotcount($event)"></app-not-overview>

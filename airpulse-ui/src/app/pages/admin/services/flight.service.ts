@@ -5,7 +5,7 @@ import { LoaderService } from "../../shared/services/loader.service";
 import { FlightResponse, FlightRequest } from "../model/flight.model";
 import { Observable, map } from "rxjs";
 import { devEnvironment } from "src/environments/devenv";
-import { ApiListResponse, ApiResponse } from "../../shared/model/api-response";
+import { ApiListResponse, ApiResponse, ChartData } from "../../shared/model/api-response";
 import { serialize } from "../../shared/utils/query-sting";
 
 @Injectable({
@@ -38,6 +38,30 @@ export class FlightService extends BaseService<FlightResponse, FlightRequest> {
         let url = `${devEnvironment.baseUrl}/fc/flight/create-checkout`;
         this.loader.show();
         return this.http.post<ApiResponse<string>>(url, request).pipe(
+            map((response) => {
+                this.loader.hide();
+                return response['data'];
+            })
+        );
+    }
+
+    flightsByMonths(): Observable<ChartData> {
+        let url = `${devEnvironment.baseUrl}/fc/flight/chart-by-months`;
+
+        this.loader.show();
+        return this.http.get<ApiResponse<ChartData>>(url).pipe(
+            map((response) => {
+                this.loader.hide();
+                return response['data'];
+            })
+        );
+    }
+
+    flightsByCity(): Observable<ChartData> {
+        let url = `${devEnvironment.baseUrl}/fc/flight/chart-by-cities`;
+
+        this.loader.show();
+        return this.http.get<ApiResponse<ChartData>>(url).pipe(
             map((response) => {
                 this.loader.hide();
                 return response['data'];

@@ -22,6 +22,9 @@ public class FlightBookingResponse implements Serializable {
 	private String status;
 	private Long flightId;
 	private Long returnFlightId;
+	private String userinfo;
+	private String luggage;
+	private String seatClass;
 	private FlightResponse flight;
 	private FlightResponse returnFlight;
 

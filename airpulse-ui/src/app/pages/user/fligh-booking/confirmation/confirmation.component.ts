@@ -12,11 +12,4 @@ export class ConfirmationComponent {
 
   }
 
-  complete() {
-
-  }
-
-  prevPage() {
-    this.router.navigate(['details']);
-  }
 }

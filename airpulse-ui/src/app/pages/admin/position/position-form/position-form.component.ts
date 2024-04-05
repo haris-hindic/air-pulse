@@ -55,13 +55,22 @@ export class PositionFormComponent {
     this.loadJobtypes();
   }
 
+  dialogStyle: any = { width: '600px' };
+  increaseModalSize(height: any) {
+    this.dialogStyle = { width: '600px', height: height };
+  }
+
+  decreaseModalSize() {
+    this.dialogStyle = { width: '600px' };
+  }
+
   loadJobtypes() {
     this.jobTypesLov = [];
     this.jobtypeService.getAll().subscribe(
       {
         next: (result) => {
           this.jobTypesLov = result.map(x => {
-            return { label: x.title, value: x.id }
+            return { label: x.title, value: x.id };
           });
         }, error: (error) => {
           this.messageToast.showError("Error", error);
@@ -81,7 +90,7 @@ export class PositionFormComponent {
           next: (result) => {
             this.employees = result;
             this.employeesLov = result.map(x => {
-              return { label: x.firstName + " " + x.lastName, value: x.id }
+              return { label: x.firstName + " " + x.lastName, value: x.id };
             });
           }, error: (error) => {
             this.messageToast.showError("Error", error);
@@ -90,7 +99,7 @@ export class PositionFormComponent {
         }
       );
     } else {
-      this.employeesLov.push({ label: this.employee.firstName + " " + this.employee.lastName, value: this.employee.id })
+      this.employeesLov.push({ label: this.employee.firstName + " " + this.employee.lastName, value: this.employee.id });
     }
   }
 
@@ -149,6 +158,6 @@ export class PositionFormComponent {
     return request;
   }
 
-  onSubmit() { this.saveButtonClicked.emit(this.populateRequest()) }
+  onSubmit() { this.saveButtonClicked.emit(this.populateRequest()); }
   hideDialog() { this.hideButtonClicked.emit(); }
 }

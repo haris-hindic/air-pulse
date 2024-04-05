@@ -38,10 +38,21 @@ export class AircraftFormComponent {
   ngOnInit() {
     this.initForm();
     this.populateFields();
+    this.decreaseModalSize();
   }
 
   ngOnChanges() {
     this.populateFields();
+    this.decreaseModalSize();
+  }
+
+  dialogStyle: any = { width: '600px' };
+  increaseModalSize(height: any) {
+    this.dialogStyle = { width: '600px', height: height };
+  }
+
+  decreaseModalSize() {
+    this.dialogStyle = { width: '600px' };
   }
 
   initForm() {
@@ -82,6 +93,6 @@ export class AircraftFormComponent {
     return 'N/A';
   }
 
-  onSubmit() { this.saveButtonClicked.emit(this.form.value) }
+  onSubmit() { this.saveButtonClicked.emit(this.form.value); }
   hideDialog() { this.hideButtonClicked.emit(); }
 }

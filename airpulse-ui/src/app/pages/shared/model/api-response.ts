@@ -9,3 +9,8 @@ export class ApiListResponse<T>{
   status!: string;
   data!: T[];
 }
+
+export class ChartData {
+  chartLabels!: string[];
+  chartValues!: number[];
+}

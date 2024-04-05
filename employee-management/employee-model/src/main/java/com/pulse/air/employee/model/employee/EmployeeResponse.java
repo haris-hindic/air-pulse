@@ -28,4 +28,5 @@ public class EmployeeResponse implements Serializable {
 	private String phoneNumber;
 	private String status;
 	private String image;
+	private String title;
 }

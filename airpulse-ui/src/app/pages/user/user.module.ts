@@ -14,6 +14,9 @@ import { StepsModule } from 'primeng/steps';
 import { DetailsComponent } from './fligh-booking/details/details.component';
 import { ConfirmationComponent } from './fligh-booking/confirmation/confirmation.component';
 import { PaymentComponent } from './fligh-booking/payment/payment.component';
+import { SuccessComponent } from './fligh-booking/success/success.component';
+import { BookedFlightsComponent } from './useradmin/booked-flights/booked-flights.component';
+import { FlightPreviewComponent } from './useradmin/booked-flights/flight-preview/flight-preview.component';
 
 
 @NgModule({
@@ -43,6 +46,9 @@ import { PaymentComponent } from './fligh-booking/payment/payment.component';
                     { path: 'confirmation', component: ConfirmationComponent },
                 ]
             },
+            {
+                path: 'success/:bookedFlightId', component: SuccessComponent
+            },
 
             //{ path: '**', redirectTo: '/notfound' }
         ]),
@@ -60,7 +66,10 @@ import { PaymentComponent } from './fligh-booking/payment/payment.component';
         FlighBookingComponent,
         DetailsComponent,
         ConfirmationComponent,
-        PaymentComponent
+        PaymentComponent,
+        SuccessComponent,
+        BookedFlightsComponent,
+        FlightPreviewComponent
     ],
     exports: []
 })

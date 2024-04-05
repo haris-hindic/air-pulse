@@ -20,6 +20,7 @@ import com.pulse.air.auth.model.user.UserRequest;
 import com.pulse.air.auth.model.user.UserResponse;
 import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiRequest;
+import com.pulse.air.common.model.ApiResponse;
 import com.pulse.air.common.model.ApiUpdateRequest;
 import com.pulse.air.common.model.BaseSearchRequest;
 import com.pulse.air.commons.enums.Status;
@@ -32,12 +33,14 @@ public class UserServiceImpl extends
 
 	private PasswordEncoder passwordEncoder;
 	private Cloudinary cloudinary;
+	private UserRepository repository;
 
 	public UserServiceImpl(final UserMapper mapper, final UserRepository repository,
 			final PasswordEncoder passwordEncoder, final Cloudinary cloudinary) {
 		super(mapper, repository);
 		this.passwordEncoder = passwordEncoder;
 		this.cloudinary = cloudinary;
+		this.repository = repository;
 	}
 
 	@Override
@@ -79,5 +82,13 @@ public class UserServiceImpl extends
 				Map.of("public_id", UUID.randomUUID().toString()));
 
 		return (String) cloudinaryResponse.get("url");
+	}
+
+	@Override
+	public ApiResponse<String> userinfo(final ApiRequest<Long> request) throws ApiException {
+		var user = findById(request).getData();
+		var userinfo = user.getFirstName() + " " + user.getLastName() + " | mail: " + user.getEmail() + " | tel: "
+				+ user.getPhoneNumber();
+		return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), userinfo);
 	}
 }

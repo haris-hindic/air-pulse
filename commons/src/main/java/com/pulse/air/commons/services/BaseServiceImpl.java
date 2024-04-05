@@ -3,6 +3,7 @@ package com.pulse.air.commons.services;
 import java.util.List;
 
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 
@@ -26,10 +27,13 @@ public class BaseServiceImpl<TEntity, TResponse, TRequest, TSearch extends BaseS
 	@Override
 	public ApiListResponse<TResponse> findAll(final ApiRequest<TSearch> request) {
 		var example = getExample(request);
+		var sort = getSort(request);
 		List<TEntity> entities;
 
-		if (example != null) {
+		if (example != null && sort == null) {
 			entities = repository.findAll(example);
+		} else if (sort != null && example != null) {
+			entities = repository.findAll(example, sort);
 		} else {
 			entities = repository.findAll();
 		}
@@ -39,6 +43,11 @@ public class BaseServiceImpl<TEntity, TResponse, TRequest, TSearch extends BaseS
 	}
 
 	public Example<TEntity> getExample(final ApiRequest<TSearch> request) {
+		// To be overridden
+		return null;
+	}
+
+	public Sort getSort(final ApiRequest<TSearch> request) {
 		// To be overridden
 		return null;
 	}

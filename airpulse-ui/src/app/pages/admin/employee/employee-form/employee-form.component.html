@@ -1,4 +1,4 @@
-<p-dialog [(visible)]="visible" [style]="{ width: '900px' }" header="Employee details" [modal]="true"
+<p-dialog [(visible)]="visible" [style]="{ width: '900px', heght:'1000px' }" header="Employee details" [modal]="true"
     (onHide)="hideDialog()" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <form id="form" [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
@@ -9,13 +9,34 @@
                     <input id="firstName" formControlName="firstName" type="text" placeholder="First name" pInputText
                         class="w-full" [ngClass]="{'ng-invalid ng-dirty' : !form.get('firstName')?.valid &&
                         form.get('firstName')?.touched}">
+                    <small class="p-error"
+                        *ngIf="form.get('firstName')?.touched && form.get('firstName')!.hasError('required')">First name
+                        is
+                        required.</small>
                 </div>
                 <div class="field col">
                     <label for="salaryMax">Last name</label>
                     <input id="lastName" formControlName="lastName" type="text" placeholder="Last name" pInputText
                         class="w-full" [ngClass]="{'ng-invalid ng-dirty' : !form.get('lastName')?.valid &&
                     form.get('lastName')?.touched}">
+
+                    <small class="p-error"
+                        *ngIf="form.get('lastName')?.touched && form.get('lastName')!.hasError('required')">Last name
+                        is
+                        required.</small>
                 </div>
+            </div>
+
+
+            <div class="field">
+                <label for="dateOfBirth" class="block text-900 font-medium">Date of birth</label>
+                <p-calendar formControlName="dateOfBirth" [showIcon]="true" [ngClass]="{'ng-invalid ng-dirty' : !form.get('dateOfBirth')?.valid &&
+                  form.get('dateOfBirth')?.touched}"></p-calendar>
+                <small class="p-error"
+                    *ngIf="form.get('dateOfBirth')?.touched && form.get('dateOfBirth')!.hasError('required')">Date of
+                    birth
+                    is
+                    required.</small>
             </div>
 
             <div class="field">
@@ -23,32 +44,38 @@
                 <input id="gender" formControlName="gender" type="text" placeholder="Gender" pInputText class="w-full"
                     [ngClass]="{'ng-invalid ng-dirty' : !form.get('gender')?.valid &&
                         form.get('gender')?.touched}">
+                <small class="p-error"
+                    *ngIf="form.get('gender')?.touched && form.get('gender')!.hasError('required')">Gender
+                    is
+                    required.</small>
             </div>
 
             <div class="field">
                 <label for="email1" class="block text-900 font-medium">Email</label>
-                <small style="color: red;" *ngIf="form.get('email')!.hasError('email')">
-                    Must be a valid email addres (example@email.com).
-                </small>
                 <input id="email1" formControlName="email" type="email" placeholder="Email address" pInputText
                     class="w-full" [ngClass]="{'ng-invalid ng-dirty' : !form.get('email')?.valid &&
                 form.get('email')?.touched}">
+                <small style="color: red;" *ngIf="form.get('email')!.hasError('email')">
+                    Must be a valid email addres (example@email.com).
+                </small>
+                <small class="p-error"
+                    *ngIf="form.get('email')?.touched && form.get('email')!.hasError('required')">Email
+                    is
+                    required.</small>
             </div>
 
             <div class="field">
                 <label for="phoneNumber" class="block text-900 font-medium">Phone number</label>
-                <small style="color: red;" *ngIf="form.get('phoneNumber')!.hasError('pattern')">
-                    Must be a valid phone number (+919367788755,8989829304,786-307-3615).
-                </small>
                 <input id="phoneNumber" formControlName="phoneNumber" type="text" placeholder="Phone number" pInputText
                     class="w-full" [ngClass]="{'ng-invalid ng-dirty' : !form.get('phoneNumber')?.valid &&
                 form.get('phoneNumber')?.touched}">
-            </div>
-
-            <div class="field">
-                <label for="dateOfBirth" class="block text-900 font-medium">Date of birth</label>
-                <p-calendar formControlName="dateOfBirth" [showIcon]="true" [ngClass]="{'ng-invalid ng-dirty' : !form.get('dateOfBirth')?.valid &&
-                  form.get('dateOfBirth')?.touched}"></p-calendar>
+                <small style="color: red;" *ngIf="form.get('phoneNumber')!.hasError('pattern')">
+                    Must be a valid phone number (+919367788755,8989829304,786-307-3615).
+                </small>
+                <small class="p-error"
+                    *ngIf="form.get('email')?.touched && form.get('phoneNumber')!.hasError('phoneNumber')">Phone number
+                    is
+                    required.</small>
             </div>
 
         </form>

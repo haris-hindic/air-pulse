@@ -1,6 +1,7 @@
 package com.pulse.air.flightcatalogue.rest.flight;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import com.pulse.air.common.model.ApiResponse;
 import com.pulse.air.commons.rest.BaseCRUDController;
 import com.pulse.air.flightcatalogue.contract.FlightBookingService;
 import com.pulse.air.flightcatalogue.contract.FlightService;
+import com.pulse.air.flightcatalogue.model.flight.ChartData;
 import com.pulse.air.flightcatalogue.model.flight.CheckoutRequest;
 import com.pulse.air.flightcatalogue.model.flight.FindReturnFlightRequest;
 import com.pulse.air.flightcatalogue.model.flight.FlightRequest;
@@ -36,14 +38,15 @@ public class FlightManagementRest extends BaseCRUDController<FlightResponse, Fli
 	private FlightService flightService;
 	private FlightBookingService flightBookingService;
 
-	public FlightManagementRest(final FlightService service) {
+	public FlightManagementRest(final FlightService service, final FlightBookingService flightBookingService) {
 		super(service);
 		this.flightService = service;
+		this.flightBookingService = flightBookingService;
 	}
 
 	@GetMapping("return")
 	public ApiListResponse<FlightResponse> findReturnFligtsByRouteId(@RequestParam final Long departureAirportId,
-			@RequestParam final Long arrivalAirportId, @RequestParam(required = false) final String departOn,
+			@RequestParam final Long arrivalAirportId, @RequestParam(required = false) final List<String> departOn,
 			@RequestParam(required = false) final String flightAfter, @RequestHeader("AP_USER") final String user)
 			throws ApiException {
 		return flightService.findReturnFligtsByRouteId(new ApiRequest<>(user,
@@ -53,20 +56,22 @@ public class FlightManagementRest extends BaseCRUDController<FlightResponse, Fli
 	@PostMapping(value = "create-checkout")
 	public ApiResponse<String> createCheckout(@RequestBody final CheckoutRequest request,
 			@RequestHeader("AP_USER") final String user) throws StripeException, ApiException {
-		var booking = flightBookingService
-				.create(new ApiRequest<>(user, new FlightBookingRequest(BigDecimal.valueOf(request.getAmount()),
-						request.getUserId(), "Draft", request.getFlightId(), request.getReturnFlightId())))
+		var booking = flightBookingService.create(new ApiRequest<>(user,
+				new FlightBookingRequest(BigDecimal.valueOf(request.getAmount()), request.getUserId(), "Draft",
+						request.getFlightId(), request.getReturnFlightId(), request.getLuggage(),
+						request.getSeatClass())))
 				.getData();
 
 		Stripe.apiKey = "sk_test_51KR05DIwNGlyHmAKv1n1TGR3LZ5bgvIsSEozrU8rWs8usz8BtEHuhsYwPIlVnDNsZL8rcJV6m65oMudBj4eSQSBE00yEuWupGX";
 		var params = SessionCreateParams.builder().setMode(SessionCreateParams.Mode.PAYMENT)
-				.setSuccessUrl(request.getSuccesUrl().replace("#", booking.getId().toString())).setCancelUrl(
+				.setSuccessUrl(request.getSuccesUrl().replace("#", booking.getId().toString()))
+				.setCancelUrl(
 						request.getFailUrl())
 				.addLineItem(
 						SessionCreateParams.LineItem.builder().setQuantity(1L)
 								.setPriceData(
 										SessionCreateParams.LineItem.PriceData.builder().setCurrency("usd")
-												.setUnitAmount(request.getAmount())
+												.setUnitAmount(request.getAmount() * 100L)
 												.setProductData(SessionCreateParams.LineItem.PriceData.ProductData
 														.builder().setName(request.getName()).build())
 												.build())
@@ -74,9 +79,18 @@ public class FlightManagementRest extends BaseCRUDController<FlightResponse, Fli
 				.build();
 
 		var session = Session.create(params);
-		
 
 		return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), session.getUrl());
 
+	}
+
+	@GetMapping("chart-by-months")
+	public ApiResponse<ChartData> flightsByMonths(@RequestHeader("AP_USER") final String user) throws ApiException {
+		return flightService.flightsByMonths();
+	}
+
+	@GetMapping("chart-by-cities")
+	public ApiResponse<ChartData> flightsByCity(@RequestHeader("AP_USER") final String user) throws ApiException {
+		return flightService.flightsByCity();
 	}
 }

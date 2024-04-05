@@ -50,4 +50,10 @@ public class SwaggerConfiguration extends BaseSwaggerConfiguration {
 		return GroupedOpenApi.builder().group("route-api").packagesToScan("com.pulse.air.flightcatalogue.rest.route")
 				.build();
 	}
+
+	@Bean
+	public GroupedOpenApi flightBookingApi() {
+		return GroupedOpenApi.builder().group("flight-booking-api")
+				.packagesToScan("com.pulse.air.flightcatalogue.rest.flightbooking").build();
+	}
 }

@@ -27,6 +27,7 @@ import { RouteComponent } from './route/route.component';
 import { RouteFormComponent } from './route/route-form/route-form.component';
 import { FlightComponent } from './flight/flight.component';
 import { FlightFormComponent } from './flight/flight-form/flight-form.component';
+import { BookingOvereviewComponent } from './flight/booking-overeview/booking-overeview.component';
 
 @NgModule({
     imports: [
@@ -52,7 +53,7 @@ import { FlightFormComponent } from './flight/flight-form/flight-form.component'
         SidebarModule
     ],
     declarations: [
-        AdminComponent, SideMenuComponent, EmployeeOverviewComponent, DashboardComponent, JobtypeComponent, JobtypeFormComponent, EmployeeComponent, EmployeeFormComponent, AbsenceComponent, AbsenceFormComponent, PositionComponent, PositionFormComponent, AirportComponent, AirportFormComponent, AircraftComponent, AircraftFormComponent, AircraftOverviewComponent, AircraftseatComponent, AircraftseatFormComponent, StaffComponent, StaffFormComponent, RouteComponent, RouteFormComponent, FlightComponent, FlightFormComponent
+        AdminComponent, SideMenuComponent, EmployeeOverviewComponent, DashboardComponent, JobtypeComponent, JobtypeFormComponent, EmployeeComponent, EmployeeFormComponent, AbsenceComponent, AbsenceFormComponent, PositionComponent, PositionFormComponent, AirportComponent, AirportFormComponent, AircraftComponent, AircraftFormComponent, AircraftOverviewComponent, AircraftseatComponent, AircraftseatFormComponent, StaffComponent, StaffFormComponent, RouteComponent, RouteFormComponent, FlightComponent, FlightFormComponent, BookingOvereviewComponent
     ],
     exports: []
 })

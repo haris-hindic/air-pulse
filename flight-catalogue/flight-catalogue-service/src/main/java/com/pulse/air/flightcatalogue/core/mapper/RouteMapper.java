@@ -16,14 +16,15 @@ public interface RouteMapper extends BaseMapper<RouteEntity, RouteResponse, Rout
 	default void setAdditionalInfo(@MappingTarget final RouteResponse response, final RouteEntity entity) {
 
 		if (entity.getArrivalAirport() != null) {
-			response.setArrivalAirportDetails(
-					entity.getArrivalAirport().getName() + " (" + entity.getArrivalAirport().getIataCode() + ")");
+			response.setArrivalAirportDetails(entity.getArrivalAirport().getCity() + ", "
+					+ entity.getArrivalAirport().getCountry() + " (" + entity.getArrivalAirport().getIataCode() + ")");
 			response.setArrivalAirportCity(
 					entity.getArrivalAirport().getCity() + "," + entity.getArrivalAirport().getIataCode());
 		}
 		if (entity.getDepartureAirport() != null) {
 			response.setDepartureAirportDetails(
-					entity.getDepartureAirport().getName() + " (" + entity.getDepartureAirport().getIataCode() + ")");
+					entity.getDepartureAirport().getCity() + ", " + entity.getDepartureAirport().getCountry() + " ("
+							+ entity.getDepartureAirport().getIataCode() + ")");
 			response.setDepartureAirportCity(
 					entity.getDepartureAirport().getCity() + "," + entity.getDepartureAirport().getIataCode());
 		}

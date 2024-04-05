@@ -4,9 +4,10 @@
         <form id="form" [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
             <div class="field">
                 <label for="status">Seat class</label>
-                <p-dropdown formControlName="seatClass" inputId="seatClass" [options]="seatClasses">
+                <p-dropdown formControlName="seatClass" inputId="seatClass" [options]="seatClasses"
+                    [disabled]="!aircraftseat.id">
                     <ng-template pTemplate="seatClass">
-                        <p-tag [value]="aircraftseat.seatClass"q
+                        <p-tag [value]="aircraftseat.seatClass"
                             [severity]="getSeverity(aircraftseat.seatClass.toUpperCase())"></p-tag>
                     </ng-template>
                     <ng-template let-option pTemplate="item">
@@ -14,7 +15,7 @@
                     </ng-template>
                 </p-dropdown>
                 <small class="p-error"
-                    *ngIf="form.get('seatClass')?.touched && form.get('seatClass')!.hasError('required')">Status is
+                    *ngIf="form.get('seatClass')?.touched && form.get('seatClass')!.hasError('required')">Seat class is
                     required.</small>
             </div>
 
@@ -37,7 +38,7 @@
                 </div>
                 <div class="field col">
                     <label for="priceModifier" class="block text-900 font-medium">Price Modifier</label>
-                    <p-inputNumber formControlName="priceModifier" inputId="percent" prefix="%" [ngClass]="{'ng-invalid ng-dirty' : !form.get('priceModifier')?.valid &&
+                    <p-inputNumber [min]="1" formControlName="priceModifier" inputId="percent" prefix="%" [ngClass]="{'ng-invalid ng-dirty' : !form.get('priceModifier')?.valid &&
                     form.get('priceModifier')?.touched}"> </p-inputNumber>
                 </div>
             </div>

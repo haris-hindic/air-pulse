@@ -1,6 +1,7 @@
 package com.pulse.air.flightcatalogue.model.flight;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,6 @@ public class FindReturnFlightRequest implements Serializable {
 
 	private Long departureAirportId;
 	private Long arrivalAirportId;
-	private String departOn;
+	private List<String> departOn;
 	private String flightAfter;
 }

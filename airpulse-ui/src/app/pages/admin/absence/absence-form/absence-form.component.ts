@@ -47,6 +47,15 @@ export class AbsenceFormComponent {
     ];
   }
 
+  dialogStyle: any = { width: '600px' };
+  increaseModalSize(height: any) {
+    this.dialogStyle = { width: '600px', height: height };
+  }
+
+  decreaseModalSize() {
+    this.dialogStyle = { width: '600px' };
+  }
+
   ngOnInit() {
     this.loadData();
     this.initForm();
@@ -66,7 +75,7 @@ export class AbsenceFormComponent {
           next: (result) => {
             this.employees = result;
             this.employeesLov = result.map(x => {
-              return { label: x.firstName + " " + x.lastName, value: x.id }
+              return { label: x.firstName + " " + x.lastName, value: x.id };
             });
           }, error: (error) => {
             this.messageToast.showError("Error", error);
@@ -75,7 +84,7 @@ export class AbsenceFormComponent {
         }
       );
     } else {
-      this.employeesLov.push({ label: this.employee.firstName + " " + this.employee.lastName, value: this.employee.id })
+      this.employeesLov.push({ label: this.employee.firstName + " " + this.employee.lastName, value: this.employee.id });
     }
   }
 
@@ -142,6 +151,6 @@ export class AbsenceFormComponent {
     return request;
   }
 
-  onSubmit() { this.saveButtonClicked.emit(this.populateRequest()) }
+  onSubmit() { this.saveButtonClicked.emit(this.populateRequest()); }
   hideDialog() { this.hideButtonClicked.emit(); }
 }

@@ -2,9 +2,9 @@
   <p-dialog (onHide)="hideModal()" header="Notifications" [(visible)]="visible" [modal]="true"
     [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
 
-    <app-not-list></app-not-list>
-    <app-not-list></app-not-list>
-    <app-not-list></app-not-list>
+    <app-not-list (redirectEmitter)="redirect($event)" (removeNotificationEmitter)="removeNot($event)"
+      *ngIf="notifications && notifications.length>0" [notifications]="notifications"></app-not-list>
 
+    <h2 *ngIf="notifications && notifications.length===0">No notifications.</h2>
   </p-dialog>
 </div>

@@ -127,8 +127,13 @@ export class DetailsComponent {
     this.flightService.createCheckout({
       name: this.departFlight.route.departureAirportDetails + " " + this.departFlight.route.arrivalAirportDetails,
       amount: this.totalPrice,
-      succesUrl: 'http://localhost:4200/user/bookign/success/#',
+      succesUrl: 'http://localhost:4200/user/success/#',
       failUrl: 'http://localhost:4200/failure',
+      flightId: this.departFlightId,
+      returnFlightId: this.returnFlightId,
+      userId: this.userId,
+      luggage: this.selectedLuggage,
+      seatClass: this.selectedSeatClass
     }).subscribe(
       {
         next: result => {

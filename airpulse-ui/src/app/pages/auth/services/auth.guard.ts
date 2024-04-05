@@ -12,7 +12,7 @@ export const canActivate: CanActivateFn = (
     return true;
   }
 
-  router.navigate(['login']);
+  router.navigate(['auth/login']);
   return false;
 };
 

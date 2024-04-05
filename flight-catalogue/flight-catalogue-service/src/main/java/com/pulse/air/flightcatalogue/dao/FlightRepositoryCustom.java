@@ -2,12 +2,15 @@ package com.pulse.air.flightcatalogue.dao;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
 import com.pulse.air.flightcatalogue.dao.model.FlightEntity;
+import com.pulse.air.flightcatalogue.model.flight.ChartData;
 import com.pulse.air.flightcatalogue.model.flight.FlightSearchRequest;
 
 import jakarta.persistence.EntityManager;
@@ -49,11 +52,9 @@ public class FlightRepositoryCustom {
 				hql.append("and f.routeId=:routeId ");
 			}
 		}
-		if (StringUtils.isNotEmpty(request.getDepartOn())) {
-			hql.append(Boolean.TRUE.equals(firstCondition) ? "where extract(day from f.departure) = :day "
-					: "and extract(day from f.departure) = :day ");
-			hql.append("and extract(month from f.departure) = :month ");
-			hql.append("and extract(year from f.departure) = :year ");
+		if (!CollectionUtils.isEmpty(request.getDepartOn())) {
+			hql.append(Boolean.TRUE.equals(firstCondition) ? "where DATE(f.departure) in (:days) "
+					: "and DATE(f.departure) in (:days) ");
 			if (Boolean.TRUE.equals(firstCondition)) {
 				firstCondition = Boolean.FALSE;
 			}
@@ -72,12 +73,11 @@ public class FlightRepositoryCustom {
 		if (request.getRouteId() != null && request.getRouteId() != 0L) {
 			query.setParameter("routeId", request.getRouteId());
 		}
-		if (StringUtils.isNotEmpty(request.getDepartOn())) {
+		if (!CollectionUtils.isEmpty(request.getDepartOn())) {
 			var formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-			var departOn = LocalDateTime.parse(request.getDepartOn(), formatter);
-			query.setParameter("day", departOn.getDayOfMonth());
-			query.setParameter("month", departOn.getMonthValue());
-			query.setParameter("year", departOn.getYear());
+			var dates = new ArrayList<>();
+			request.getDepartOn().forEach(x -> dates.add(LocalDateTime.parse(x, formatter)));
+			query.setParameter("days", dates);
 		}
 		if (StringUtils.isNotEmpty(request.getFlightAfter())) {
 			var formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
@@ -97,5 +97,36 @@ public class FlightRepositoryCustom {
 
 		var query = entityManager.createQuery(hql.toString(), FlightEntity.class).setParameter("routeId", routeId);
 		return query.getResultList();
+	}
+
+	public ChartData getFlightCountsByCountryAndCity() {
+		var jpql = """
+				select country || ', '|| city , count(*)
+				 from testing.fc_flight ff join testing.fc_route fr on ff.route_id = fr.id join testing.fc_airport fa on fa.id = fr.departure_airport_id
+				 group by country ,city;""";
+
+		return retrieveChartData(jpql);
+	}
+
+	public ChartData getFlightCountsByMonths() {
+		var jpql = "SELECT TO_CHAR(departure, 'FMMonth YYYY') AS month_year, COUNT(*) AS flight_count "
+				+ "FROM testing.fc_flight GROUP BY TO_CHAR(departure, 'FMMonth YYYY') ORDER by MIN(departure);";
+
+		return retrieveChartData(jpql);
+	}
+
+	@SuppressWarnings("unchecked")
+	private ChartData retrieveChartData(final String jpql) {
+		var query = entityManager.createNativeQuery(jpql);
+		List<Object[]> rows = query.getResultList();
+		var labels = new ArrayList<String>();
+		var data = new ArrayList<Long>();
+
+		for (Object[] row : rows) {
+			labels.add((String) row[0]);
+			data.add((Long) row[1]);
+		}
+
+		return new ChartData(labels, data);
 	}
 }

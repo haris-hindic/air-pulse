@@ -13,6 +13,7 @@ import { FlightService } from '../services/flight.service';
 })
 export class FlightComponent {
   flightDialog: boolean = false;
+  overviewDialog: boolean = false;
 
   flights!: FlightResponse[];
 
@@ -45,6 +46,10 @@ export class FlightComponent {
   openNew() {
     this.flight = new FlightResponse();
     this.flightDialog = true;
+  }
+
+  openOverview() {
+    this.overviewDialog = true;
   }
 
   deleteSelectedFlights() {
@@ -95,7 +100,9 @@ export class FlightComponent {
 
   hideDialog() {
     this.flightDialog = false;
+    this.overviewDialog = false;
   }
+
 
   saveFlight(flightRequest: FlightRequest) {
 

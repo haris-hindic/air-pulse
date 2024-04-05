@@ -1,0 +1,71 @@
+<div *ngIf="flightBookings" class="card">
+  <p-table *ngIf="flightBookings.length>0" id="myTable" #dt [value]="flightBookings" [rows]="20" [paginator]="true"
+    [tableStyle]="{ 'min-width': '70rem' }" [(selection)]="selectedFlightBookings" [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="{first} to {last} of {totalRecords}" [showCurrentPageReport]="true">
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <h5 class="m-0"></h5>
+        <span class="p-input-icon-left">
+          <p-button icon="pi pi-eye" [rounded]="true" [text]="true" (click)="openNew()"
+            [disabled]="!selectedFlightBookings || selectedFlightBookings.length!==1"></p-button>
+          <p-button icon="pi pi-ban" severity="danger" [rounded]="true" [text]="true"
+            (click)="deactivateSelectedProducts()"
+            [disabled]="!selectedFlightBookings || selectedFlightBookings.length!==1"></p-button>
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width:2%">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <!-- <th pSortableColumn="id" style="width:3%">Id <p-sortIcon field="id"></p-sortIcon></th> -->
+        <!-- <th>Image</th> -->
+        <th style="width:35%">Departure</th>
+        <th style="width:35%">Arrival</th>
+        <th pSortableColumn="totalPrice" style="width:10%">Price <p-sortIcon field="totalPrice"></p-sortIcon>
+        </th>
+        <th style="width:10%" pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+        <th style="width:10%">Return</th>
+        <!-- <th style="width:10%">Created</th>
+              <th style="width:10%">Modified</th> -->
+        <th style="width:10%"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-flightBooking>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="flightBooking"></p-tableCheckbox>
+        </td>
+        <!-- <td>{{flight.id}}</td> -->
+        <td>{{ flightBooking.flight.route.departureAirportDetails}} <br>{{flightBooking.flight.departure |
+          date:'short'}}</td>
+        <td>{{ flightBooking.flight.route.arrivalAirportDetails}}<br>{{flightBooking.flight.arrival | date:'short'}}
+        </td>
+        <td>{{flightBooking.totalPrice |currency}}</td>
+        <td><p-tag [value]="flightBooking.status" [severity]="getSeverity(flightBooking.status.toUpperCase())"></p-tag>
+        </td>
+        <td class="text-center">
+          <i class="pi"
+            [ngClass]="{ 'text-green-500 pi-check-circle': flightBooking.returnFlight, 'text-red-500 pi-times-circle': !flightBooking.returnFlight }"></i>
+        </td>
+        <!-- <td>{{ (flightBooking.created | date)+ " (" +flightBooking.createdBy+")" }}</td>
+        <td>{{ flightBooking.modified ? (flightBooking.modified | date)+ " (" +flightBooking.modifiedBy+")" : '' }}</td> -->
+        <!-- <td>
+          <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="warning" (click)="null"></p-button>
+           <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
+                      (click)="deleteFlight(flight)"></p-button> 
+        </td> -->
+      </tr>
+    </ng-template>
+  </p-table>
+  <h1 *ngIf="flightBookings.length===0">No booked flights.</h1>
+</div>
+
+<!-- <app-flight-form [visible]="flightDialog" [flight]="flight || {}" (saveButtonClicked)="saveFlight($event)"
+  (hideButtonClicked)="hideDialog()"></app-flight-form> -->
+
+
+<app-flight-preview [visible]="flightBookingDialog" [flight]="flightBooking" *ngIf="flightBookingDialog"
+  (hideButtonClicked)="hideDialog()"></app-flight-preview>
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
