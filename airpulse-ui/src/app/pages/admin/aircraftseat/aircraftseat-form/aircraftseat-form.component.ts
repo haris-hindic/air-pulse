@@ -79,7 +79,7 @@ export class AircraftseatFormComponent {
   initForm() {
     this.form = this.formBuilder.group({
       quantity: [0, Validators.required],
-      priceModifier: [0, Validators.required],
+      priceModifier: [1, Validators.required],
       seatClass: ['', Validators.required],
       aircraftId: [{ value: !this.aircraft ? '' : this.aircraft.id, disabled: !!this.aircraft }, Validators.required,],
     });
@@ -89,7 +89,7 @@ export class AircraftseatFormComponent {
 
     if (this.aircraftseat.id) {
       this.form.get('quantity')?.patchValue(this.aircraftseat.quantity);
-      this.form.get('priceModifier')?.patchValue(this.aircraftseat.priceModifier);
+      this.form.get('priceModifier')?.patchValue(this.aircraftseat.priceModifier * 100);
       this.form.get('seatClass')?.patchValue(this.aircraftseat.seatClass);
       this.form.get('aircraftId')?.patchValue(this.aircraftseat.aircraftId);
     } else {
@@ -117,7 +117,7 @@ export class AircraftseatFormComponent {
     const request = new AircraftseatRequest();
 
     request.seatClass = this.form.get('seatClass')?.value;
-    request.priceModifier = (this.form.get('priceModifier')?.value / 100) + 1;
+    request.priceModifier = (this.form.get('priceModifier')?.value / 100);
     request.aircraftId = this.form.get('aircraftId')?.value;
     request.quantity = this.form.get('quantity')?.value;
 

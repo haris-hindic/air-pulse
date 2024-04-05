@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class TopbarComponent {
   showNotificationsModal = false;
+  notificationCount: number = 0;
 
   constructor(public securtiyService: SecurityService, private router: Router) {
 
@@ -21,5 +22,9 @@ export class TopbarComponent {
   logout() {
     this.securtiyService.logout();
     this.router.navigate(['']);
+  }
+
+  setNotcount(notCount: number) {
+    this.notificationCount = notCount;
   }
 }

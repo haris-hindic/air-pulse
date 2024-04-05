@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.pulse.air.common.model.ApiException;
@@ -40,6 +41,11 @@ public class RouteServiceImpl extends
 		}
 
 		return Example.of(example);
+	}
+
+	@Override
+	public Sort getSort(final ApiRequest<BaseSearchRequest> request) {
+		return Sort.by(Sort.Direction.ASC, "departureAirportId");
 	}
 
 	@Override

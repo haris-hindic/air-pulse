@@ -19,7 +19,7 @@ export class FlightSearchComponent {
 
   searchRequest: FlightSearchRequest = new FlightSearchRequest();
 
-  departOn!: any;
+  departOn!: any[];
   return: any = false;
 
   seatClasses = [
@@ -51,7 +51,7 @@ export class FlightSearchComponent {
       {
         next: (result) => {
           this.routesLov = result.map(x => {
-            return { label: x.departureAirportDetails + "-" + x.arrivalAirportDetails, value: x.id };
+            return { label: x.departureAirportDetails + " --> " + x.arrivalAirportDetails, value: x.id };
           });
         }, error: (error) => {
           this.messageToast.showError("Error", error);
@@ -78,15 +78,20 @@ export class FlightSearchComponent {
 
 
   searchFlights() {
-    if (this.departOn != null && this.departOn !== '') {
-      this.searchRequest.departOn = new Date(this.departOn.getTime() - (this.departOn.getTimezoneOffset() * 60000)).toJSON().replace('Z', '');
+    console.log('departOn :>> ', this.departOn);
+    if (this.departOn != null && this.departOn.length > 0) {
+      let dates: string[] = [];
+      this.departOn.forEach(date => {
+        dates.push(new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON().replace('Z', ''));
+      });
+      this.searchRequest.departOn = dates;
     }
-    //console.log('this.searchRequest :>> ', new Date(this.departOn).toJSON());
+    console.log('this.searchRequest :>> ', this.searchRequest);
     this.loadFlights(this.searchRequest);
   }
 
   clearFilter() {
-    this.departOn = null; this.return = false; this.searchRequest.routeId = 0; this.searchRequest.departOn = '';
+    this.departOn = []; this.return = false; this.searchRequest.routeId = 0; this.searchRequest.departOn = [];
   }
 
   getSeverity(status: string) {

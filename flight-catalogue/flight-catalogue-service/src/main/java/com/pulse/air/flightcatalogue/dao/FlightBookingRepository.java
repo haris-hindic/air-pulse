@@ -9,4 +9,7 @@ import com.pulse.air.flightcatalogue.dao.model.FlightBookingEntity;
 public interface FlightBookingRepository extends JpaRepository<FlightBookingEntity, Long> {
 
 	List<FlightBookingEntity> findByUserId(Long userId);
+
+	List<FlightBookingEntity> findByStatusAndFlightIdOrReturnFlightId(String status, Long flightId,
+			Long returnFlightId);
 }

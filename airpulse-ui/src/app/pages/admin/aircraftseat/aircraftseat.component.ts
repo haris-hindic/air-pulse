@@ -55,7 +55,7 @@ export class AircraftseatComponent {
   }
 
   openNew() {
-    this.setAvailableSeatClasses();
+    this.setAvailableSeatClasses(false);
     if (this.availabelSeatClasses.length === 0) {
       return this.messageToast.showWarn('Error', 'All available seat classes are already assigned.');
     }
@@ -63,9 +63,13 @@ export class AircraftseatComponent {
     this.aircraftseatDialog = true;
   }
 
-  setAvailableSeatClasses() {
+  setAvailableSeatClasses(edit: boolean) {
     this.availabelSeatClasses = [];
-    this.availabelSeatClasses = this.seatClasses.filter(x => !this.aircraftseats.some(y => y.seatClass === x.value));
+    if (edit) {
+      this.availabelSeatClasses = this.seatClasses.filter(x => this.aircraftseats.some(y => y.seatClass === x.value));
+    } else {
+      this.availabelSeatClasses = this.seatClasses.filter(x => !this.aircraftseats.some(y => y.seatClass === x.value));
+    }
   }
 
   deleteSelectedAircraftseats() {
@@ -90,6 +94,7 @@ export class AircraftseatComponent {
   }
 
   editAircraftseat(aircraftseat: any) {
+    this.setAvailableSeatClasses(true);
     this.aircraftseat = { ...aircraftseat };
     this.aircraftseatDialog = true;
   }

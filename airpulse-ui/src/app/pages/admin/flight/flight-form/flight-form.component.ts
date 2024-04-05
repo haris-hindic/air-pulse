@@ -6,6 +6,7 @@ import { LoaderService } from 'src/app/pages/shared/services/loader.service';
 import { MessageToast } from 'src/app/pages/shared/services/message-toast.service';
 import { FlightResponse, FlightRequest } from '../../model/flight.model';
 
+
 @Component({
   selector: 'app-flight-form',
   templateUrl: './flight-form.component.html',
@@ -49,8 +50,8 @@ export class FlightFormComponent {
     this.loadRoutes();
   }
 
-  increaseModalSize(height: any) {
-    this.dialogStyle = { width: '600px', height: height };
+  increaseModalSize(height: any, width: any) {
+    this.dialogStyle = { width: width, height: height };
   }
 
   decreaseModalSize() {
@@ -66,7 +67,7 @@ export class FlightFormComponent {
         next: (result) => {
           this.routes = result;
           this.routesLov = result.map(x => {
-            return { label: x.departureAirportDetails + "-" + x.arrivalAirportDetails, value: x.id };
+            return { label: x.departureAirportDetails + " --> " + x.arrivalAirportDetails, value: x.id };
           });
         }, error: (error) => {
           this.messageToast.showError("Error", error);
@@ -84,7 +85,7 @@ export class FlightFormComponent {
     this.form = this.formBuilder.group({
       basePrice: [1, Validators.required],
       routeId: ['', Validators.required,],
-      dateRange: new FormControl<Date[] | null>(null, Validators.required),
+      dateRange: new FormControl<Date | null>(null, Validators.required),
     });
   }
 
@@ -97,7 +98,7 @@ export class FlightFormComponent {
     if (this.flight.id) {
       this.form.get('routeId')?.patchValue(this.flight.routeId);
       this.form.get('basePrice')?.patchValue(this.flight.basePrice);
-      this.form.get('dateRange')?.patchValue([new Date(this.flight.departure), new Date(this.flight.arrival)]);
+      this.form.get('dateRange')?.patchValue(new Date(this.flight.departure));
     } else {
       this.initForm();
     }
@@ -119,11 +120,17 @@ export class FlightFormComponent {
     const request = new FlightRequest();
 
     request.routeId = this.form.get('routeId')?.value;
-    request.departure = this.form.get('dateRange')?.value[0];
-    request.arrival = this.form.get('dateRange')?.value[1];
+    request.departure = this.form.get('dateRange')?.value;
+    request.arrival = this.calculateArrivalTime(request.departure, request.routeId);
     request.basePrice = this.form.get('basePrice')?.value;
 
     return request;
+  }
+
+  calculateArrivalTime(departure: Date, routeId: number): Date {
+    const route = this.routes.find(x => x.id === routeId);
+
+    return new Date(departure.getTime() + route!.duration * 60000);
   }
 
   onSubmit() { this.saveButtonClicked.emit(this.populateRequest()); }

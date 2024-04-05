@@ -6,10 +6,12 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.pulse.air.common.model.ApiException;
 import com.pulse.air.common.model.ApiListResponse;
 import com.pulse.air.common.model.ApiRequest;
+import com.pulse.air.common.model.ApiResponse;
 import com.pulse.air.common.model.ApiUpdateRequest;
 import com.pulse.air.commons.enums.Status;
 import com.pulse.air.commons.services.BaseCRUDServiceImpl;
@@ -20,6 +22,7 @@ import com.pulse.air.flightcatalogue.dao.FlightRepositoryCustom;
 import com.pulse.air.flightcatalogue.dao.RouteRepository;
 import com.pulse.air.flightcatalogue.dao.model.FlightEntity;
 import com.pulse.air.flightcatalogue.dao.model.RouteEntity;
+import com.pulse.air.flightcatalogue.model.flight.ChartData;
 import com.pulse.air.flightcatalogue.model.flight.FindReturnFlightRequest;
 import com.pulse.air.flightcatalogue.model.flight.FlightRequest;
 import com.pulse.air.flightcatalogue.model.flight.FlightResponse;
@@ -94,12 +97,24 @@ public class FlightServiceImpl extends
 		searchRequest.setRouteId(route.getId());
 		searchRequest.setStatus(Status.ACTIVE.getValue());
 		searchRequest.setDepartOn(request.getObject().getDepartOn());
-		if (StringUtils.isEmpty(request.getObject().getDepartOn())) {
+		if (CollectionUtils.isEmpty(request.getObject().getDepartOn())) {
 			searchRequest.setFlightAfter(request.getObject().getFlightAfter());
 		}
 
 		return new ApiListResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
 				mapper.entitesToDtos(repositoryCustom.searchFlights(searchRequest)));
+	}
+
+	@Override
+	public ApiResponse<ChartData> flightsByMonths() throws ApiException {
+		return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
+				repositoryCustom.getFlightCountsByMonths());
+	}
+
+	@Override
+	public ApiResponse<ChartData> flightsByCity() throws ApiException {
+		return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
+				repositoryCustom.getFlightCountsByCountryAndCity());
 	}
 
 }

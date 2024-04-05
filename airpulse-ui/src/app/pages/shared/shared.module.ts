@@ -30,12 +30,13 @@ import { ImageUploadComponent } from './image-upload/image-upload.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { DateTimeDiff } from "./pipe/timediff.pipe";
 import { NgxStripeModule, StripeCardComponent } from "ngx-stripe";
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
   imports: [
     DialogModule,
     FileUploadModule,
-    ImageModule,
+    ImageModule, ChartModule,
     DateTimeDiff, NgxStripeModule.forRoot('pk_test_51KR05DIwNGlyHmAKnz8PDxOojJ1pXkmGAek19LTK4XY8oR6XAkpQgoZHE0ESAAdMjuFsT2QFV1NXSFAaW1XrLTdb00G3xxz2CI')
   ],
   declarations: [
@@ -70,7 +71,8 @@ import { NgxStripeModule, StripeCardComponent } from "ngx-stripe";
     InputNumberModule,
     CalendarModule,
     ImageUploadComponent, DateTimeDiff,
-    StripeCardComponent
+    StripeCardComponent, ChartModule
+
   ]
 })
 export class SharedModule { }

@@ -33,4 +33,11 @@ public class FlightBookingManagementRest
 		return flightBookingService.confirm(new ApiRequest<>(user, bookingId));
 
 	}
+
+	@PutMapping(value = "cancel/{bookingId}")
+	public ApiResponse<String> cancel(@PathVariable final Long bookingId, @RequestHeader("AP_USER") final String user)
+			throws ApiException {
+		return flightBookingService.cancel(new ApiRequest<>(user, bookingId));
+
+	}
 }

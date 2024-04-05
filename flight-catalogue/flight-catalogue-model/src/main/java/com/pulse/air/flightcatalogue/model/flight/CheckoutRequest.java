@@ -15,4 +15,6 @@ public class CheckoutRequest implements Serializable {
 	private Long flightId;
 	private Long returnFlightId;
 	private Long userId;
+	private String luggage;
+	private String seatClass;
 }

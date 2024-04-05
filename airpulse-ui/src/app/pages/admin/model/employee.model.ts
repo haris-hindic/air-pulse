@@ -12,6 +12,7 @@ export class EmployeeResponse {
     phoneNumber!: string;
     status!: string;
     image!: string;
+    title!: string;
 }
 
 export class EmployeeRequest {

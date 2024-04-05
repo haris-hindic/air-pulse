@@ -1,11 +1,13 @@
 <div *ngIf="flights" class="card">
-    <p-table id="myTable" #dt [value]="flights" [rows]="20" [paginator]="true" [tableStyle]="{ 'min-width': '70rem' }"
+    <p-table id="myTable" #dt [value]="flights" [rows]="10" [paginator]="true" [tableStyle]="{ 'min-width': '70rem' }"
         [(selection)]="selectedFlights" [rowHover]="true" dataKey="id"
         currentPageReportTemplate="{first} to {last} of {totalRecords}" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
                 <h5 class="m-0">Manage flights</h5>
                 <span class="p-input-icon-left">
+                    <p-button icon="pi pi-eye" [rounded]="true" [text]="true" (click)="openOverview()"
+                        [disabled]="!selectedFlights || selectedFlights.length!==1"></p-button>
                     <p-button icon="pi pi-plus" [rounded]="true" [text]="true" (click)="openNew()"></p-button>
                     <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true"
                         (click)="deleteSelectedFlights()"
@@ -15,16 +17,16 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th style="width:2%">
+                <th style="width:5%">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
                 <th pSortableColumn="id" style="width:3%">Id <p-sortIcon field="id"></p-sortIcon></th>
                 <!-- <th>Image</th> -->
-                <th style="width:30%">Departure</th>
-                <th style="width:30%">Arrival</th>
-                <th pSortableColumn="basePrice" style="width:5%">Base Price <p-sortIcon field="basePrice"></p-sortIcon>
+                <th style="width:25%">Departure</th>
+                <th style="width:25%">Arrival</th>
+                <th pSortableColumn="basePrice" style="width:10%">Base Price <p-sortIcon field="basePrice"></p-sortIcon>
                 </th>
-                <th style="width:5%" pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+                <th style="width:8%" pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
                 <th style="width:10%">Created</th>
                 <th style="width:10%">Modified</th>
                 <th style="width:5%"></th>
@@ -56,5 +58,9 @@
 
 <app-flight-form [visible]="flightDialog" [flight]="flight || {}" (saveButtonClicked)="saveFlight($event)"
     (hideButtonClicked)="hideDialog()"></app-flight-form>
+
+<app-booking-overeview [visible]="overviewDialog"
+    [flightId]="selectedFlights!=null && selectedFlights!.length>0 ? selectedFlights![0].id : 0"
+    (hideButtonClicked)="hideDialog()"></app-booking-overeview>
 
 <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

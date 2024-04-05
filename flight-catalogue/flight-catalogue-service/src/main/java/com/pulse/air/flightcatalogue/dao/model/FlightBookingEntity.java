@@ -33,7 +33,7 @@ public class FlightBookingEntity implements Serializable {
 	private Long id;
 
 	@Column(name = "total_price")
-	private BigDecimal basePrice;
+	private BigDecimal totalPrice;
 
 	private LocalDateTime created;
 
@@ -55,6 +55,13 @@ public class FlightBookingEntity implements Serializable {
 	private Long returnFlightId;
 
 	private String status;
+
+	@Column(name = "seat_class")
+	private String seatClass;
+
+	private String luggage;
+
+	private String userinfo;
 
 	// bi-directional many-to-one association to FcRoute
 	@ManyToOne

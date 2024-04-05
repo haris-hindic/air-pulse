@@ -16,5 +16,6 @@ public class FlightBookingRequest implements Serializable {
 	private String status;
 	private Long flightId;
 	private Long returnFlightId;
-
+	private String luggage;
+	private String seatClass;
 }

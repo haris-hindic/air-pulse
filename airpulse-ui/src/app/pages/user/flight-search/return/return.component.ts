@@ -18,8 +18,7 @@ export class ReturnComponent {
   returnFlights!: FlightResponse[];
   searchRequest: FlightSearchRequest = new FlightSearchRequest();
 
-  returnAt!: any;
-  departOn!: any;
+  departOn!: any[];
 
   routesLov: any[] = [];
 
@@ -47,8 +46,12 @@ export class ReturnComponent {
   }
 
   searchFlights() {
-    if (this.departOn != null && this.departOn !== '') {
-      this.searchRequest.departOn = new Date(this.departOn.getTime() - (this.departOn.getTimezoneOffset() * 60000)).toJSON().replace('Z', '');
+    if (this.departOn != null && this.departOn.length > 0) {
+      let dates: string[] = [];
+      this.departOn.forEach(date => {
+        dates.push(new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON().replace('Z', ''));
+      });
+      this.searchRequest.departOn = dates;
     } else {
       this.searchRequest.flightAfter = new Date(this.flight.departure).toJSON().replace('Z', '');
     }
@@ -56,7 +59,7 @@ export class ReturnComponent {
   }
 
   clearFilter() {
-    this.departOn = null; this.searchRequest.departOn = '';
+    this.departOn = []; this.searchRequest.departOn = [];
   }
 
   loadData() {

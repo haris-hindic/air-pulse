@@ -1,5 +1,5 @@
-<p-dialog [(visible)]="visible" [style]="{ width: '600px' }" header="Absence details" [modal]="true"
-    (onHide)="hideDialog()" styleClass="p-fluid">
+<p-dialog [(visible)]="visible" [style]="dialogStyle" header="Absence details" [modal]="true" (onHide)="hideDialog()"
+    styleClass="p-fluid">
     <ng-template *ngIf="employees" pTemplate="content">
         <form id="form" [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
 
@@ -51,7 +51,11 @@
             <div class="field">
                 <label for="dateRange" class="block text-900 font-medium">Valid From/To</label>
                 <p-calendar formControlName="dateRange" selectionMode="range" [showIcon]="true" [ngClass]="{'ng-invalid ng-dirty' : !form.get('dateRange')?.valid &&
-                  form.get('dateRange')?.touched}"></p-calendar>
+                  form.get('dateRange')?.touched}" (onShow)="increaseModalSize('1000px')"
+                    (onClose)="decreaseModalSize()"></p-calendar>
+                <small class="p-error"
+                    *ngIf="form.get('dateRange')?.touched && form.get('dateRange')!.hasError('required')">Duration is
+                    required.</small>
             </div>
 
         </form>

@@ -17,12 +17,14 @@ import { MessageService } from 'primeng/api';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './pages/shared/services/auth-interceptor.service';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { FailureComponent } from './pages/failure/failure.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NotfoundComponent,
+    FailureComponent
   ],
   imports: [
     BrowserModule,

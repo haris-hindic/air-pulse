@@ -35,18 +35,23 @@ export class EmployeeOverviewComponent {
   }
 
   loadData() {
-    const emplyoeeId = this.route.snapshot.paramMap.get('id') as unknown as number;
-    this.employeeService.getById(emplyoeeId).subscribe({
-      next: result => {
-        this.employee = result;
-        this.date = new Date(this.employee.dateOfBirth);
-        this.created = new Date(this.employee.created).toUTCString() + " (" + this.employee.createdBy + ")";
-        this.modified = this.employee.modified ? new Date(this.employee.modified).toUTCString() + " (" + this.employee.modifiedBy + ")" : '';
-      },
-      error: (err) => {
-        this.handleError(err);
-      },
+    this.route.params.subscribe({
+      next: (params) => {
+
+        this.employeeService.getById(params['id']).subscribe({
+          next: result => {
+            this.employee = result;
+            this.date = new Date(this.employee.dateOfBirth);
+            this.created = new Date(this.employee.created).toUTCString() + " (" + this.employee.createdBy + ")";
+            this.modified = this.employee.modified ? new Date(this.employee.modified).toUTCString() + " (" + this.employee.modifiedBy + ")" : '';
+          },
+          error: (err) => {
+            this.handleError(err);
+          },
+        });
+      }
     });
+
   }
 
   editEmployee() {

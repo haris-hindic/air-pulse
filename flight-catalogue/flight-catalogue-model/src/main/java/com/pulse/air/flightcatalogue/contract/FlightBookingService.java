@@ -12,4 +12,6 @@ public interface FlightBookingService
 		extends BaseCRUDService<FlightBookingResponse, FlightBookingRequest, FlightBookingSearchRequest> {
 
 	public ApiResponse<String> confirm(final ApiRequest<Long> request) throws ApiException;
+
+	public ApiResponse<String> cancel(final ApiRequest<Long> request) throws ApiException;
 }

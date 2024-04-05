@@ -19,4 +19,5 @@ public class NotificationResponse implements Serializable {
 	private LocalDateTime modified;
 	private String modifiedBy;
 	private String status;
+	private Long bussinessKey;
 }

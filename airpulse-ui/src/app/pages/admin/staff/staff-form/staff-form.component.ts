@@ -68,7 +68,7 @@ export class StaffFormComponent {
           next: (result) => {
             this.aircrafts = result;
             this.aircraftsLov = result.map(x => {
-              return { label: this.aircraft.model + " (" + this.aircraft.manufacturer + ")", value: x.id }
+              return { label: this.aircraft.model + " (" + this.aircraft.manufacturer + ")", value: x.id };
             });
           }, error: (error) => {
             this.messageToast.showError("Error", error);
@@ -77,7 +77,7 @@ export class StaffFormComponent {
         }
       );
     } else {
-      this.aircraftsLov.push({ label: this.aircraft.model + " (" + this.aircraft.manufacturer + ")", value: this.aircraft.id })
+      this.aircraftsLov.push({ label: this.aircraft.model + " (" + this.aircraft.manufacturer + ")", value: this.aircraft.id });
     }
   }
 
@@ -89,7 +89,7 @@ export class StaffFormComponent {
         next: (result) => {
           this.employees = result;
           this.employeeeLov = result.map(x => {
-            return { label: x.firstName + " " + x.lastName, value: x.id }
+            return { label: x.firstName + " " + x.lastName + " (" + x.title + ") ", value: x.id };
           });
         }, error: (error) => {
           this.messageToast.showError("Error", error);
@@ -143,10 +143,19 @@ export class StaffFormComponent {
     request.validFrom = this.form.get('dateRange')?.value[0];
     request.validTo = this.form.get('dateRange')?.value[1];
     const selectedEmployee = this.employees.find(x => x.id === request.employeeId);
-    request.summary = selectedEmployee?.firstName + " " + selectedEmployee?.lastName;
+    request.summary = selectedEmployee?.firstName + " " + selectedEmployee?.lastName + " (" + selectedEmployee?.title + ") ";
     request.status = this.form.get('status')?.value;
 
     return request;
+  }
+
+  dialogStyle: any = { width: '600px' };
+  increaseModalSize(height: any) {
+    this.dialogStyle = { width: '600px', height: height };
+  }
+
+  decreaseModalSize() {
+    this.dialogStyle = { width: '600px' };
   }
 
   onSubmit() { this.saveButtonClicked.emit(this.populateRequest()); }

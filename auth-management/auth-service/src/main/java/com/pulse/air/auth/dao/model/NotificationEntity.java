@@ -49,4 +49,7 @@ public class NotificationEntity implements Serializable {
 	private String modifiedBy;
 
 	private String status;
+
+	@Column(name = "bussiness_key")
+	private Long bussinessKey;
 }

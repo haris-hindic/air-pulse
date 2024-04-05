@@ -13,6 +13,8 @@ import com.pulse.air.common.model.BaseSearchRequest;
 import com.pulse.air.commons.contract.BaseCRUDService;
 import com.pulse.air.commons.contract.BaseMapper;
 
+import java.util.Objects;
+
 public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TSearch extends BaseSearchRequest, TMapper extends BaseMapper<TEntity, TResponse, TRequest>, TRepository extends JpaRepository<TEntity, Long>>
 		extends BaseServiceImpl<TEntity, TResponse, TRequest, TSearch, TMapper, TRepository>
 		implements BaseCRUDService<TResponse, TRequest, TSearch> {
@@ -52,6 +54,7 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TSearch extends B
 			mapper.updateEntity(entity, request.getObject());
 			beforeUpdate(entity, request);
 
+
 			repository.save(entity);
 			return new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(),
 					mapper.entityToDto(entity));
@@ -89,7 +92,7 @@ public class BaseCRUDServiceImpl<TEntity, TResponse, TRequest, TSearch extends B
 	public ApiResponse<String> bulkDelete(final ApiListRequest<Long> request) throws ApiException {
 
 		var ids = request.getObject();
-		ids.removeIf(x -> x == null);
+		ids.removeIf(Objects::isNull);
 
 		if (!ids.isEmpty()) {
 			repository.deleteAllById(request.getObject());
